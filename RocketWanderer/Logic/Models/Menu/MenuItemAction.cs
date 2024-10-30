@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace Logic.Models.Menu
 {
+  /// <summary>
+  /// Действия пунктов в меню
+  /// </summary>
+  public enum MenuItemAction
+  {
     /// <summary>
-    /// Действия пунктов в меню
+    /// Новая игра
     /// </summary>
-    public enum MenuItemAction
-    {
-        /// <summary>
-        /// Новая игра
-        /// </summary>
-        NewGame,
+    NewGame,
 
-        /// <summary>
-        /// Рекорды
-        /// </summary>
-        Records,
+    /// <summary>
+    /// Рекорды
+    /// </summary>
+    Records,
 
-        /// <summary>
-        /// Описание
-        /// </summary>
-        Description,
+    /// <summary>
+    /// Описание
+    /// </summary>
+    Description,
 
-        /// <summary>
-        /// Выход
-        /// </summary>
-        Exit,
+    /// <summary>
+    /// Выход
+    /// </summary>
+    Exit,
 
-        /// <summary>
-        /// Назад
-        /// </summary>
-        Back,
-    }
+    /// <summary>
+    /// Назад
+    /// </summary>
+    Back,
+  }
 }

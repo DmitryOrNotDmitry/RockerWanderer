@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Logic.Models.Menu
 {
+  /// <summary>
+  /// Состояния пунктов меню
+  /// </summary>
+  public enum MenuItemState
+  {
     /// <summary>
-    /// Состояния пунктов меню
+    /// Обычный
     /// </summary>
-    public enum MenuItemState
-    {
-        /// <summary>
-        /// Обычный
-        /// </summary>
-        Normal,
+    Normal,
 
-        /// <summary>
-        /// Сфокусированный
-        /// </summary>
-        Focused,
+    /// <summary>
+    /// Сфокусированный
+    /// </summary>
+    Focused,
 
-        /// <summary>
-        /// Выбранный
-        /// </summary>
-        Selected,
-    }
+    /// <summary>
+    /// Выбранный
+    /// </summary>
+    Selected,
+  }
 }

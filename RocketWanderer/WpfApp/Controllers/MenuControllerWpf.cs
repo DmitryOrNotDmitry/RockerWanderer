@@ -17,15 +17,20 @@ namespace WpfApp.Controllers
     public MenuControllerWpf()
     {
       Menu = new Menu();
+
+      Menu.AddItem(new MenuItem(MenuItemAction.NewGame, "Новая игра"));
+      Menu.AddItem(new MenuItem(MenuItemAction.Records, "Рекорды"));
+      Menu.AddItem(new MenuItem(MenuItemAction.Exit, "Выход"));
+
       _menuView = new MenuViewWpf(Menu);
 
-      //Menu[(int)Model.Menu.MenuMain.MenuItemCodes.Exit].Selected += () => { _viewMenu.Close(); };
+      Menu[MenuItemAction.Exit].Selected += () => { _menuView.Close(); };
       _menuView.Init();
 
-      //foreach (Model.Menu.MenuItem elMenuItem in Menu.Items)
-      //{
-      //  ((ViewWPF.MenuGraphics.ViewMenuItemWPF)_viewMenu[elMenuItem.ID]).Enter += (id) => { Menu.FocusItemById(id); Menu.SelectFocusedItem(); };
-      //}
+      foreach (MenuItem elMenuItem in Menu.Items)
+      {
+        ((MenuItemViewWpf)_menuView[elMenuItem.Action]).Enter += (id) => { Menu.Focus(elMenuItem.Action); };
+      }
     }
     public override void Start()
     {

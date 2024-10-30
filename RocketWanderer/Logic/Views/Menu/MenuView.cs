@@ -28,6 +28,11 @@ namespace Logic.Views.Menus
       }
     }
 
+    public MenuItemView this[MenuItemAction parAction]
+    {
+      get { return _items[parAction]; }
+    }
+
     public abstract MenuItemView CreateMenuItemView(MenuItem parMenuItem);
 
   }
