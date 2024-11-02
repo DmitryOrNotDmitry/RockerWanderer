@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Models.Menu
+namespace Logic.Models.Menus
 {
   /// <summary>
   /// Меню, по которому можно перемещаться вперед и назад

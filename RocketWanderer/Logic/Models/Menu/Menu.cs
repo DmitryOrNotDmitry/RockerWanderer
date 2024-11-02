@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Models.Menu
+namespace Logic.Models.Menus
 {
   /// <summary>
   /// Меню
@@ -83,6 +83,11 @@ namespace Logic.Models.Menu
 
       _focusedAction = parNewFocusedAction;
       this[_focusedAction.Value].State = MenuItemState.Focused;
+    }
+
+    public void SelectFocusedItem()
+    {
+      this[_focusedAction.Value].State = MenuItemState.Selected;
     }
 
   }

@@ -15,6 +15,9 @@
     /// <summary>
     /// Запуск контроллера
     /// </summary>
-    public abstract void Start();
+    public virtual void Start()
+    {
+      throw new NotImplementedException();
+    }
   }
 }
