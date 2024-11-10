@@ -12,7 +12,9 @@ namespace WpfApp
   {
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-      new MenuControllerWpf();
+      WindowControllerWpf windowController = new WindowControllerWpf();
+
+      MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView);
     }
   }
 

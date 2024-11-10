@@ -22,7 +22,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Модель главного меню
     /// </summary>
-    protected Menu Menu
+    public Menu Menu
     {
       get { return _menu; }
     }

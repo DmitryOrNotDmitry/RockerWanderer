@@ -20,6 +20,14 @@ namespace Logic.Views.Menus
     private readonly Menu _menu;
 
     /// <summary>
+    /// Модель меню
+    /// </summary>
+    public Menu Menu
+    { 
+      get { return _menu; } 
+    }
+
+    /// <summary>
     /// Словарь представлений пунктов меню, индексированных по действиям
     /// </summary>
     private Dictionary<MenuItemAction, MenuItemView> _items = new();

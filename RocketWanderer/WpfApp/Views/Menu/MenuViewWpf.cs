@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Logic.Models.Menus;
+using Logic.Models.Windows;
 using Logic.Views.Menus;
+using WpfApp.Views.Windows;
 
 namespace WpfApp.Views.Menus
 {
@@ -13,9 +15,7 @@ namespace WpfApp.Views.Menus
   /// Представление меню
   /// </summary>
   public class MenuViewWpf : MenuView, IWpfItem
-  {
-    private Window _window = null;
-    
+  {    
     /// <summary>
     /// Контейнер для пунктов меню
     /// </summary>
@@ -33,16 +33,21 @@ namespace WpfApp.Views.Menus
     /// Конструктор
     /// </summary>
     /// <param name="parSubMenuItem"></param>
-    public MenuViewWpf(Menu parSubMenuItem) : base(parSubMenuItem)
+    public MenuViewWpf(Menu parSubMenuItem, WindowViewWpf parAppWindowView) : base(parSubMenuItem)
     {
-      _window = new Window();
-      _window.ShowActivated = true;
-      _window.WindowState = WindowState.Maximized;
-
       _stackPanel = new System.Windows.Controls.StackPanel();
       _stackPanel.VerticalAlignment = VerticalAlignment.Center;
       _stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-      _window.Content = _stackPanel;
+
+      ((IWpfItem)parAppWindowView).SetChild(this);
+
+      parAppWindowView.Window.ScreenChanged += (ScreenType parNewScreen) =>
+      {
+        if (parNewScreen == ScreenType.MainMenu)
+        {
+          ((IWpfItem)parAppWindowView).SetChild(this);
+        }
+      };
 
       foreach (IWpfItem elViewMenuItem in Items)
       {
@@ -50,13 +55,6 @@ namespace WpfApp.Views.Menus
       }
 
       Draw();
-
-      _window.Show();
-    }
-
-    public void Close()
-    {
-      _window.Close();
     }
 
     /// <summary>

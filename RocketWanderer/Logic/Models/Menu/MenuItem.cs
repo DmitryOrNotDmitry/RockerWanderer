@@ -26,9 +26,16 @@ namespace Logic.Models.Menus
     /// </summary>
     private readonly string _title;
 
+    /// <summary>
+    /// Делегат, представляющий метод, который будет вызываться при срабатывании события выбора
+    /// </summary>
     public delegate void dSeleted();
+
+    /// <summary>
+    /// Событие, которое возникает при выборе
+    /// </summary>
     public event dSeleted? Selected;
-      
+
     /// <summary>
     /// Тип выполняемого дейсвия
     /// </summary>

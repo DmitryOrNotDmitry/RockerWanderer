@@ -85,6 +85,9 @@ namespace Logic.Models.Menus
       this[_focusedAction.Value].State = MenuItemState.Focused;
     }
 
+    /// <summary>
+    /// Выбирает пункт, на котором установлен фокус
+    /// </summary>
     public void SelectFocusedItem()
     {
       this[_focusedAction.Value].State = MenuItemState.Selected;
