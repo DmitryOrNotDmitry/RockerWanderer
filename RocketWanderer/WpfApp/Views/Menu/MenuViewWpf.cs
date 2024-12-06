@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Logic.Models.Menus;
 using Logic.Models.Windows;
+using Logic.Utils;
 using Logic.Views.Menus;
 using WpfApp.Views.Windows;
 
@@ -22,6 +23,16 @@ namespace WpfApp.Views.Menus
     private System.Windows.Controls.StackPanel _stackPanel = null;
 
     /// <summary>
+    /// Размер элемента _stackPanel
+    /// </summary>
+    private UDim2 _stackPanelSize;
+
+    /// <summary>
+    /// Калькулятор координат для элементов меню
+    /// </summary>
+    private static CoordsCalculator _coordsCalculator = CoordsCalculator.Instance;
+
+    /// <summary>
     /// Элемент WPF, представляющий данный объект
     /// </summary>
     public UIElement Control
@@ -35,6 +46,8 @@ namespace WpfApp.Views.Menus
     /// <param name="parSubMenuItem"></param>
     public MenuViewWpf(Menu parSubMenuItem, WindowViewWpf parAppWindowView) : base(parSubMenuItem)
     {
+      _stackPanelSize = new UDim2(0.3, 0.6);
+
       _stackPanel = new System.Windows.Controls.StackPanel();
       _stackPanel.VerticalAlignment = VerticalAlignment.Center;
       _stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -62,6 +75,10 @@ namespace WpfApp.Views.Menus
     /// </summary>
     public override void Draw()
     {
+      Vector2 windowSize = _coordsCalculator.Сalculate(_stackPanelSize);
+      _stackPanel.Width = windowSize.X;
+      _stackPanel.Height = windowSize.Y;
+
       foreach (MenuItemView elViewMenuItem in Items)
       {
         elViewMenuItem.Draw();

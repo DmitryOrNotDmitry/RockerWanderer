@@ -46,7 +46,7 @@ namespace Logic.Utils
     /// <param name="parXOffset">Смещение по оси X</param>
     /// <param name="parYScale">Масштаб по оси Y</param>
     /// <param name="parYOffset">Смещение по оси Y</param>
-    public UDim2(int parXScale, int parXOffset, int parYScale, int parYOffset)
+    public UDim2(double parXScale, int parXOffset, double parYScale, int parYOffset)
     {
       _x = new UDim(parXScale, parXOffset);
       _y = new UDim(parYScale, parYOffset);
@@ -57,7 +57,7 @@ namespace Logic.Utils
     /// </summary>
     /// <param name="parXScale">Масштаб по оси X</param>
     /// <param name="parYScale">Масштаб по оси Y</param>
-    public UDim2(int parXScale, int parYScale) 
+    public UDim2(double parXScale, double parYScale) 
       : this(parXScale, 0, parYScale, 0)
     {
     }

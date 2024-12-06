@@ -1,4 +1,5 @@
 ﻿using Logic.Models.Menus;
+using Logic.Utils;
 using Logic.Views.Menus;
 using System;
 using System.Collections.Generic;
@@ -37,12 +38,22 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Кнопка, представляющая пункт меню
     /// </summary>
-    System.Windows.Controls.Button _button = null;
+    private System.Windows.Controls.Button _button = null;
 
     /// <summary>
     /// Кисть для нормального состояния пункта меню
     /// </summary>
-    Brush _brush = null;
+    private Brush _brush = null;
+
+    /// <summary>
+    /// Относительный размер кнопки
+    /// </summary>
+    private readonly UDim2 _buttonSize = new UDim2(0.12, 0.06);
+
+    /// <summary>
+    /// Калькулятор координат для элементов меню
+    /// </summary>
+    private static CoordsCalculator _coordsCalculator = CoordsCalculator.Instance;
 
     /// <summary>
     /// Элемент WPF, представляющий данный объект
@@ -60,7 +71,8 @@ namespace WpfApp.Views.Menus
     {
       _button = new System.Windows.Controls.Button();
       _button.Content = parMenuItem.Title;
-
+      _button.Margin = new Thickness(10);
+      
       _button.Click += (s, e) => { Enter?.Invoke(Item.Action); };
       _button.GotFocus += (s, e) => { Focused?.Invoke(Item.Action); };
     }
@@ -70,6 +82,10 @@ namespace WpfApp.Views.Menus
     /// </summary>
     public override void Draw()
     {
+      Vector2 buttinSize = _coordsCalculator.Сalculate(_buttonSize);
+      _button.Width = buttinSize.X;
+      _button.Height = buttinSize.Y;
+
       if (Item.State == MenuItemState.Focused)
       {
         _button.Background = Brushes.Magenta;

@@ -14,7 +14,7 @@ namespace Logic.Utils
     /// <summary>
     /// Относительный масштаб
     /// </summary>
-    private int _scale;
+    private double _scale;
 
     /// <summary>
     /// Смещение
@@ -24,7 +24,7 @@ namespace Logic.Utils
     /// <summary>
     /// Относительный масштаб
     /// </summary>
-    public int Scale
+    public double Scale
     {
       get { return _scale; }
       set { _scale = value; }
@@ -44,7 +44,7 @@ namespace Logic.Utils
     /// </summary>
     /// <param name="parScale">Относительный масштаб</param>
     /// <param name="parOffset">Смещение</param>
-    public UDim(int parScale, int parOffset)
+    public UDim(double parScale, int parOffset)
     {
       _scale = parScale;
       _offset = parOffset;

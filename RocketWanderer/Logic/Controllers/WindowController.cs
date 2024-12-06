@@ -1,5 +1,6 @@
 ﻿using Logic.Models.Menus;
 using Logic.Models.Windows;
+using Logic.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace Logic.Controllers
     public WindowController()
     {
       _window = new WindowData();
+      CoordsCalculator.Instance.SetWindow(_window);
     }
   }
 }

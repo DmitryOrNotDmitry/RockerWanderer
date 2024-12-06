@@ -1,5 +1,6 @@
 ﻿using Logic.Models.Menus;
 using Logic.Models.Windows;
+using Logic.Utils;
 using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,9 @@ namespace WpfApp.Views.Windows
       _windowControl.WindowState = WindowState.Maximized;
 
       _windowControl.Show();
+     
+      Window.Width = (int)_windowControl.Width;
+      Window.Height = (int)_windowControl.Height;
     }
 
     /// <summary>

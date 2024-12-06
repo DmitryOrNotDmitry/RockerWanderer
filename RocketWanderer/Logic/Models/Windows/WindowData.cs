@@ -14,7 +14,35 @@ namespace Logic.Models.Windows
     /// <summary>
     /// Текущий экран
     /// </summary>
-    ScreenType _currentScreen;
+    private ScreenType _currentScreen;
+
+    /// <summary>
+    /// Ширина окна
+    /// </summary>
+    private int _width;
+
+    /// <summary>
+    /// Высота окна
+    /// </summary>
+    private int _height;
+
+    /// <summary>
+    /// Ширина окна
+    /// </summary>
+    public int Width
+    {
+      get { return _width; }
+      set { _width = value; }
+    }
+
+    /// <summary>
+    /// Высота окна
+    /// </summary>
+    public int Height
+    {
+      get { return _height; }
+      set { _height = value; }
+    }
 
     /// <summary>
     /// Делегат, представляющий метод, который будет вызываться при смене экрана
