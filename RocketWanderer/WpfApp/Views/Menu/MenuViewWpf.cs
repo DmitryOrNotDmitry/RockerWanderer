@@ -46,19 +46,35 @@ namespace WpfApp.Views.Menus
     /// <param name="parSubMenuItem"></param>
     public MenuViewWpf(Menu parSubMenuItem, WindowViewWpf parAppWindowView) : base(parSubMenuItem)
     {
-      _stackPanelSize = new UDim2(0.3, 0.6);
+      _stackPanelSize = new UDim2(0.3, 0.35);
 
       _stackPanel = new System.Windows.Controls.StackPanel();
       _stackPanel.VerticalAlignment = VerticalAlignment.Center;
       _stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
 
-      ((IWpfItem)parAppWindowView).SetChild(this);
+      ((IWpfItem)parAppWindowView).AddChild(this);
 
       parAppWindowView.Window.ScreenChanged += (ScreenType parNewScreen) =>
       {
         if (parNewScreen == ScreenType.MainMenu)
         {
-          ((IWpfItem)parAppWindowView).SetChild(this);
+          ((IWpfItem)parAppWindowView).RemoveChildren();
+          ((IWpfItem)parAppWindowView).AddChild(this);
+        }
+
+        if (parNewScreen == ScreenType.Description)
+        {
+          // Окно для описания
+        }
+
+        if (parNewScreen == ScreenType.Records)
+        {
+          // Окно для ...
+        }
+
+        if (parNewScreen == ScreenType.Game)
+        {
+          // Окно для ...
         }
       };
 

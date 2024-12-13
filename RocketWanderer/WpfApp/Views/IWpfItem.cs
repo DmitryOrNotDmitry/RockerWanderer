@@ -25,7 +25,18 @@ namespace WpfApp.Views
     /// <param name="childItem">дочерний объект</param>
     void AddChild(IWpfItem childItem)
     {
-      ((IAddChild)Control).AddChild(childItem.Control);
+      ((IAddChild)Control).AddChild(childItem.Control);      
+    }
+
+    /// <summary>
+    /// Удаляет все дочерние элементы
+    /// </summary>
+    void RemoveChildren()
+    {
+      if (Control is Panel panel)
+      {
+        panel.Children.Clear();
+      }
     }
 
     /// <summary>

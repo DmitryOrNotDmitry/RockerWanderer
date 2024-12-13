@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WpfApp.Views.Menus;
 
 namespace WpfApp.Views.Windows
@@ -21,26 +22,33 @@ namespace WpfApp.Views.Windows
     /// Окно Wpf
     /// </summary>
     private Window _windowControl = null;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    private Canvas _canvasControl = null;
 
     /// <summary>
     /// Элемент WPF, представляющий данный объект
     /// </summary>
     public UIElement Control
     {
-      get { return _windowControl; }
+      get { return _canvasControl; }
     }
 
     /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parWindow">Модель окна</param>
-    /// <param name="parMenuViewWpf">Представление меню</param>
     public WindowViewWpf(WindowData parWindow) 
       : base(parWindow)
     {
       _windowControl = new Window();
       _windowControl.ShowActivated = true;
       _windowControl.WindowState = WindowState.Maximized;
+
+      _canvasControl = new Canvas();
+      _windowControl.Content = _canvasControl;
 
       _windowControl.Show();
      
