@@ -7,6 +7,7 @@ using System.Windows;
 using Logic.Models.Menus;
 using Logic.Models.Windows;
 using Logic.Utils;
+using Logic.Views;
 using Logic.Views.Menus;
 using WpfApp.Views.Windows;
 
@@ -23,16 +24,6 @@ namespace WpfApp.Views.Menus
     private System.Windows.Controls.StackPanel _stackPanel = null;
 
     /// <summary>
-    /// Размер элемента _stackPanel
-    /// </summary>
-    private UDim2 _stackPanelSize;
-
-    /// <summary>
-    /// Калькулятор координат для элементов меню
-    /// </summary>
-    private static CoordsCalculator _coordsCalculator = CoordsCalculator.Instance;
-
-    /// <summary>
     /// Элемент WPF, представляющий данный объект
     /// </summary>
     public UIElement Control
@@ -44,61 +35,31 @@ namespace WpfApp.Views.Menus
     /// Конструктор
     /// </summary>
     /// <param name="parSubMenuItem"></param>
-    public MenuViewWpf(Menu parSubMenuItem, WindowViewWpf parAppWindowView) : base(parSubMenuItem)
+    public MenuViewWpf(Menu parSubMenuItem) : base(parSubMenuItem)
     {
-      _stackPanelSize = new UDim2(0.3, 0.35);
+      Size = new UDim2(0.2, 0.25);
 
       _stackPanel = new System.Windows.Controls.StackPanel();
       _stackPanel.VerticalAlignment = VerticalAlignment.Center;
       _stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
 
-      ((IWpfItem)parAppWindowView).AddChild(this);
-
-      parAppWindowView.Window.ScreenChanged += (ScreenType parNewScreen) =>
-      {
-        if (parNewScreen == ScreenType.MainMenu)
-        {
-          ((IWpfItem)parAppWindowView).RemoveChildren();
-          ((IWpfItem)parAppWindowView).AddChild(this);
-        }
-
-        if (parNewScreen == ScreenType.Description)
-        {
-          // Окно для описания
-        }
-
-        if (parNewScreen == ScreenType.Records)
-        {
-          // Окно для ...
-        }
-
-        if (parNewScreen == ScreenType.Game)
-        {
-          // Окно для ...
-        }
-      };
-
       foreach (IWpfItem elViewMenuItem in Items)
       {
         ((IWpfItem)this).AddChild(elViewMenuItem);
       }
-
-      Draw();
     }
 
     /// <summary>
     /// Отрисовывает меню
     /// </summary>
-    public override void Draw()
+    public override void Draw(Vector2 parParentSize)
     {
-      Vector2 windowSize = _coordsCalculator.Сalculate(_stackPanelSize);
-      _stackPanel.Width = windowSize.X;
-      _stackPanel.Height = windowSize.Y;
+      Vector2 menuSize = AbsoluteSize(parParentSize);
 
-      foreach (MenuItemView elViewMenuItem in Items)
-      {
-        elViewMenuItem.Draw();
-      }
+      _stackPanel.Width = menuSize.X;
+      _stackPanel.Height = menuSize.Y;
+
+      DrawChildren(menuSize);
     }
 
     /// <summary>

@@ -49,7 +49,10 @@ namespace Logic.Views.Menus
       _menu = parMenu;
       foreach (MenuItem elMenuItem in parMenu.Items)
       {
-        _items.Add(elMenuItem.Action, CreateMenuItemView(elMenuItem));
+        MenuItemView itemView = CreateMenuItemView(elMenuItem);
+        _items.Add(elMenuItem.Action, itemView);
+        
+        AddChild(itemView);
       }
     }
 

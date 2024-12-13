@@ -50,10 +50,10 @@ namespace Logic.Utils
     }
 
     /// <summary>
-    /// Рассчитать координаты вектора по текущему окну
+    /// Рассчитать координаты вектора по размеру текущего окна
     /// </summary>
     /// <param name="parUDim2">Параметр расчета</param>
-    /// <returns>Вектор, представляющий абсолютные координаты окна и рассчитанные по UDim2</returns>
+    /// <returns>Вектор, представляющий абсолютные координаты окна и рассчитанный по UDim2</returns>
     public Vector2 Сalculate(UDim2 parUDim2)
     {
       int x = (int)(parUDim2.X.Scale * _window.Width + parUDim2.X.Offset);

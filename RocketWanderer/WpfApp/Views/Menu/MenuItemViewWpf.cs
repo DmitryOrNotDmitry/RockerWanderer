@@ -46,16 +46,6 @@ namespace WpfApp.Views.Menus
     private Brush _brush = null;
 
     /// <summary>
-    /// Относительный размер кнопки
-    /// </summary>
-    private readonly UDim2 _buttonSize = new UDim2(0.12, 0.06);
-
-    /// <summary>
-    /// Калькулятор координат для элементов меню
-    /// </summary>
-    private static CoordsCalculator _coordsCalculator = CoordsCalculator.Instance;
-
-    /// <summary>
     /// Элемент WPF, представляющий данный объект
     /// </summary>
     public UIElement Control
@@ -69,9 +59,11 @@ namespace WpfApp.Views.Menus
     /// <param name="parMenuItem">Модель пункта меню</param>
     public MenuItemViewWpf(MenuItem parMenuItem) : base(parMenuItem)
     {
+      Size = new UDim2(0.95, 0.2);
+
       _button = new System.Windows.Controls.Button();
       _button.Content = parMenuItem.Title;
-      _button.Margin = new Thickness(10);
+      _button.Margin = new Thickness(5);
       
       _button.Click += (s, e) => { Enter?.Invoke(Item.Action); };
       _button.GotFocus += (s, e) => { Focused?.Invoke(Item.Action); };
@@ -80,9 +72,9 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Отрисовывает объект
     /// </summary>
-    public override void Draw()
+    public override void Draw(Vector2 parParentSize)
     {
-      Vector2 buttinSize = _coordsCalculator.Сalculate(_buttonSize);
+      Vector2 buttinSize = AbsoluteSize(parParentSize);
       _button.Width = buttinSize.X;
       _button.Height = buttinSize.Y;
 

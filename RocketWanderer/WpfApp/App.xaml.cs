@@ -14,7 +14,11 @@ namespace WpfApp
     {
       WindowControllerWpf windowController = new WindowControllerWpf();
 
-      MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView);
+      ScreenControllerWpf screenController = new ScreenControllerWpf(windowController.WindowView);
+      
+      MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView, screenController.MainMenuScreenView);
+
+      windowController.WindowView.Draw(null);
     }
   }
 

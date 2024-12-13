@@ -1,4 +1,5 @@
 ﻿using Logic.Models.Windows;
+using Logic.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Logic.Views.Windows
   /// <summary>
   /// Представление окна
   /// </summary>
-  public class WindowView
+  public abstract class WindowView : BaseView
   {
     /// <summary>
     /// Модель окна
@@ -26,6 +27,15 @@ namespace Logic.Views.Windows
     }
 
     /// <summary>
+    /// Возвращает абсолютный размер окна
+    /// </summary>
+    /// <returns>Абсолютный размер</returns>
+    public Vector2 AbsoluteSize()
+    {
+      return new Vector2(Window.Width, Window.Height);
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parWindow">Модель окна</param>
@@ -33,5 +43,6 @@ namespace Logic.Views.Windows
     { 
       _window = parWindow;
     }
+
   }
 }

@@ -24,16 +24,11 @@ namespace WpfApp.Views.Windows
     private Window _windowControl = null;
     
     /// <summary>
-    /// 
-    /// </summary>
-    private Canvas _canvasControl = null;
-
-    /// <summary>
     /// Элемент WPF, представляющий данный объект
     /// </summary>
     public UIElement Control
     {
-      get { return _canvasControl; }
+      get { return _windowControl; }
     }
 
     /// <summary>
@@ -47,9 +42,6 @@ namespace WpfApp.Views.Windows
       _windowControl.ShowActivated = true;
       _windowControl.WindowState = WindowState.Maximized;
 
-      _canvasControl = new Canvas();
-      _windowControl.Content = _canvasControl;
-
       _windowControl.Show();
      
       Window.Width = (int)_windowControl.Width;
@@ -62,6 +54,15 @@ namespace WpfApp.Views.Windows
     public void Close()
     {
       _windowControl.Close();
+    }
+
+    /// <summary>
+    /// Отрисовывает окно
+    /// </summary>
+    /// <param name="parParentSize">Абсолютный размер родителя</param>
+    public override void Draw(Vector2 parParentSize)
+    {
+      DrawChildren(AbsoluteSize());
     }
   }
 }

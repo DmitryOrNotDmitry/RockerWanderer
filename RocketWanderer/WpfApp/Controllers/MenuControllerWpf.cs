@@ -2,6 +2,7 @@
 using Logic.Models.Menus;
 using Logic.Models.Windows;
 using Logic.Views.Menus;
+using Logic.Views.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,13 @@ namespace WpfApp.Controllers
     /// <summary>
     /// Конструктор
     /// </summary>
-    public MenuControllerWpf(WindowViewWpf parAppWindowView)
+    public MenuControllerWpf(WindowViewWpf parAppWindowView, MainMenuScreenView parMainMenuScreen)
     {
-      _menuView = new MenuViewWpf(Menu, parAppWindowView);
+      _menuView = new MenuViewWpf(Menu);
+
+      parMainMenuScreen.AddChild(_menuView);
+
+      ((IWpfItem)parMainMenuScreen).AddChild(_menuView);
 
       Menu[MenuItemAction.NewGame].Selected += () => { parAppWindowView.Window.ChangeScreen(ScreenType.Game); };
       Menu[MenuItemAction.Records].Selected += () => { parAppWindowView.Window.ChangeScreen(ScreenType.Records); };
@@ -50,13 +55,13 @@ namespace WpfApp.Controllers
         {
           Menu.Focus(action);
           Menu.SelectFocusedItem();
-          _menuView.Draw();
+          parAppWindowView.Draw(null);
         };
 
         ((MenuItemViewWpf)_menuView[elMenuItem.Action]).Focused += (action) =>
         {
           Menu.Focus(action);
-          _menuView.Draw();
+          parAppWindowView.Draw(null);
         };
       }
     }
