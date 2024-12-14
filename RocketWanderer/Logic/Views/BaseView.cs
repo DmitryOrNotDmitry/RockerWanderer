@@ -45,7 +45,7 @@ namespace Logic.Views
     /// <summary>
     /// Дочерние представления
     /// </summary>
-    public List<BaseView> _children = new List<BaseView>();
+    private List<BaseView> _children = new List<BaseView>();
 
     /// <summary>
     /// Добавляет новый дочерний объект
@@ -54,6 +54,14 @@ namespace Logic.Views
     public void AddChild(BaseView parChild)
     {
       _children.Add(parChild);
+    }
+
+    /// <summary>
+    /// Удаляет все дочерние элементы
+    /// </summary>
+    public void RemoveChildren()
+    {
+      _children.Clear();
     }
 
     /// <summary>

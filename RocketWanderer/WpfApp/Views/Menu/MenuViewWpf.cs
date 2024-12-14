@@ -47,6 +47,11 @@ namespace WpfApp.Views.Menus
       {
         ((IWpfItem)this).AddChild(elViewMenuItem);
       }
+
+      foreach (MenuItemViewWpf elViewMenuItem in Items)
+      {
+        elViewMenuItem.Size = new UDim2(0.95, 0.2);
+      }
     }
 
     /// <summary>
@@ -58,6 +63,12 @@ namespace WpfApp.Views.Menus
 
       _stackPanel.Width = menuSize.X;
       _stackPanel.Height = menuSize.Y;
+
+      int leftOffset = parParentSize.X / 2 - menuSize.X / 2;
+      int topOffset  = parParentSize.Y / 2 - menuSize.Y / 2;
+
+      System.Windows.Controls.Canvas.SetLeft(_stackPanel, leftOffset);
+      System.Windows.Controls.Canvas.SetTop(_stackPanel, topOffset);
 
       DrawChildren(menuSize);
     }

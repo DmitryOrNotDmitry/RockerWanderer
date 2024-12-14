@@ -36,6 +36,11 @@ namespace WpfApp.Views.Menus
     public event dEnter Focused = null;
 
     /// <summary>
+    /// Событие наведения курсора на пункте
+    /// </summary>
+    public event dEnter MoveEnter = null;
+
+    /// <summary>
     /// Кнопка, представляющая пункт меню
     /// </summary>
     private System.Windows.Controls.Button _button = null;
@@ -59,14 +64,15 @@ namespace WpfApp.Views.Menus
     /// <param name="parMenuItem">Модель пункта меню</param>
     public MenuItemViewWpf(MenuItem parMenuItem) : base(parMenuItem)
     {
-      Size = new UDim2(0.95, 0.2);
-
       _button = new System.Windows.Controls.Button();
       _button.Content = parMenuItem.Title;
       _button.Margin = new Thickness(5);
       
+      _button.FontSize = 20;
+
       _button.Click += (s, e) => { Enter?.Invoke(Item.Action); };
       _button.GotFocus += (s, e) => { Focused?.Invoke(Item.Action); };
+      _button.MouseEnter += (s, e) => { MoveEnter?.Invoke(Item.Action); };
     }
 
     /// <summary>

@@ -18,6 +18,14 @@ namespace Logic.Views.Screens
     private MainMenuScreen _mainMenuScreen;
 
     /// <summary>
+    /// Модель экрана главного меню
+    /// </summary>
+    protected MainMenuScreen MainMenuScreen
+    {
+      get { return _mainMenuScreen; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parMainMenuScreen">Модель экрана главного меню</param>

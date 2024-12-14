@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace WpfApp.Views.Screens
 {
@@ -22,6 +23,11 @@ namespace WpfApp.Views.Screens
     /// </summary>
     private Canvas _canvasControl = new Canvas();
 
+    /// <summary>
+    /// Элемент отображения названия игры
+    /// </summary>
+    private TextBlock _gameTitleControl = new TextBlock();
+
     public UIElement Control
     {
       get { return _canvasControl; }
@@ -35,10 +41,19 @@ namespace WpfApp.Views.Screens
       : base(parMainMenuScreen)
     {
       Size = new UDim2(1, 1);
+
+      _gameTitleControl.Text = MainMenuScreen.GameTitle;
+      _gameTitleControl.FontSize = 60;
+
+
+      _canvasControl.Children.Add(_gameTitleControl);
     }
 
     public override void Draw(Vector2 parParentSize)
     {
+      Canvas.SetLeft(_gameTitleControl, parParentSize.X / 2 - parParentSize.X * 0.25);
+      Canvas.SetTop(_gameTitleControl, parParentSize.Y * 0.22);
+      
       DrawChildren(AbsoluteSize(parParentSize));
     }
   }

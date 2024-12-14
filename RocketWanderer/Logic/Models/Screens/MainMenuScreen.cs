@@ -17,6 +17,14 @@ namespace Logic.Models.Screens
     private string _gameTitle;
 
     /// <summary>
+    /// Название игры
+    /// </summary>
+    public string GameTitle
+    {
+      get { return _gameTitle; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parGameTitle">Название игры</param>

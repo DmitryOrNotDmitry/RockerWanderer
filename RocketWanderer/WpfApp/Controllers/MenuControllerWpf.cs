@@ -58,7 +58,14 @@ namespace WpfApp.Controllers
           parAppWindowView.Draw(null);
         };
 
+
         ((MenuItemViewWpf)_menuView[elMenuItem.Action]).Focused += (action) =>
+        {
+          Menu.Focus(action);
+          parAppWindowView.Draw(null);
+        };
+
+        ((MenuItemViewWpf)_menuView[elMenuItem.Action]).MoveEnter += (action) =>
         {
           Menu.Focus(action);
           parAppWindowView.Draw(null);

@@ -1,5 +1,8 @@
 ﻿using Logic.Controllers;
+using Logic.Models.Menus;
 using Logic.Models.Windows;
+using Logic.Utils;
+using Logic.Views;
 using Logic.Views.Screens;
 using System;
 using System.Collections.Generic;
@@ -7,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp.Views;
+using WpfApp.Views.Menus;
 using WpfApp.Views.Screens;
 using WpfApp.Views.Windows;
 
@@ -18,41 +22,34 @@ namespace WpfApp.Controllers
   public class ScreenControllerWpf : ScreenController
   {
     /// <summary>
-    /// Представление экрана главного меню
+    /// Модель кнопки "Назад"
     /// </summary>
-    private MainMenuScreenViewWpf _mainMenuScreenView;
+    private MenuItem _backButton;
 
     /// <summary>
-    /// Представление экрана главного меню
+    /// Представление кнопки "Назад"
     /// </summary>
-    public MainMenuScreenViewWpf MainMenuScreenView
-    {
-      get { return _mainMenuScreenView; }
-    }
+    private MenuItemViewWpf _backButtonView;
 
     /// <summary>
     /// Конструктор
     /// </summary>
     public ScreenControllerWpf(WindowViewWpf parAppWindowView)
     {
-      _mainMenuScreenView = new MainMenuScreenViewWpf(MainMenuScreen);
-
-      parAppWindowView.AddChild(_mainMenuScreenView);
-
-      ((IWpfItem)parAppWindowView).SetChild(_mainMenuScreenView);
+      parAppWindowView.AddChild(MainMenuScreenView);
+      ((IWpfItem)parAppWindowView).SetChild((IWpfItem)MainMenuScreenView);
 
       parAppWindowView.Window.ScreenChanged += (ScreenType parNewScreen) =>
       {
         if (parNewScreen == ScreenType.MainMenu)
         {
-          ((IWpfItem)parAppWindowView).SetChild(_mainMenuScreenView);
-          parAppWindowView.Draw(null);
+          ChangeScreen(parAppWindowView, MainMenuScreenView);
         }
 
-        //if (parNewScreen == ScreenType.Description)
-        //{
-        //  // Окно для описания
-        //}
+        if (parNewScreen == ScreenType.Description)
+        {
+          ChangeScreen(parAppWindowView, DescriptionScreenView);
+        }
 
         //if (parNewScreen == ScreenType.Records)
         //{
@@ -64,6 +61,73 @@ namespace WpfApp.Controllers
         //  // Окно для ...
         //}
       };
+
+      ConfigureBackButton(parAppWindowView);
+    }
+
+    /// <summary>
+    /// Настраивает кнопку "Назад"
+    /// </summary>
+    /// <param name="parAppWindowView">Окно приложения</param>
+    private void ConfigureBackButton(WindowViewWpf parAppWindowView)
+    {
+      _backButton = new MenuItem(MenuItemAction.Back, "Назад");
+      _backButtonView = new MenuItemViewWpf(_backButton);
+      _backButtonView.Size = new UDim2(0.16, 0.09);
+
+      _backButtonView.Enter += (action) =>
+      {
+        _backButton.State = MenuItemState.Selected;
+        parAppWindowView.Draw(null);
+      };
+
+      _backButtonView.Focused += (action) =>
+      {
+        _backButton.State = MenuItemState.Focused;
+        parAppWindowView.Draw(null);
+      };
+
+      _backButton.Selected += () =>
+      {
+        parAppWindowView.Window.ChangeScreen(ScreenType.MainMenu);
+      };
+
+      DescriptionScreenView.AddChild(_backButtonView);
+      ((IWpfItem)DescriptionScreenView).AddChild(_backButtonView);
+    }
+
+    /// <summary>
+    /// Сменяет экран приложения
+    /// </summary>
+    /// <param name="parWindowViewWpf">Окно приложения</param>
+    /// <param name="parScreen">Экран, на который требуется перейти</param>
+    private void ChangeScreen(WindowViewWpf parWindowViewWpf, BaseView parScreen)
+    {
+      _backButton.State = MenuItemState.Normal;
+
+      ((IWpfItem)parWindowViewWpf).SetChild((IWpfItem)parScreen);
+      parWindowViewWpf.Draw(null);
+
+      parWindowViewWpf.RemoveChildren();
+      parWindowViewWpf.AddChild(parScreen);
+    }
+
+    /// <summary>
+    /// Создает представление экрана описания от Wpf
+    /// </summary>
+    /// <returns>Представление экрана описания</returns>
+    public override DescriptionScreenView CreateDescriptionScreenView()
+    {
+      return new DescriptionScreenViewWpf(DescriptionScreen);
+    }
+
+    /// <summary>
+    /// Создает предстваление экрана главного меню от Wpf
+    /// </summary>
+    /// <returns>Предстваление экрана главного меню</returns>
+    public override MainMenuScreenView CreateMainMenuScreenView()
+    {
+      return new MainMenuScreenViewWpf(MainMenuScreen);
     }
   }
 }
