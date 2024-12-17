@@ -51,10 +51,10 @@ namespace WpfApp.Controllers
           ChangeScreen(parAppWindowView, DescriptionScreenView);
         }
 
-        //if (parNewScreen == ScreenType.Records)
-        //{
-        //  // Окно для ...
-        //}
+        if (parNewScreen == ScreenType.Records)
+        {
+          ChangeScreen(parAppWindowView, RecordsScreenView);
+        }
 
         //if (parNewScreen == ScreenType.Game)
         //{
@@ -92,8 +92,8 @@ namespace WpfApp.Controllers
         parAppWindowView.Window.ChangeScreen(ScreenType.MainMenu);
       };
 
-      DescriptionScreenView.AddChild(_backButtonView);
-      ((IWpfItem)DescriptionScreenView).AddChild(_backButtonView);
+      //DescriptionScreenView.AddChild(_backButtonView);
+      //RecordsScreenView.AddChild(_backButtonView);
     }
 
     /// <summary>
@@ -103,7 +103,11 @@ namespace WpfApp.Controllers
     /// <param name="parScreen">Экран, на который требуется перейти</param>
     private void ChangeScreen(WindowViewWpf parWindowViewWpf, BaseView parScreen)
     {
+      ((IWpfItem)DescriptionScreenView).RemoveChild(_backButtonView);
+      ((IWpfItem)RecordsScreenView).RemoveChild(_backButtonView);
+
       _backButton.State = MenuItemState.Normal;
+      ((IWpfItem)parScreen).AddChild(_backButtonView);
 
       ((IWpfItem)parWindowViewWpf).SetChild((IWpfItem)parScreen);
       parWindowViewWpf.Draw(null);
@@ -128,6 +132,15 @@ namespace WpfApp.Controllers
     public override MainMenuScreenView CreateMainMenuScreenView()
     {
       return new MainMenuScreenViewWpf(MainMenuScreen);
+    }
+
+    /// <summary>
+    /// Создает представление экрана рекордов от Wpf
+    /// </summary>
+    /// <returns>Представление экрана рекордов от Wpf</returns>
+    public override RecordsScreenView CreateRecordsScreenView()
+    {
+      return new RecordsScreenViewWpf(RecordsScreen);
     }
   }
 }

@@ -34,6 +34,16 @@ namespace Logic.Controllers
     private DescriptionScreenView _descriptionScreenView;
 
     /// <summary>
+    /// Экран рекордов
+    /// </summary>
+    private RecordsScreen _recordsScreen;
+
+    /// <summary>
+    /// Представление экрана рекордов
+    /// </summary>
+    private RecordsScreenView _recordsScreenView;
+
+    /// <summary>
     /// Экран главного меню
     /// </summary>
     public MainMenuScreen MainMenuScreen
@@ -55,7 +65,7 @@ namespace Logic.Controllers
     public DescriptionScreen DescriptionScreen
     {
       get { return _descriptionScreen; }
-    }    
+    }
 
     /// <summary>
     /// Представление экрана описания
@@ -63,6 +73,22 @@ namespace Logic.Controllers
     public DescriptionScreenView DescriptionScreenView
     {
       get { return _descriptionScreenView; }
+    }
+
+    /// <summary>
+    /// Экран рекордов
+    /// </summary>
+    public RecordsScreen RecordsScreen
+    {
+      get { return _recordsScreen; }
+    }
+
+    /// <summary>
+    /// Представление экрана рекордов
+    /// </summary>
+    public RecordsScreenView RecordsScreenView
+    {
+      get { return _recordsScreenView; }
     }
 
     /// <summary>
@@ -76,9 +102,11 @@ namespace Logic.Controllers
         В данной игре вам предстоит управлять космическим кораблем, который может перемещаться между орбитами планет. Управление кораблем происходит с помощью кнопки «Пробел», при нажатии на который корабль перестает двигаться по орбите и начинает двигаться по прямой. Ваша задача – попасть кораблем на орбиту другой планеты. Игра заканчивается, когда корабль врезается в планету, солнце или поток астероидов.
         """
         );
+      _recordsScreen = new RecordsScreen();
 
       _descriptionScreenView = CreateDescriptionScreenView();
       _mainMenuScreenView = CreateMainMenuScreenView();
+      _recordsScreenView = CreateRecordsScreenView();
     }
 
     /// <summary>
@@ -92,5 +120,11 @@ namespace Logic.Controllers
     /// </summary>
     /// <returns>Представление экрана описания</returns>
     public abstract DescriptionScreenView CreateDescriptionScreenView();
+
+    /// <summary>
+    /// Создает представление экрана рекордов
+    /// </summary>
+    /// <returns>Представление экрана рекордов</returns>
+    public abstract RecordsScreenView CreateRecordsScreenView();
   }
 }
