@@ -1,6 +1,7 @@
 ﻿using Logic.Models.Menus;
 using Logic.Models.Windows;
 using Logic.Utils;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Logic.Controllers
   /// <summary>
   /// Контроллер окна
   /// </summary>
-  public class WindowController : BaseController
+  public abstract class WindowController : BaseController
   {
     /// <summary>
     /// Модель окна
@@ -28,12 +29,31 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Представленик окна
+    /// </summary>
+    private WindowView _windowView;
+
+    /// <summary>
+    /// Представленик окна
+    /// </summary>
+    public WindowView WindowView
+    {
+      get { return _windowView; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     public WindowController()
     {
       _window = new WindowData();
-      CoordsCalculator.Instance.SetWindow(_window);
+      _windowView = CreateWindowView();
     }
+
+    /// <summary>
+    /// Создает представление окна
+    /// </summary>
+    /// <returns>Представление окна</returns>
+    protected abstract WindowView CreateWindowView();
   }
 }

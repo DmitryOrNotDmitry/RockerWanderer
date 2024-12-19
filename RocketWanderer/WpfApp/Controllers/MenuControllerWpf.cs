@@ -3,6 +3,7 @@ using Logic.Models.Menus;
 using Logic.Models.Windows;
 using Logic.Views.Menus;
 using Logic.Views.Screens;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,21 +23,13 @@ namespace WpfApp.Controllers
     /// <summary>
     /// Конструктор
     /// </summary>
-    public MenuControllerWpf(WindowViewWpf parAppWindowView, MainMenuScreenView parMainMenuScreen)
+    public MenuControllerWpf(WindowView parAppWindowView, MainMenuScreenView parMainMenuScreen)
       : base(parAppWindowView)
     {
       IWpfItem.AddChild(parMainMenuScreen, MenuView);
 
       foreach (MenuItem elMenuItem in Menu.Items)
       {
-        //((MenuItemViewWpf)MenuView[elMenuItem.Action]).Enter += (action) =>
-        //{
-        //  Menu.Focus(action);
-        //  Menu.SelectFocusedItem();
-        //};
-
-        ((MenuItemViewWpf)MenuView[elMenuItem.Action]).Focused += Menu.Focus;
-
         ((MenuItemViewWpf)MenuView[elMenuItem.Action]).MoveEnter += Menu.Focus;
       }
     }

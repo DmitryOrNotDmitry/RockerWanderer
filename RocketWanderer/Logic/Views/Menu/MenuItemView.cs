@@ -25,6 +25,11 @@ namespace Logic.Views.Menus
     public event dMenuItemAction Enter = null;
 
     /// <summary>
+    /// Событие получение фокуса на пункте
+    /// </summary>
+    public event dMenuItemAction Focused = null;
+
+    /// <summary>
     /// Модель пункта меню
     /// </summary>
     private MenuItem _menuItem;
@@ -44,6 +49,24 @@ namespace Logic.Views.Menus
     public MenuItemView(MenuItem parMenuItem)
     {
       _menuItem = parMenuItem;
+    }
+
+    /// <summary>
+    /// Активирует событие Enter
+    /// </summary>
+    /// <param name="parAction">Действие пункта меню</param>
+    protected void TriggerEnter(MenuItemAction parAction)
+    {
+      Enter?.Invoke(parAction);
+    }
+
+    /// <summary>
+    /// Активирует событие Focused
+    /// </summary>
+    /// <param name="parAction">Действие пункта меню</param>
+    protected void TriggerFocus(MenuItemAction parAction)
+    {
+      Focused?.Invoke(parAction);
     }
   }
 }

@@ -90,7 +90,22 @@ namespace Logic.Models.Menus
     /// </summary>
     public void SelectFocusedItem()
     {
-      this[_focusedAction.Value].State = MenuItemState.Selected;
+      if (_focusedAction.HasValue)
+      {
+        this[_focusedAction.Value].State = MenuItemState.Selected;
+      }
+    }
+
+    /// <summary>
+    /// Изменяет состояние выбранного элемента на Normal
+    /// </summary>
+    public void Unfocus()
+    {
+      if (_focusedAction.HasValue)
+      {
+        this[_focusedAction.Value].State = MenuItemState.Normal;
+        _focusedAction = null;
+      }
     }
 
   }

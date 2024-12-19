@@ -128,7 +128,7 @@ namespace Logic.Controllers
     /// </summary>
     /// <param name="parType">Тип экрана</param>
     /// <returns>Представление экрана по типу</returns>
-    protected BaseView? GetScreen(ScreenType parType)
+    protected BaseView GetScreen(ScreenType parType)
     {
       return _screens[parType];
     }

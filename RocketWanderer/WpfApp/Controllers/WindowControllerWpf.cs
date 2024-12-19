@@ -1,4 +1,5 @@
 ﻿using Logic.Controllers;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +16,19 @@ namespace WpfApp.Controllers
   public class WindowControllerWpf : WindowController
   {
     /// <summary>
-    /// Представленик окна
-    /// </summary>
-    private WindowViewWpf _windowView;
-
-    /// <summary>
-    /// Представленик окна
-    /// </summary>
-    public WindowViewWpf WindowView 
-    { 
-      get { return _windowView; } 
-    }
-
-    /// <summary>
     /// Конструктор
     /// </summary>
     public WindowControllerWpf() 
     {
-      _windowView = new WindowViewWpf(Window);
+    }
+
+    /// <summary>
+    /// Создает представление окна от Wpf
+    /// </summary>
+    /// <returns>Представление окна</returns>
+    protected override WindowView CreateWindowView()
+    {
+      return new WindowViewWpf(Window);
     }
   }
 }

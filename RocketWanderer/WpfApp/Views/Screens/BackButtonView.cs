@@ -23,7 +23,9 @@ namespace WpfApp.Views.Screens
     public BackButtonView(WindowData parWindowData)
       : base(new MenuItem(MenuItemAction.Back, "Назад"))
     {
-      Size = new UDim2(0.16, 0.09); 
+      Size = new UDim2(0.16, 0.09);
+
+      _button.FontSize = 40;
 
       Enter += (action) =>
       {
@@ -37,6 +39,7 @@ namespace WpfApp.Views.Screens
 
       Item.Selected += () =>
       {
+        Item.State = MenuItemState.Normal;
         parWindowData.ChangeScreen(ScreenType.MainMenu);
       };
     }

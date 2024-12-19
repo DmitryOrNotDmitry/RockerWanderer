@@ -20,16 +20,6 @@ namespace WpfApp.Views.Menus
   public class MenuItemViewWpf : MenuItemView, IWpfItem
   {
     /// <summary>
-    /// Событие нажатия на пункт меню
-    /// </summary>
-    public event dMenuItemAction Enter = null;
-
-    /// <summary>
-    /// Событие получение фокуса на пункте
-    /// </summary>
-    public event dMenuItemAction Focused = null;
-
-    /// <summary>
     /// Событие наведения курсора на пункте
     /// </summary>
     public event dMenuItemAction MoveEnter = null;
@@ -37,7 +27,7 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Кнопка, представляющая пункт меню
     /// </summary>
-    private System.Windows.Controls.Button _button = null;
+    protected System.Windows.Controls.Button _button = null;
 
     /// <summary>
     /// Кисть для нормального состояния пункта меню
@@ -64,8 +54,8 @@ namespace WpfApp.Views.Menus
       
       _button.FontSize = 20;
 
-      _button.Click += (s, e) => { Enter?.Invoke(Item.Action); };
-      _button.GotFocus += (s, e) => { Focused?.Invoke(Item.Action); };
+      _button.Click += (s, e) => { TriggerEnter(Item.Action); };
+      _button.GotFocus += (s, e) => { TriggerFocus(Item.Action); };
       _button.MouseEnter += (s, e) => { MoveEnter?.Invoke(Item.Action); };
     }
 

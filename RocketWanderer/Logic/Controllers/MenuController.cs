@@ -76,7 +76,10 @@ namespace Logic.Controllers
         {
           Menu.Focus(action);
           Menu.SelectFocusedItem();
+          Menu.Unfocus();
         };
+
+        (MenuView[elMenuItem.Action]).Focused += Menu.Focus;
       }
     }
 

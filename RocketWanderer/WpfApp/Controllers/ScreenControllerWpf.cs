@@ -5,6 +5,7 @@ using Logic.Utils;
 using Logic.Views;
 using Logic.Views.Menus;
 using Logic.Views.Screens;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,12 @@ namespace WpfApp.Controllers
     /// <summary>
     /// Представление окна приложения
     /// </summary>
-    private WindowViewWpf _appWindowView;
+    private WindowView _appWindowView;
 
     /// <summary>
     /// Конструктор
     /// </summary>
-    public ScreenControllerWpf(WindowViewWpf parAppWindowView)
+    public ScreenControllerWpf(WindowView parAppWindowView)
       : base(parAppWindowView.Window)
     {
       _appWindowView = parAppWindowView;
