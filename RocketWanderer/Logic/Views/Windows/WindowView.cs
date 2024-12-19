@@ -44,5 +44,10 @@ namespace Logic.Views.Windows
       _window = parWindow;
     }
 
+    /// <summary>
+    /// Закрывает окно
+    /// </summary>
+    public abstract void Close();
+
   }
 }

@@ -14,6 +14,17 @@ namespace Logic.Views.Menus
   public abstract class MenuItemView : BaseView
   {
     /// <summary>
+    /// Обработчик события с представлением пункта меню
+    /// </summary>
+    /// <param name="parAction">Действие пункта меню</param>
+    public delegate void dMenuItemAction(MenuItemAction parAction);
+
+    /// <summary>
+    /// Событие нажатия на пункт меню
+    /// </summary>
+    public event dMenuItemAction Enter = null;
+
+    /// <summary>
     /// Модель пункта меню
     /// </summary>
     private MenuItem _menuItem;

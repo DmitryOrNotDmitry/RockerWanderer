@@ -3,6 +3,7 @@ using Logic.Models.Menus;
 using Logic.Models.Windows;
 using Logic.Utils;
 using Logic.Views;
+using Logic.Views.Menus;
 using Logic.Views.Screens;
 using System;
 using System.Collections.Generic;
@@ -22,107 +23,45 @@ namespace WpfApp.Controllers
   public class ScreenControllerWpf : ScreenController
   {
     /// <summary>
-    /// Модель кнопки "Назад"
+    /// Представление окна приложения
     /// </summary>
-    private MenuItem _backButton;
-
-    /// <summary>
-    /// Представление кнопки "Назад"
-    /// </summary>
-    private MenuItemViewWpf _backButtonView;
+    private WindowViewWpf _appWindowView;
 
     /// <summary>
     /// Конструктор
     /// </summary>
     public ScreenControllerWpf(WindowViewWpf parAppWindowView)
+      : base(parAppWindowView.Window)
     {
-      parAppWindowView.AddChild(MainMenuScreenView);
-      ((IWpfItem)parAppWindowView).SetChild((IWpfItem)MainMenuScreenView);
-
-      parAppWindowView.Window.ScreenChanged += (ScreenType parNewScreen) =>
-      {
-        if (parNewScreen == ScreenType.MainMenu)
-        {
-          ChangeScreen(parAppWindowView, MainMenuScreenView);
-        }
-
-        if (parNewScreen == ScreenType.Description)
-        {
-          ChangeScreen(parAppWindowView, DescriptionScreenView);
-        }
-
-        if (parNewScreen == ScreenType.Records)
-        {
-          ChangeScreen(parAppWindowView, RecordsScreenView);
-        }
-
-        //if (parNewScreen == ScreenType.Game)
-        //{
-        //  // Окно для ...
-        //}
-      };
-
-      ConfigureBackButton(parAppWindowView);
-    }
-
-    /// <summary>
-    /// Настраивает кнопку "Назад"
-    /// </summary>
-    /// <param name="parAppWindowView">Окно приложения</param>
-    private void ConfigureBackButton(WindowViewWpf parAppWindowView)
-    {
-      _backButton = new MenuItem(MenuItemAction.Back, "Назад");
-      _backButtonView = new MenuItemViewWpf(_backButton);
-      _backButtonView.Size = new UDim2(0.16, 0.09);
-
-      _backButtonView.Enter += (action) =>
-      {
-        _backButton.State = MenuItemState.Selected;
-        parAppWindowView.Draw(null);
-      };
-
-      _backButtonView.Focused += (action) =>
-      {
-        _backButton.State = MenuItemState.Focused;
-        parAppWindowView.Draw(null);
-      };
-
-      _backButton.Selected += () =>
-      {
-        parAppWindowView.Window.ChangeScreen(ScreenType.MainMenu);
-      };
-
-      //DescriptionScreenView.AddChild(_backButtonView);
-      //RecordsScreenView.AddChild(_backButtonView);
+      _appWindowView = parAppWindowView;
+     
+      IWpfItem.AddChild(parAppWindowView, MainMenuScreenView);
     }
 
     /// <summary>
     /// Сменяет экран приложения
     /// </summary>
-    /// <param name="parWindowViewWpf">Окно приложения</param>
-    /// <param name="parScreen">Экран, на который требуется перейти</param>
-    private void ChangeScreen(WindowViewWpf parWindowViewWpf, BaseView parScreen)
+    /// <param name="parNewScreenType">Новый тип экрана</param>
+    /// <exception cref="ArgumentException">Выбрасывается при неправильном указании parNewScreenType</exception>
+    public override void ChangeScreen(ScreenType parNewScreenType)
     {
-      ((IWpfItem)DescriptionScreenView).RemoveChild(_backButtonView);
-      ((IWpfItem)RecordsScreenView).RemoveChild(_backButtonView);
+      BaseView? newScreen = GetScreen(parNewScreenType);
 
-      _backButton.State = MenuItemState.Normal;
-      ((IWpfItem)parScreen).AddChild(_backButtonView);
+      if (newScreen is null)
+      {
+        throw new ArgumentException("Переданного типа экрана еще не реализовано");
+      }
 
-      ((IWpfItem)parWindowViewWpf).SetChild((IWpfItem)parScreen);
-      parWindowViewWpf.Draw(null);
-
-      parWindowViewWpf.RemoveChildren();
-      parWindowViewWpf.AddChild(parScreen);
+      IWpfItem.AddChild(_appWindowView, newScreen);
     }
 
     /// <summary>
     /// Создает представление экрана описания от Wpf
     /// </summary>
     /// <returns>Представление экрана описания</returns>
-    public override DescriptionScreenView CreateDescriptionScreenView()
+    public override DescriptionScreenView CreateDescriptionScreenView(WindowData parWindowData)
     {
-      return new DescriptionScreenViewWpf(DescriptionScreen);
+      return new DescriptionScreenViewWpf(DescriptionScreen, parWindowData);
     }
 
     /// <summary>
@@ -138,9 +77,9 @@ namespace WpfApp.Controllers
     /// Создает представление экрана рекордов от Wpf
     /// </summary>
     /// <returns>Представление экрана рекордов от Wpf</returns>
-    public override RecordsScreenView CreateRecordsScreenView()
+    public override RecordsScreenView CreateRecordsScreenView(WindowData parWindowData)
     {
-      return new RecordsScreenViewWpf(RecordsScreen);
+      return new RecordsScreenViewWpf(RecordsScreen, parWindowData);
     }
   }
 }

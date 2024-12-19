@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using Logic.Models.Windows;
 
 namespace WpfApp.Views.Screens
 {
@@ -27,6 +28,11 @@ namespace WpfApp.Views.Screens
     private TextBlock _recordsCapture = new TextBlock();
 
     /// <summary>
+    /// Представление кнопки "Назад"
+    /// </summary>
+    private BackButtonView _backButtonView;
+
+    /// <summary>
     /// Canvas, представляющий объект
     /// </summary>
     public UIElement Control
@@ -38,7 +44,7 @@ namespace WpfApp.Views.Screens
     /// Конструктор
     /// </summary>
     /// <param name="parRecordsScreen"></param>
-    public RecordsScreenViewWpf(RecordsScreen parRecordsScreen) 
+    public RecordsScreenViewWpf(RecordsScreen parRecordsScreen, WindowData parWindowData) 
       : base(parRecordsScreen)
     {
       Size = new UDim2(1, 1);
@@ -46,6 +52,9 @@ namespace WpfApp.Views.Screens
       _recordsCapture.Text = "Рекорды";
       _recordsCapture.FontSize = 40;
       _canvasControl.Children.Add(_recordsCapture);
+
+      _backButtonView = new BackButtonView(parWindowData);
+      IWpfItem.AddChild(this, _backButtonView);
     }
 
     /// <summary>

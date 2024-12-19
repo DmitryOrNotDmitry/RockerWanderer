@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,29 +21,39 @@ namespace WpfApp.Views
     UIElement Control { get; }
 
     /// <summary>
-    /// Добавляет дочерний объект
+    /// Устанавливает связи для родительского элементы и дочернего элемента
     /// </summary>
-    /// <param name="childItem">дочерний объект</param>
-    void AddChild(IWpfItem childItem)
+    /// <param name="parParentItem">Родительский элемент</param>
+    /// <param name="parChildItem">Дочерний элемент</param>
+    static void AddChild(BaseView parParentItem, BaseView parChildItem)
     {
-      if (Control is Panel panel)
+      IWpfItem parent = (IWpfItem)parParentItem;
+      IWpfItem child = (IWpfItem)parChildItem;
+
+      if (parent.Control is Panel panel)
       {
-        panel.Children.Add(childItem.Control);
+        panel.Children.Add(child.Control);
       }
+      else if (parent.Control is ContentControl contentControl)
+      {
+        parParentItem.RemoveChildren();
+        contentControl.Content = child.Control;
+      }
+
+      parParentItem.AddChild(parChildItem);
     }
 
     /// <summary>
-    /// Удаляет дочерний элемент
+    /// Добавляет дочерний объект
     /// </summary>
-    /// <param name="deletedChild">Удаляемый элемент</param>
-    void RemoveChild(IWpfItem deletedChild)
-    {
-      if (Control is Panel panel)
-      {
-        int t = panel.Children.IndexOf(deletedChild.Control);
-        panel.Children.Remove(deletedChild.Control);
-      }
-    }
+    /// <param name="childItem">дочерний объект</param>
+    //void AddChild(IWpfItem childItem)
+    //{
+    //  if (Control is Panel panel)
+    //  {
+    //    panel.Children.Add(childItem.Control);
+    //  }
+    //}
 
     /// <summary>
     /// Удаляет все дочерние элементы
@@ -59,12 +70,12 @@ namespace WpfApp.Views
     /// Устанавливает дочерний объект
     /// </summary>
     /// <param name="childItem">дочерний объект</param>
-    void SetChild(IWpfItem childItem)
-    {
-      if (Control is ContentControl contentControl)
-      {
-        contentControl.Content = childItem.Control;
-      }
-    }
+    //void SetChild(IWpfItem childItem)
+    //{
+    //  if (Control is ContentControl contentControl)
+    //  {
+    //    contentControl.Content = childItem.Control;
+    //  }
+    //}
   }
 }

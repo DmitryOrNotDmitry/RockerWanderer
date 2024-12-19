@@ -18,7 +18,27 @@ namespace WpfApp
       
       MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView, screenController.MainMenuScreenView);
 
-      windowController.WindowView.Draw(null);
+      Task.Run(() =>
+      {
+        {
+          try
+          {
+            while (true)
+            {
+              Dispatcher.Invoke(() =>
+              {
+                windowController.WindowView.Draw(null);
+              });
+            }
+          }
+          catch (TaskCanceledException e)
+          {
+
+          }
+        }
+      }
+      );
+
     }
   }
 

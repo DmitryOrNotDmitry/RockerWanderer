@@ -49,20 +49,20 @@ namespace WpfApp.Views.Windows
     }
 
     /// <summary>
-    /// Закрывает окно
-    /// </summary>
-    public void Close()
-    {
-      _windowControl.Close();
-    }
-
-    /// <summary>
     /// Отрисовывает окно
     /// </summary>
     /// <param name="parParentSize">Абсолютный размер родителя</param>
     public override void Draw(Vector2 parParentSize)
     {
       DrawChildren(AbsoluteSize());
+    }
+
+    /// <summary>
+    /// Закрывает окно
+    /// </summary>
+    public override void Close()
+    {
+      _windowControl.Close();
     }
   }
 }

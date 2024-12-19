@@ -43,13 +43,15 @@ namespace WpfApp.Views.Menus
       _stackPanel.VerticalAlignment = VerticalAlignment.Center;
       _stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
 
-      foreach (IWpfItem elViewMenuItem in Items)
-      {
-        ((IWpfItem)this).AddChild(elViewMenuItem);
-      }
+      //foreach (IWpfItem elViewMenuItem in Items)
+      //{
+
+        //((IWpfItem)this).AddChild(elViewMenuItem);
+      //}
 
       foreach (MenuItemViewWpf elViewMenuItem in Items)
       {
+        IWpfItem.AddChild(this, elViewMenuItem);
         elViewMenuItem.Size = new UDim2(0.95, 0.2);
       }
     }

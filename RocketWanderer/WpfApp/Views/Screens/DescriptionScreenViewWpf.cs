@@ -1,4 +1,5 @@
 ﻿using Logic.Models.Screens;
+using Logic.Models.Windows;
 using Logic.Utils;
 using Logic.Views.Screens;
 using System;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Markup;
+using WpfApp.Views.Windows;
 
 namespace WpfApp.Views.Screens
 {
@@ -33,6 +35,10 @@ namespace WpfApp.Views.Screens
     /// </summary>
     private TextBlock _descriptionCapture = new TextBlock();
 
+    /// <summary>
+    /// Представление кнопки "Назад"
+    /// </summary>
+    private BackButtonView _backButtonView;
 
     public UIElement Control
     {
@@ -43,7 +49,7 @@ namespace WpfApp.Views.Screens
     /// Конструктор
     /// </summary>
     /// <param name="parMainMenuScreen">Модель экрана главного меню</param>
-    public DescriptionScreenViewWpf(DescriptionScreen parDescriptionScreen)
+    public DescriptionScreenViewWpf(DescriptionScreen parDescriptionScreen, WindowData windowData)
       : base(parDescriptionScreen)
     {
       Size = new UDim2(1, 1);
@@ -58,6 +64,10 @@ namespace WpfApp.Views.Screens
       _descriptionControl.TextWrapping = TextWrapping.Wrap;
       _descriptionControl.TextAlignment = TextAlignment.Justify;
       _canvasControl.Children.Add(_descriptionControl);
+
+      _backButtonView = new BackButtonView(windowData);
+
+      IWpfItem.AddChild(this, _backButtonView);
     }
 
     /// <summary>

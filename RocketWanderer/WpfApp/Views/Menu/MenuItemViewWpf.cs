@@ -20,25 +20,19 @@ namespace WpfApp.Views.Menus
   public class MenuItemViewWpf : MenuItemView, IWpfItem
   {
     /// <summary>
-    /// Обработчик события с представлением пункта меню
-    /// </summary>
-    /// <param name="parAction">Действие пункта меню</param>
-    public delegate void dEnter(MenuItemAction parAction);
-
-    /// <summary>
     /// Событие нажатия на пункт меню
     /// </summary>
-    public event dEnter Enter = null;
+    public event dMenuItemAction Enter = null;
 
     /// <summary>
     /// Событие получение фокуса на пункте
     /// </summary>
-    public event dEnter Focused = null;
+    public event dMenuItemAction Focused = null;
 
     /// <summary>
     /// Событие наведения курсора на пункте
     /// </summary>
-    public event dEnter MoveEnter = null;
+    public event dMenuItemAction MoveEnter = null;
 
     /// <summary>
     /// Кнопка, представляющая пункт меню

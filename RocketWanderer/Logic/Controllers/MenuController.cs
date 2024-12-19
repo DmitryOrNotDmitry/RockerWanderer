@@ -1,4 +1,8 @@
 ﻿using Logic.Models.Menus;
+using Logic.Models.Windows;
+using Logic.Views.Menus;
+using Logic.Views.Screens;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +32,22 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Представление главного меню
+    /// </summary>
+    private MenuView _menuView;
+
+    /// <summary>
+    /// Представление главного меню
+    /// </summary>
+    public MenuView MenuView
+    {
+      get { return _menuView; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
-    public MenuController()
+    public MenuController(WindowView parWindowView)
     {
       _menu = new Menu();
 
@@ -40,6 +57,33 @@ namespace Logic.Controllers
       _menu.AddItem(new MenuItem(MenuItemAction.Exit, "Выход"));
 
       _menu.Focus(MenuItemAction.NewGame);
+
+      
+      WindowData windowData = parWindowView.Window;
+
+      _menu[MenuItemAction.NewGame].Selected += () => { windowData.ChangeScreen(ScreenType.Game); };
+      _menu[MenuItemAction.Records].Selected += () => { windowData.ChangeScreen(ScreenType.Records); };
+      _menu[MenuItemAction.Description].Selected += () => { windowData.ChangeScreen(ScreenType.Description); };
+
+      _menu[MenuItemAction.Exit].Selected += () => { parWindowView.Close(); };
+
+
+      _menuView = CreateMenuView();
+
+      foreach (MenuItem elMenuItem in Menu.Items)
+      {
+        (MenuView[elMenuItem.Action]).Enter += (action) =>
+        {
+          Menu.Focus(action);
+          Menu.SelectFocusedItem();
+        };
+      }
     }
+
+    /// <summary>
+    /// Создает представление меню
+    /// </summary>
+    /// <returns>Представление меню</returns>
+    public abstract MenuView CreateMenuView();
   }
 }

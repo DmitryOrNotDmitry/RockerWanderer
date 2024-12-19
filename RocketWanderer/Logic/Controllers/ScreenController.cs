@@ -1,4 +1,6 @@
 ﻿using Logic.Models.Screens;
+using Logic.Models.Windows;
+using Logic.Views;
 using Logic.Views.Screens;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,11 @@ namespace Logic.Controllers
   /// </summary>
   public abstract class ScreenController : BaseController
   {
+    /// <summary>
+    /// Представления экранов ассоциированные с типов экрана
+    /// </summary>
+    private Dictionary<ScreenType, BaseView> _screens;
+
     /// <summary>
     /// Экран главного меню
     /// </summary>
@@ -94,7 +101,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Конструктор
     /// </summary>
-    public ScreenController()
+    public ScreenController(WindowData parWindowData)
     {
       _mainMenuScreen = new MainMenuScreen("RocketWanderer");
       _descriptionScreen = new DescriptionScreen(
@@ -104,9 +111,26 @@ namespace Logic.Controllers
         );
       _recordsScreen = new RecordsScreen();
 
-      _descriptionScreenView = CreateDescriptionScreenView();
+      _descriptionScreenView = CreateDescriptionScreenView(parWindowData);
       _mainMenuScreenView = CreateMainMenuScreenView();
-      _recordsScreenView = CreateRecordsScreenView();
+      _recordsScreenView = CreateRecordsScreenView(parWindowData);
+      
+      _screens = new Dictionary<ScreenType, BaseView>();
+      _screens.Add(ScreenType.MainMenu, MainMenuScreenView);
+      _screens.Add(ScreenType.Description, DescriptionScreenView);
+      _screens.Add(ScreenType.Records, RecordsScreenView);
+
+      parWindowData.ScreenChanged += ChangeScreen;
+    }
+
+    /// <summary>
+    /// Возвращает представление экран
+    /// </summary>
+    /// <param name="parType">Тип экрана</param>
+    /// <returns>Представление экрана по типу</returns>
+    protected BaseView? GetScreen(ScreenType parType)
+    {
+      return _screens[parType];
     }
 
     /// <summary>
@@ -119,12 +143,18 @@ namespace Logic.Controllers
     /// Создает представление экрана описания
     /// </summary>
     /// <returns>Представление экрана описания</returns>
-    public abstract DescriptionScreenView CreateDescriptionScreenView();
+    public abstract DescriptionScreenView CreateDescriptionScreenView(WindowData parWindowData);
 
     /// <summary>
     /// Создает представление экрана рекордов
     /// </summary>
     /// <returns>Представление экрана рекордов</returns>
-    public abstract RecordsScreenView CreateRecordsScreenView();
+    public abstract RecordsScreenView CreateRecordsScreenView(WindowData parWindowData);
+
+    /// <summary>
+    /// Сменяет экран приложения
+    /// </summary>
+    /// <param name="parNewScreenType">Новый тип экрана</param>
+    public abstract void ChangeScreen(ScreenType parNewScreenType);
   }
 }
