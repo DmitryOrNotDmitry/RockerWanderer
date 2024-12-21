@@ -61,7 +61,7 @@ namespace WpfApp.Views.Menus
       _stackPanel.Height = menuSize.Y;
 
       int leftOffset = parParentSize.X / 2 - menuSize.X / 2;
-      int topOffset  = parParentSize.Y / 2 - menuSize.Y / 2;
+      int topOffset  = parParentSize.Y / 2 - menuSize.Y / 2 + parParentSize.Y / 20;
 
       System.Windows.Controls.Canvas.SetLeft(_stackPanel, leftOffset);
       System.Windows.Controls.Canvas.SetTop(_stackPanel, topOffset);

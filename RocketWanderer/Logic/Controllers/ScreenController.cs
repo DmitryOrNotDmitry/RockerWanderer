@@ -57,6 +57,16 @@ namespace Logic.Controllers
     private RecordsTableView _recordsTableView;
 
     /// <summary>
+    /// Модель настроек игрока
+    /// </summary>
+    private PlayerSettings _playerSettings;
+
+    /// <summary>
+    /// Представление настроек игрока
+    /// </summary>
+    private PlayerSettingsView _settingsView;
+
+    /// <summary>
     /// Экран главного меню
     /// </summary>
     public MainMenuScreen MainMenuScreen
@@ -113,6 +123,22 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Модель настроек игрока
+    /// </summary>
+    public PlayerSettings PlayerSettings
+    {
+      get { return _playerSettings; }
+    }
+
+    /// <summary>
+    /// Представление настроек игрока
+    /// </summary>
+    public PlayerSettingsView PlayerSettingsView
+    {
+      get { return _settingsView; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     public ScreenController(WindowData parWindowData)
@@ -138,12 +164,15 @@ namespace Logic.Controllers
 
       _recordsTableView = CreateRecordsTableView();
 
-      for(int i = 0; i < 1; i++)
+      for(int i = 0; i < 1; i++) // TODO
       {
         _recordsTableView.RecordsTable.Add(new Record("QWe1", 100));
         _recordsTableView.RecordsTable.Add(new Record("QWe2", 200));
         _recordsTableView.RecordsTable.Add(new Record("QWerwer", 50));
       }
+
+      _playerSettings = new PlayerSettings();
+      _settingsView = CreatePlayerSettingsView();
     }
 
     /// <summary>
@@ -186,5 +215,10 @@ namespace Logic.Controllers
     /// <returns>Представление таблицы рекордов</returns>
     public abstract RecordsTableView CreateRecordsTableView();
 
+    /// <summary>
+    /// Создает представление настроек игрока
+    /// </summary>
+    /// <returns>Представление настроек игрока</returns>
+    public abstract PlayerSettingsView CreatePlayerSettingsView();
   }
 }

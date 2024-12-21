@@ -39,6 +39,8 @@ namespace WpfApp.Controllers
      
       IWpfItem.AddChild(parAppWindowView, MainMenuScreenView);
 
+      IWpfItem.AddChild(MainMenuScreenView, PlayerSettingsView);
+
       IWpfItem.AddChild(RecordsScreenView, RecordsTableView);
     }
 
@@ -75,6 +77,15 @@ namespace WpfApp.Controllers
     public override MainMenuScreenView CreateMainMenuScreenView()
     {
       return new MainMenuScreenViewWpf(MainMenuScreen);
+    }
+
+    /// <summary>
+    /// Создает предстваление настроек игрока от Wpf
+    /// </summary>
+    /// <returns>Предстваление настроек игрока от Wpf</returns>
+    public override PlayerSettingsView CreatePlayerSettingsView()
+    {
+      return new PlayerSettingsViewWpf(PlayerSettings);
     }
 
     /// <summary>

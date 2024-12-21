@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -57,6 +58,11 @@ namespace WpfApp.Views.Menus
       _button.Click += (s, e) => { TriggerEnter(Item.Action); };
       _button.GotFocus += (s, e) => { TriggerFocus(Item.Action); };
       _button.MouseEnter += (s, e) => { MoveEnter?.Invoke(Item.Action); };
+
+      _button.LostFocus += (s, e) =>
+      {
+        Item.State = MenuItemState.Normal;
+      };
     }
 
     /// <summary>
@@ -67,6 +73,8 @@ namespace WpfApp.Views.Menus
       Vector2 buttinSize = AbsoluteSize(parParentSize);
       _button.Width = buttinSize.X;
       _button.Height = buttinSize.Y;
+
+      _button.FontSize = parParentSize.Y * 0.08;
 
       if (Item.State == MenuItemState.Focused)
       {

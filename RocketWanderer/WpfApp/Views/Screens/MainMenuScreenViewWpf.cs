@@ -45,12 +45,17 @@ namespace WpfApp.Views.Screens
       _gameTitleControl.Text = MainMenuScreen.GameTitle;
       _gameTitleControl.FontSize = 60;
 
-
       _canvasControl.Children.Add(_gameTitleControl);
     }
 
+    /// <summary>
+    /// Отрисовывает экран главного меню
+    /// </summary>
+    /// <param name="parParentSize">Размер родителя</param>
     public override void Draw(Vector2 parParentSize)
     {
+      _gameTitleControl.FontSize = parParentSize.Y * 0.06;
+
       Canvas.SetLeft(_gameTitleControl, parParentSize.X / 2 - parParentSize.X * 0.25);
       Canvas.SetTop(_gameTitleControl, parParentSize.Y * 0.22);
       

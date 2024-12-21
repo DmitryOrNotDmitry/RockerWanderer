@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using WpfApp.Views.Menus;
 using WpfApp.Views.Windows;
 
@@ -42,6 +43,17 @@ namespace WpfApp.Views.Screens
         Item.State = MenuItemState.Normal;
         parWindowData.ChangeScreen(ScreenType.MainMenu);
       };
+    }
+
+    /// <summary>
+    /// Отрисовывает кнопку "Назад"
+    /// </summary>
+    public override void Draw(Vector2 parParentSize)
+    {
+      base.Draw(parParentSize);
+
+      _button.FontSize = parParentSize.Y * 0.04;
+
     }
 
   }
