@@ -1,5 +1,6 @@
 ﻿using Logic.Models.Screens;
 using Logic.Models.Windows;
+using Logic.Records;
 using Logic.Views;
 using Logic.Views.Screens;
 using System;
@@ -51,6 +52,11 @@ namespace Logic.Controllers
     private RecordsScreenView _recordsScreenView;
 
     /// <summary>
+    /// Представление таблицы рекордов
+    /// </summary>
+    private RecordsTableView _recordsTableView;
+
+    /// <summary>
     /// Экран главного меню
     /// </summary>
     public MainMenuScreen MainMenuScreen
@@ -99,6 +105,14 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Представление таблицы рекордов
+    /// </summary>
+    public RecordsTableView RecordsTableView
+    {
+      get { return _recordsTableView; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     public ScreenController(WindowData parWindowData)
@@ -114,13 +128,22 @@ namespace Logic.Controllers
       _descriptionScreenView = CreateDescriptionScreenView(parWindowData);
       _mainMenuScreenView = CreateMainMenuScreenView();
       _recordsScreenView = CreateRecordsScreenView(parWindowData);
-      
+
       _screens = new Dictionary<ScreenType, BaseView>();
       _screens.Add(ScreenType.MainMenu, MainMenuScreenView);
       _screens.Add(ScreenType.Description, DescriptionScreenView);
       _screens.Add(ScreenType.Records, RecordsScreenView);
 
       parWindowData.ScreenChanged += ChangeScreen;
+
+      _recordsTableView = CreateRecordsTableView();
+
+      for(int i = 0; i < 1; i++)
+      {
+        _recordsTableView.RecordsTable.Add(new Record("QWe1", 100));
+        _recordsTableView.RecordsTable.Add(new Record("QWe2", 200));
+        _recordsTableView.RecordsTable.Add(new Record("QWerwer", 50));
+      }
     }
 
     /// <summary>
@@ -156,5 +179,12 @@ namespace Logic.Controllers
     /// </summary>
     /// <param name="parNewScreenType">Новый тип экрана</param>
     public abstract void ChangeScreen(ScreenType parNewScreenType);
+
+    /// <summary>
+    /// Создает представление таблицы рекордов
+    /// </summary>
+    /// <returns>Представление таблицы рекордов</returns>
+    public abstract RecordsTableView CreateRecordsTableView();
+
   }
 }

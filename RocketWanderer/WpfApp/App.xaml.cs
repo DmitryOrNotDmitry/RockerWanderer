@@ -41,6 +41,8 @@ namespace WpfApp
       }
       );
 
+      
+
       //List<Record> records = new List<Record>();
       //records.Add(new Record("QWe1", 100));
       //records.Add(new Record("QWe2", 200));

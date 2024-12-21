@@ -50,5 +50,16 @@ namespace Logic.Records
     {
     }
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parName">Имя игрока</param>
+    /// <param name="parScore">Очки</param>
+    public Record(string parName, long parScore)
+    {
+      _name = parName;
+      _score = parScore;
+    }
+
   }
 }

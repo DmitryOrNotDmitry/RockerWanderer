@@ -1,5 +1,6 @@
 ﻿using Logic.Controllers;
 using Logic.Models.Menus;
+using Logic.Models.Screens;
 using Logic.Models.Windows;
 using Logic.Utils;
 using Logic.Views;
@@ -37,6 +38,8 @@ namespace WpfApp.Controllers
       _appWindowView = parAppWindowView;
      
       IWpfItem.AddChild(parAppWindowView, MainMenuScreenView);
+
+      IWpfItem.AddChild(RecordsScreenView, RecordsTableView);
     }
 
     /// <summary>
@@ -81,6 +84,15 @@ namespace WpfApp.Controllers
     public override RecordsScreenView CreateRecordsScreenView(WindowData parWindowData)
     {
       return new RecordsScreenViewWpf(RecordsScreen, parWindowData);
+    }
+
+    /// <summary>
+    /// Создает представление таблицы рекордов от Wpf
+    /// </summary>
+    /// <returns>Представление таблицы рекордов от Wpf</returns>
+    public override RecordsTableView CreateRecordsTableView()
+    {
+      return new RecordsTableViewWpf(new RecordsTable());
     }
   }
 }
