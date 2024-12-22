@@ -36,12 +36,8 @@ namespace WpfApp.Controllers
       : base(parAppWindowView.Window)
     {
       _appWindowView = parAppWindowView;
-     
-      IWpfItem.AddChild(parAppWindowView, MainMenuScreenView);
 
-      IWpfItem.AddChild(MainMenuScreenView, PlayerSettingsView);
-
-      IWpfItem.AddChild(RecordsScreenView, RecordsTableView);
+      ChangeScreen(ScreenType.MainMenu);
     }
 
     /// <summary>
@@ -71,22 +67,22 @@ namespace WpfApp.Controllers
     }
 
     /// <summary>
+    /// Создает представление экрана игры от Wpf
+    /// </summary>
+    /// <returns>Представление экрана игры</returns>
+    public override GameScreenView CreateGameScreenView()
+    {
+      return new GameScreenViewWpf(GameScreen);
+    }
+
+    /// <summary>
     /// Создает предстваление экрана главного меню от Wpf
     /// </summary>
     /// <returns>Предстваление экрана главного меню</returns>
     public override MainMenuScreenView CreateMainMenuScreenView()
     {
       return new MainMenuScreenViewWpf(MainMenuScreen);
-    }
-
-    /// <summary>
-    /// Создает предстваление настроек игрока от Wpf
-    /// </summary>
-    /// <returns>Предстваление настроек игрока от Wpf</returns>
-    public override PlayerSettingsView CreatePlayerSettingsView()
-    {
-      return new PlayerSettingsViewWpf(PlayerSettings);
-    }
+    }    
 
     /// <summary>
     /// Создает представление экрана рекордов от Wpf
@@ -96,14 +92,6 @@ namespace WpfApp.Controllers
     {
       return new RecordsScreenViewWpf(RecordsScreen, parWindowData);
     }
-
-    /// <summary>
-    /// Создает представление таблицы рекордов от Wpf
-    /// </summary>
-    /// <returns>Представление таблицы рекордов от Wpf</returns>
-    public override RecordsTableView CreateRecordsTableView()
-    {
-      return new RecordsTableViewWpf(new RecordsTable());
-    }
+    
   }
 }

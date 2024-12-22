@@ -18,11 +18,24 @@ namespace Logic.Views.Screens
     private MainMenuScreen _mainMenuScreen;
 
     /// <summary>
+    /// Представление настроек игрока
+    /// </summary>
+    private PlayerSettingsView _settingsView;
+    
+    /// <summary>
     /// Модель экрана главного меню
     /// </summary>
-    protected MainMenuScreen MainMenuScreen
+    public MainMenuScreen MainMenuScreen
     {
       get { return _mainMenuScreen; }
+    }
+
+    /// <summary>
+    /// Представление настроек игрока
+    /// </summary>
+    public PlayerSettingsView PlayerSettingsView
+    {
+      get { return _settingsView; }
     }
 
     /// <summary>
@@ -32,6 +45,14 @@ namespace Logic.Views.Screens
     public MainMenuScreenView(MainMenuScreen parMainMenuScreen)
     {
       _mainMenuScreen = parMainMenuScreen;
+
+      _settingsView = CreatePlayerSettingsView();
     }
+
+    /// <summary>
+    /// Создает представление настроек игрока
+    /// </summary>
+    /// <returns>Представление настроек игрока</returns>
+    public abstract PlayerSettingsView CreatePlayerSettingsView();
   }
 }

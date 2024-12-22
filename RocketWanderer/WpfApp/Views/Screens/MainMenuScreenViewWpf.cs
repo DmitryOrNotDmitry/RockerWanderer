@@ -46,6 +46,8 @@ namespace WpfApp.Views.Screens
       _gameTitleControl.FontSize = 60;
 
       _canvasControl.Children.Add(_gameTitleControl);
+
+      IWpfItem.AddChild(this, PlayerSettingsView);
     }
 
     /// <summary>
@@ -60,6 +62,15 @@ namespace WpfApp.Views.Screens
       Canvas.SetTop(_gameTitleControl, parParentSize.Y * 0.22);
       
       DrawChildren(AbsoluteSize(parParentSize));
+    }
+
+    /// <summary>
+    /// Создает предстваление настроек игрока от Wpf
+    /// </summary>
+    /// <returns>Предстваление настроек игрока от Wpf</returns>
+    public override PlayerSettingsView CreatePlayerSettingsView()
+    {
+      return new PlayerSettingsViewWpf(MainMenuScreen.PlayerSettings);
     }
   }
 }

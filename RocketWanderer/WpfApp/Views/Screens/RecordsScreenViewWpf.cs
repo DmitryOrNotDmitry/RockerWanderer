@@ -54,7 +54,9 @@ namespace WpfApp.Views.Screens
       _canvasControl.Children.Add(_recordsCapture);
 
       _backButtonView = new BackButtonView(parWindowData);
+
       IWpfItem.AddChild(this, _backButtonView);
+      IWpfItem.AddChild(this, RecordsTableView);
     }
 
     /// <summary>
@@ -66,6 +68,15 @@ namespace WpfApp.Views.Screens
       Canvas.SetTop(_recordsCapture, parParentSize.Y * 0.22);
 
       DrawChildren(AbsoluteSize(parParentSize));
+    }
+
+    /// <summary>
+    /// Создает представление таблицы рекордов от Wpf
+    /// </summary>
+    /// <returns>Представление таблицы рекордов от Wpf</returns>
+    public override RecordsTableView CreateRecordsTableView()
+    {
+      return new RecordsTableViewWpf(new RecordsTable());
     }
   }
 }

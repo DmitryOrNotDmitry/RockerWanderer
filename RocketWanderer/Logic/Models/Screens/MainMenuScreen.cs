@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.Views.Screens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,12 +26,27 @@ namespace Logic.Models.Screens
     }
 
     /// <summary>
+    /// Модель настроек игрока
+    /// </summary>
+    private PlayerSettings _playerSettings;
+
+    /// <summary>
+    /// Модель настроек игрока
+    /// </summary>
+    public PlayerSettings PlayerSettings
+    {
+      get { return _playerSettings; }
+    }    
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parGameTitle">Название игры</param>
     public MainMenuScreen(string parGameTitle) 
     {
       _gameTitle = parGameTitle;
+
+      _playerSettings = new PlayerSettings();
     }
 
   }

@@ -20,7 +20,7 @@ namespace Logic.Views.Screens
     /// <summary>
     /// Модель экрана описания
     /// </summary>
-    protected DescriptionScreen DescriptionScreen
+    public DescriptionScreen DescriptionScreen
     {
       get { return _descriptionScreen; }
     }

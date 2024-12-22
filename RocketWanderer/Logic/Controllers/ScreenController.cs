@@ -52,19 +52,14 @@ namespace Logic.Controllers
     private RecordsScreenView _recordsScreenView;
 
     /// <summary>
-    /// Представление таблицы рекордов
+    /// Экран игры
     /// </summary>
-    private RecordsTableView _recordsTableView;
+    private GameScreen _gameScreen;
 
     /// <summary>
-    /// Модель настроек игрока
+    /// Представление экрана игры
     /// </summary>
-    private PlayerSettings _playerSettings;
-
-    /// <summary>
-    /// Представление настроек игрока
-    /// </summary>
-    private PlayerSettingsView _settingsView;
+    private GameScreenView _gameScreenView;
 
     /// <summary>
     /// Экран главного меню
@@ -115,27 +110,19 @@ namespace Logic.Controllers
     }
 
     /// <summary>
-    /// Представление таблицы рекордов
+    /// Экран игры
     /// </summary>
-    public RecordsTableView RecordsTableView
+    public GameScreen GameScreen
     {
-      get { return _recordsTableView; }
+      get { return _gameScreen; }
     }
 
     /// <summary>
-    /// Модель настроек игрока
+    /// Представление экрана игры
     /// </summary>
-    public PlayerSettings PlayerSettings
+    public GameScreenView GameScreenView
     {
-      get { return _playerSettings; }
-    }
-
-    /// <summary>
-    /// Представление настроек игрока
-    /// </summary>
-    public PlayerSettingsView PlayerSettingsView
-    {
-      get { return _settingsView; }
+      get { return _gameScreenView; }
     }
 
     /// <summary>
@@ -150,29 +137,20 @@ namespace Logic.Controllers
         """
         );
       _recordsScreen = new RecordsScreen();
+      _gameScreen = new GameScreen();
 
       _descriptionScreenView = CreateDescriptionScreenView(parWindowData);
       _mainMenuScreenView = CreateMainMenuScreenView();
       _recordsScreenView = CreateRecordsScreenView(parWindowData);
+      _gameScreenView = CreateGameScreenView();
 
       _screens = new Dictionary<ScreenType, BaseView>();
       _screens.Add(ScreenType.MainMenu, MainMenuScreenView);
       _screens.Add(ScreenType.Description, DescriptionScreenView);
       _screens.Add(ScreenType.Records, RecordsScreenView);
+      _screens.Add(ScreenType.Game, GameScreenView);
 
       parWindowData.ScreenChanged += ChangeScreen;
-
-      _recordsTableView = CreateRecordsTableView();
-
-      for(int i = 0; i < 1; i++) // TODO
-      {
-        _recordsTableView.RecordsTable.Add(new Record("QWe1", 100));
-        _recordsTableView.RecordsTable.Add(new Record("QWe2", 200));
-        _recordsTableView.RecordsTable.Add(new Record("QWerwer", 50));
-      }
-
-      _playerSettings = new PlayerSettings();
-      _settingsView = CreatePlayerSettingsView();
     }
 
     /// <summary>
@@ -204,21 +182,17 @@ namespace Logic.Controllers
     public abstract RecordsScreenView CreateRecordsScreenView(WindowData parWindowData);
 
     /// <summary>
+    /// Создает представление экрана игры
+    /// </summary>
+    /// <returns>Представление экрана игры</returns>
+    public abstract GameScreenView CreateGameScreenView();
+
+    /// <summary>
     /// Сменяет экран приложения
     /// </summary>
     /// <param name="parNewScreenType">Новый тип экрана</param>
     public abstract void ChangeScreen(ScreenType parNewScreenType);
 
-    /// <summary>
-    /// Создает представление таблицы рекордов
-    /// </summary>
-    /// <returns>Представление таблицы рекордов</returns>
-    public abstract RecordsTableView CreateRecordsTableView();
-
-    /// <summary>
-    /// Создает представление настроек игрока
-    /// </summary>
-    /// <returns>Представление настроек игрока</returns>
-    public abstract PlayerSettingsView CreatePlayerSettingsView();
+    
   }
 }
