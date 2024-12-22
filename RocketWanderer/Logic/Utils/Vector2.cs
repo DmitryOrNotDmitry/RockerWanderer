@@ -14,17 +14,17 @@ namespace Logic.Utils
     /// <summary>
     /// Компонент x
     /// </summary>
-    private int _x;
+    private double _x;
 
     /// <summary>
     /// Компонент y
     /// </summary>
-    private int _y;
+    private double _y;
 
     /// <summary>
     /// Компонент x
     /// </summary>
-    public int X
+    public double X
     {
       get { return _x; }
       set { _x = value; }
@@ -33,7 +33,7 @@ namespace Logic.Utils
     /// <summary>
     /// Компонент y
     /// </summary>
-    public int Y
+    public double Y
     {
       get { return _y; }
       set { _y = value; }
@@ -44,7 +44,7 @@ namespace Logic.Utils
     /// </summary>
     /// <param name="parX">Компонент x</param>
     /// <param name="parY">Компонент y</param>
-    public Vector2(int parX, int parY)
+    public Vector2(double parX, double parY)
     {
       _x = parX;
       _y = parY;
@@ -55,7 +55,27 @@ namespace Logic.Utils
     /// </summary>
     public Vector2() : this(1, 1)
     {
-      
+    }
+
+    /// <summary>
+    /// Масштабирует вектор
+    /// </summary>
+    /// <param name="parFactor">Множитель</param>
+    /// <returns>Новый вектор, умноженный на множитель</returns>
+    public Vector2 Scale(double parFactor)
+    {
+      return new Vector2(this.X * parFactor, this.Y * parFactor);
+    }
+
+    /// <summary>
+    /// Складывает 2 вектора
+    /// </summary>
+    /// <param name="v1">вектор 1</param>
+    /// <param name="v2">вектор 2</param>
+    /// <returns>Новый вектор как сумма v1 и v2</returns>
+    public static Vector2 operator +(Vector2 v1, Vector2 v2)
+    {
+      return new Vector2( v1.X + v2.X, v1.Y + v2.Y );
     }
   }
 }

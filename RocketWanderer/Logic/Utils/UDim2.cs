@@ -57,9 +57,18 @@ namespace Logic.Utils
     /// </summary>
     /// <param name="parXScale">Масштаб по оси X</param>
     /// <param name="parYScale">Масштаб по оси Y</param>
-    public UDim2(double parXScale, double parYScale) 
+    public UDim2(double parXScale, double parYScale)
       : this(parXScale, 0, parYScale, 0)
     {
+    }
+
+    /// <summary>
+    /// Возвращает UDim2 с нулевыми компонентами
+    /// </summary>
+    /// <returns></returns>
+    public static UDim2 Zero()
+    {
+      return new UDim2(0, 0, 0, 0);
     }
   }
 }

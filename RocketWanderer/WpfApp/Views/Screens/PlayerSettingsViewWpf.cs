@@ -93,8 +93,8 @@ namespace WpfApp.Views.Screens
       _panel.Width = tableSize.X;
       _panel.Height = tableSize.Y;
 
-      int leftOffset = parParentSize.X / 2 - tableSize.X / 2;
-      int topOffset = parParentSize.Y / 2 - tableSize.Y / 2 - parParentSize.Y / 8;
+      double leftOffset = parParentSize.X / 2 - tableSize.X / 2;
+      double topOffset = parParentSize.Y / 2 - tableSize.Y / 2 - parParentSize.Y / 8;
 
       System.Windows.Controls.Canvas.SetLeft(_panel, leftOffset);
       System.Windows.Controls.Canvas.SetTop(_panel, topOffset);
