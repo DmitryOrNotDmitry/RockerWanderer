@@ -57,7 +57,6 @@ namespace WpfApp.Views.Menus
 
       _button.Click += (s, e) => { TriggerEnter(Item.Action); };
       _button.GotFocus += (s, e) => { TriggerFocus(Item.Action); };
-      _button.MouseEnter += (s, e) => { MoveEnter?.Invoke(Item.Action); };
 
       _button.LostFocus += (s, e) =>
       {

@@ -69,6 +69,11 @@ namespace WpfApp.Views.Screens
       _playerNameInput.FontSize = fontSize;
       _playerNameInput.VerticalContentAlignment = VerticalAlignment.Center;
       _panel.Children.Add(_playerNameInput);
+
+      _playerNameInput.LostFocus += (s, e) =>
+      {
+        PlayerSettings.Name = _playerNameInput.Text;
+      };
     }
 
     /// <summary>
