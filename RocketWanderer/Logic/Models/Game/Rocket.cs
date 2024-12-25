@@ -11,5 +11,27 @@ namespace Logic.Models.Game
   /// </summary>
   public class Rocket : MovableItem
   {
+    /// <summary>
+    /// Угол поворота
+    /// </summary>
+    private double _rotation;
+
+    /// <summary>
+    /// Угол поворота
+    /// </summary>
+    public double Rotation
+    {
+      get { return _rotation; }
+      set { _rotation = value; }
+    }
+
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    public Rocket() 
+    {
+      _rotation = 0;
+    }
+
   }
 }

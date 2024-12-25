@@ -20,6 +20,8 @@ namespace WpfApp
       
       MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView, screenController.MainMenuScreenView);
 
+      GameControllerWpf gameController = new GameControllerWpf(screenController.GameScreenView, windowController.Window);
+
       Task.Run(() =>
       {
         {

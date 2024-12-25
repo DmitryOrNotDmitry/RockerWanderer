@@ -36,6 +36,7 @@ namespace WpfApp.Views.Screens
     public GameScreenViewWpf(GameScreen parGameScreen)
       : base(parGameScreen)
     {
+      Size = new UDim2(1, 1);
     }
 
     /// <summary>

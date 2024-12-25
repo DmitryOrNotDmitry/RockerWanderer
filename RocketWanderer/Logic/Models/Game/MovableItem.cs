@@ -17,7 +17,7 @@ namespace Logic.Models.Game
     /// <summary>
     /// Скорость единиц в секунду
     /// </summary>
-    public Vector2 Velocity;
+    public Vector2 Velocity
     {
       get {  return _velocity; }
       set { _velocity = value; }
