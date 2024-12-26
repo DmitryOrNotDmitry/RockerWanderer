@@ -77,6 +77,7 @@ namespace Logic.Controllers
               Map.Update(currentFrameTime - lastFrameTime);
 
               lastFrameTime = currentFrameTime;
+
             }
 
           });

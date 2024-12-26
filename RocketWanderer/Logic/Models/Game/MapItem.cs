@@ -35,7 +35,15 @@ namespace Logic.Models.Game
     { 
       get { return _size; }
       set { _size = value; }
-    }    
+    }
+    
+    /// <summary>
+    /// Центральная точка объекта
+    /// </summary>
+    public Vector2 Center
+    {
+      get { return new Vector2(Position.X + Size.X / 2, Position.Y + Size.Y / 2); }
+    }
 
   }
 }

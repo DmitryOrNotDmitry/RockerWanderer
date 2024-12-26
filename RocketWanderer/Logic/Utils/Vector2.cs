@@ -40,6 +40,14 @@ namespace Logic.Utils
     }
 
     /// <summary>
+    /// Длина вектора
+    /// </summary>
+    public double Length
+    { 
+      get { return Math.Sqrt(X * X + Y * Y); }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parX">Компонент x</param>

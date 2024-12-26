@@ -24,10 +24,10 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
-    /// Перемещает объект
+    /// Перемещает объект линейно
     /// </summary>
     /// <param name="parDeltaTimeSec">Прошедшее время в секундах</param>
-    public void Move(double parDeltaTimeSec)
+    public virtual void Move(double parDeltaTimeSec)
     {
       Position += Velocity.Scale(parDeltaTimeSec); 
     }

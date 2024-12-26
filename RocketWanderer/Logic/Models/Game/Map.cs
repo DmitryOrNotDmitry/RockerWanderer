@@ -82,12 +82,15 @@ namespace Logic.Models.Game
       _visibleSize = parVisibleSize;
 
       _rocket = new Rocket();
-      _rocket.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5);
+      _rocket.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5 + 170);
       _rocket.Velocity = new Vector2(_visibleSize.X / 10, 0);
       _rocket.Size = new Vector2(170, 100);
       
       _startPlanet = new Planet(100);
       _startPlanet.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5);
+
+      _rocket.Location = _startPlanet;
+      _rocket.ReachedOrbit = 300;
 
       _planets = new LinkedList<Planet>();
     }
