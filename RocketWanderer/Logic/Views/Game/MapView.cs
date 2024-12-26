@@ -13,22 +13,9 @@ namespace Logic.Views.Game
   public abstract class MapView : GameView
   {
     /// <summary>
-    /// Модель карты
-    /// </summary>
-    private Map _map;
-
-    /// <summary>
     /// Представление ракеты
     /// </summary>
     private RocketView _rocketView;
-
-    /// <summary>
-    /// Модель карты
-    /// </summary>
-    public Map Map
-    {
-      get { return _map; }
-    }
 
     /// <summary>
     /// Представление ракеты
@@ -39,14 +26,31 @@ namespace Logic.Views.Game
     }
 
     /// <summary>
+    /// Представление стратовой планеты
+    /// </summary>
+    private PlanetView _startPlanetView;
+
+    /// <summary>
+    /// Представление ракеты
+    /// </summary>
+    public PlanetView StartPlanetView
+    {
+      get { return _startPlanetView; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parMap">Модель карты</param>
     public MapView(Map parMap) 
     {
-      _map = parMap;
+      Map = parMap;
 
       _rocketView = CreateRocketView();
+      _startPlanetView = CreateStartPlanetView();
+
+      RocketView.Map = parMap;
+      StartPlanetView.Map = parMap;
     }
 
     /// <summary>
@@ -54,6 +58,12 @@ namespace Logic.Views.Game
     /// </summary>
     /// <returns>Представление ракеты</returns>
     public abstract RocketView CreateRocketView();
+
+    /// <summary>
+    /// Создает представление стартовой планеты
+    /// </summary>
+    /// <returns>Представление стартовой планеты</returns>
+    public abstract PlanetView CreateStartPlanetView();
 
   }
 }

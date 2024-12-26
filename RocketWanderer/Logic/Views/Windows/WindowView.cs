@@ -30,7 +30,7 @@ namespace Logic.Views.Windows
     /// Возвращает абсолютный размер окна
     /// </summary>
     /// <returns>Абсолютный размер</returns>
-    public Vector2 AbsoluteSize()
+    public Vector2 AbsSize()
     {
       return new Vector2(Window.Width, Window.Height);
     }

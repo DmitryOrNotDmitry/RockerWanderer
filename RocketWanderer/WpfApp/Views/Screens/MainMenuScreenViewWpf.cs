@@ -53,15 +53,18 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отрисовывает экран главного меню
     /// </summary>
-    /// <param name="parParentSize">Размер родителя</param>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      _gameTitleControl.FontSize = parParentSize.Y * 0.06;
+      base.Draw();
 
-      Canvas.SetLeft(_gameTitleControl, parParentSize.X / 2 - parParentSize.X * 0.25);
-      Canvas.SetTop(_gameTitleControl, parParentSize.Y * 0.22);
+      Vector2 parentSize = Parent.AbsoluteSize;
       
-      DrawChildren(AbsoluteSize(parParentSize));
+      _gameTitleControl.FontSize = parentSize.Y * 0.06;
+
+      Canvas.SetLeft(_gameTitleControl, parentSize.X / 2 - parentSize.X * 0.25);
+      Canvas.SetTop(_gameTitleControl, parentSize.Y * 0.22);
+      
+      DrawChildren();
     }
 
     /// <summary>

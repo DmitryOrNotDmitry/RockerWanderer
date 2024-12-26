@@ -53,20 +53,24 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Отрисовывает меню
     /// </summary>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      Vector2 menuSize = AbsoluteSize(parParentSize);
+      base.Draw();
+
+      Vector2 parentSize = Parent.AbsoluteSize;
+
+      Vector2 menuSize = AbsoluteSize;
 
       _stackPanel.Width = menuSize.X;
       _stackPanel.Height = menuSize.Y;
 
-      double leftOffset = parParentSize.X / 2 - menuSize.X / 2;
-      double topOffset  = parParentSize.Y / 2 - menuSize.Y / 2 + parParentSize.Y / 20;
+      double leftOffset = parentSize.X / 2 - menuSize.X / 2;
+      double topOffset  = parentSize.Y / 2 - menuSize.Y / 2 + parentSize.Y / 20;
 
       System.Windows.Controls.Canvas.SetLeft(_stackPanel, leftOffset);
       System.Windows.Controls.Canvas.SetTop(_stackPanel, topOffset);
 
-      DrawChildren(menuSize);
+      DrawChildren();
     }
 
     /// <summary>

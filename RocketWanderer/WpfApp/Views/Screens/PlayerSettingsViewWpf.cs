@@ -79,22 +79,24 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отрисовывает поле для изменения настроек игрока
     /// </summary>
-    /// <param name="parParentSize">Размер родителя</param>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      Vector2 tableSize = AbsoluteSize(parParentSize);
+      base.Draw();
+
+      Vector2 parentSize = Parent.AbsoluteSize;
+      Vector2 tableSize = AbsoluteSize;
 
       _playerNameLabel.Width = tableSize.X * 0.2;
       _playerNameInput.Width = tableSize.X - _playerNameLabel.Width - 20;
 
-      _playerNameLabel.FontSize = parParentSize.Y * 0.03;
-      _playerNameInput.FontSize = parParentSize.Y * 0.03;
+      _playerNameLabel.FontSize = parentSize.Y * 0.03;
+      _playerNameInput.FontSize = parentSize.Y * 0.03;
 
       _panel.Width = tableSize.X;
       _panel.Height = tableSize.Y;
 
-      double leftOffset = parParentSize.X / 2 - tableSize.X / 2;
-      double topOffset = parParentSize.Y / 2 - tableSize.Y / 2 - parParentSize.Y / 8;
+      double leftOffset = parentSize.X / 2 - tableSize.X / 2;
+      double topOffset = parentSize.Y / 2 - tableSize.Y / 2 - parentSize.Y / 8;
 
       System.Windows.Controls.Canvas.SetLeft(_panel, leftOffset);
       System.Windows.Controls.Canvas.SetTop(_panel, topOffset);

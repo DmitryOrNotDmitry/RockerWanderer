@@ -103,16 +103,18 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отрисовывает таблицу рекордов
     /// </summary>
-    /// <param name="parParentSize">Размер родительского элемента</param>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      Vector2 tableSize = AbsoluteSize(parParentSize);
+      base.Draw();
+
+      Vector2 parentSize = Parent.AbsoluteSize;
+      Vector2 tableSize = AbsoluteSize;
 
       _scrollViewer.Width = tableSize.X;
       _scrollViewer.Height = tableSize.Y;
 
-      double leftOffset = parParentSize.X / 2 - tableSize.X / 2;
-      double topOffset = parParentSize.Y / 2 - tableSize.Y / 2 + 40;
+      double leftOffset = parentSize.X / 2 - tableSize.X / 2;
+      double topOffset = parentSize.Y / 2 - tableSize.Y / 2 + 40;
 
       System.Windows.Controls.Canvas.SetLeft(_scrollViewer, leftOffset);
       System.Windows.Controls.Canvas.SetTop(_scrollViewer, topOffset);

@@ -48,12 +48,13 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отрисовывает кнопку "Назад"
     /// </summary>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      base.Draw(parParentSize);
+      base.Draw();
+      
+      Vector2 parentSize = Parent.AbsoluteSize;
 
-      _button.FontSize = parParentSize.Y * 0.04;
-
+      _button.FontSize = parentSize.Y * 0.04;
     }
 
   }

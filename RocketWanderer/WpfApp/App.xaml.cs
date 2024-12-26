@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Threading;
 using WpfApp.Controllers;
 
 namespace WpfApp
@@ -31,7 +32,7 @@ namespace WpfApp
             {
               Dispatcher.Invoke(() =>
               {
-                windowController.WindowView.Draw(null);
+                windowController.WindowView.Draw();
               });
             }
           }

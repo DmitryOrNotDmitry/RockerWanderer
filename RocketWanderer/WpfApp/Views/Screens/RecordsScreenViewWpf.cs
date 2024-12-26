@@ -62,12 +62,16 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отображает экран рекордов
     /// </summary>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      Canvas.SetLeft(_recordsCapture, parParentSize.X / 2 - parParentSize.X * 0.25);
-      Canvas.SetTop(_recordsCapture, parParentSize.Y * 0.22);
+      base.Draw();
 
-      DrawChildren(AbsoluteSize(parParentSize));
+      Vector2 parentSize = Parent.AbsoluteSize;
+
+      Canvas.SetLeft(_recordsCapture, parentSize.X / 2 - parentSize.X * 0.25);
+      Canvas.SetTop(_recordsCapture, parentSize.Y * 0.22);
+
+      DrawChildren();
     }
 
     /// <summary>

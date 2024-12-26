@@ -38,19 +38,23 @@ namespace WpfApp.Views.Game
       : base(parMap)
     {
       IWpfItem.AddChild(this, RocketView);
+      IWpfItem.AddChild(this, StartPlanetView);
 
     }
 
     /// <summary>
     /// Отрисовывает карту
     /// </summary>
-    /// <param name="parParentSize"></param>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      _canvasControl.Width = parParentSize.X;
-      _canvasControl.Height = parParentSize.Y - 50;
+      Vector2 parentSize = Parent.AbsoluteSize;
 
-      DrawChildren(new Vector2(_canvasControl.Width, _canvasControl.Height));
+      _canvasControl.Width = parentSize.X;
+      _canvasControl.Height = Math.Max(parentSize.Y - 50, 0);
+
+      AbsoluteSize = new Vector2(_canvasControl.Width, _canvasControl.Height);
+
+      DrawChildren();
     }
 
     /// <summary>
@@ -60,6 +64,15 @@ namespace WpfApp.Views.Game
     public override RocketView CreateRocketView()
     {
       return new RocketViewWpf(Map.Rocket);
+    }
+
+    /// <summary>
+    /// Создает представление стартовой планеты от Wpf
+    /// </summary>
+    /// <returns>Представление стартовой планеты от Wpf</returns>
+    public override PlanetView CreateStartPlanetView()
+    {
+      return new PlanetViewWpf(Map.StartPlanet, "Images\\start_planet.png");
     }
   }
 }

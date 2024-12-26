@@ -23,7 +23,7 @@ namespace Logic.Views.Game
     public Rocket Rocket
     {
       get { return _rocket; }
-    }
+    }    
 
     /// <summary>
     /// Конструктор

@@ -106,20 +106,24 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отрисовывает элемент
     /// </summary>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      Canvas.SetLeft(_descriptionCapture, parParentSize.X / 2 - parParentSize.X * 0.25);
-      Canvas.SetTop(_descriptionCapture, parParentSize.Y * 0.22);
+      base.Draw();
+
+      Vector2 parentSize = Parent.AbsoluteSize;
+
+      Canvas.SetLeft(_descriptionCapture, parentSize.X / 2 - parentSize.X * 0.25);
+      Canvas.SetTop(_descriptionCapture, parentSize.Y * 0.22);
 
       UDim2 descriptionControlSize = new UDim2(0.8, 0.6);
 
-      _descriptionControl.Width  = parParentSize.X * descriptionControlSize.X.Scale;
-      _descriptionControl.Height = parParentSize.Y * descriptionControlSize.Y.Scale;
+      _descriptionControl.Width  = parentSize.X * descriptionControlSize.X.Scale;
+      _descriptionControl.Height = parentSize.Y * descriptionControlSize.Y.Scale;
 
-      Canvas.SetLeft(_descriptionControl,parParentSize.X / 2 - _descriptionControl.Width / 2);
-      Canvas.SetTop(_descriptionControl, parParentSize.Y / 2 - _descriptionControl.Height / 2 + parParentSize.Y * 0.1);
+      Canvas.SetLeft(_descriptionControl,parentSize.X / 2 - _descriptionControl.Width / 2);
+      Canvas.SetTop(_descriptionControl, parentSize.Y / 2 - _descriptionControl.Height / 2 + parentSize.Y * 0.1);
 
-      DrawChildren(AbsoluteSize(parParentSize));
+      DrawChildren();
     }
   }
 }

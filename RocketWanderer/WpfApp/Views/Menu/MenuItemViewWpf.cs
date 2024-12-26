@@ -67,13 +67,17 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Отрисовывает объект
     /// </summary>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      Vector2 buttinSize = AbsoluteSize(parParentSize);
+      base.Draw();
+
+      Vector2 parentSize = Parent.AbsoluteSize;
+      
+      Vector2 buttinSize = AbsoluteSize;
       _button.Width = buttinSize.X;
       _button.Height = buttinSize.Y;
 
-      _button.FontSize = parParentSize.Y * 0.08;
+      _button.FontSize = parentSize.Y * 0.08;
 
       if (Item.State == MenuItemState.Focused)
       {

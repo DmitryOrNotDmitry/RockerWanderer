@@ -51,13 +51,14 @@ namespace WpfApp.Views.Windows
     /// <summary>
     /// Отрисовывает окно
     /// </summary>
-    /// <param name="parParentSize">Абсолютный размер родителя</param>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
       Window.Height = (int)_windowControl.ActualHeight;
       Window.Width = (int)_windowControl.ActualWidth;
 
-      DrawChildren(AbsoluteSize());
+      AbsoluteSize = AbsSize();
+
+      DrawChildren();
     }
 
     /// <summary>

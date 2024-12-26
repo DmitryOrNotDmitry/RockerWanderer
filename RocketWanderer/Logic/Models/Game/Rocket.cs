@@ -30,7 +30,7 @@ namespace Logic.Models.Game
     /// </summary>
     public Rocket() 
     {
-      _rotation = 0;
+      _rotation = 90;
     }
 
   }

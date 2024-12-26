@@ -57,6 +57,14 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Стартовая планета
+    /// </summary>
+    public Planet StartPlanet
+    {
+      get { return _startPlanet; }
+    }
+
+    /// <summary>
     /// Размер видимой части карты
     /// </summary>
     public Vector2 VisibleSize
@@ -78,7 +86,9 @@ namespace Logic.Models.Game
       _rocket.Velocity = new Vector2(_visibleSize.X / 10, 0);
       _rocket.Size = new Vector2(170, 100);
       
-        
+      _startPlanet = new Planet(100);
+      _startPlanet.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5);
+
       _planets = new LinkedList<Planet>();
     }
 

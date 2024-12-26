@@ -42,10 +42,11 @@ namespace WpfApp.Views.Screens
     /// <summary>
     /// Отрисовывает экран игры
     /// </summary>
-    /// <param name="parParentSize">Размер родителя</param>
-    public override void Draw(Vector2 parParentSize)
+    public override void Draw()
     {
-      DrawChildren(AbsoluteSize(parParentSize));
+      base.Draw();
+
+      DrawChildren();
     }
   }
 }
