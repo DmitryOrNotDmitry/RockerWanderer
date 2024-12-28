@@ -37,9 +37,12 @@ namespace WpfApp.Views.Game
     public MapViewWpf(Map parMap)
       : base(parMap)
     {
-      IWpfItem.AddChild(this, RocketView);
       IWpfItem.AddChild(this, StartPlanetView);
+      IWpfItem.AddChild(this, SunView);
+      IWpfItem.AddChild(this, TopBeltView);
+      IWpfItem.AddChild(this, BottomBeltView);
 
+      IWpfItem.AddChild(this, RocketView);
     }
 
     /// <summary>
@@ -74,5 +77,24 @@ namespace WpfApp.Views.Game
     {
       return new PlanetViewWpf(Map.StartPlanet, "Images\\start_planet.png");
     }
+
+    /// <summary>
+    /// Создает представление солнца от Wpf
+    /// </summary>
+    /// <returns>Представление солнца от Wpf</returns>
+    public override SunView CreateSunView()
+    {
+      return new SunViewWpf(Map.Sun);
+    }
+
+    /// <summary>
+    /// Создает представление пояса астероидов от Wpf
+    /// </summary>
+    /// <returns>Представление пояса астероидов от Wpf</returns>
+    public override AsteroidBeltView CreateAsteroidBeltView(AsteroidBelt parAsteroidBelt)
+    {
+      return new AsteroidBeltViewWpf(parAsteroidBelt);
+    }
+
   }
 }

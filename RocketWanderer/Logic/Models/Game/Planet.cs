@@ -27,6 +27,14 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Радиус орбиты
+    /// </summary>
+    public double OrbitRadius
+    {
+      get { return _radius * 3; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parRadius">Радиус</param>

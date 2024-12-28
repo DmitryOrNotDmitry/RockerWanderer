@@ -65,6 +65,30 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Солнце
+    /// </summary>
+    public Sun Sun
+    {
+      get { return _sun; }
+    }
+
+    /// <summary>
+    /// Верхний пояс астероидов
+    /// </summary>
+    public AsteroidBelt TopAsteroidBelt
+    {
+      get { return _topAsteroidBelt; }
+    }
+
+    /// <summary>
+    /// Нижний пояс астероидов
+    /// </summary>
+    public AsteroidBelt BottomAsteroidBelt
+    {
+      get { return _bottomAsteroidBelt; }
+    }
+
+    /// <summary>
     /// Размер видимой части карты
     /// </summary>
     public Vector2 VisibleSize
@@ -90,7 +114,23 @@ namespace Logic.Models.Game
       _startPlanet.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5);
 
       _rocket.Location = _startPlanet;
-      _rocket.ReachedOrbit = 300;
+      _rocket.ReachedOrbit = 200;
+
+      double sunDiameter = _visibleSize.Y;
+      _sun = new Sun();
+      _sun.Size = new Vector2(sunDiameter, sunDiameter);
+      _sun.Position = new Vector2(-sunDiameter * 0.3, _visibleSize.Y * 0.5);
+
+      Vector2 asteroidsSize = new Vector2(_visibleSize.X, _visibleSize.Y * 0.1);
+
+      _topAsteroidBelt = new AsteroidBelt();
+      _topAsteroidBelt.Size = asteroidsSize;
+      _topAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, asteroidsSize.Y / 2);
+
+      _bottomAsteroidBelt = new AsteroidBelt();
+      _bottomAsteroidBelt.Size = asteroidsSize;
+      _bottomAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, _visibleSize.Y - asteroidsSize.Y / 2);
+
 
       _planets = new LinkedList<Planet>();
     }
