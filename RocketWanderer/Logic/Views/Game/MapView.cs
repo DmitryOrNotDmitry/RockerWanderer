@@ -78,6 +78,19 @@ namespace Logic.Views.Game
     }
 
     /// <summary>
+    /// Представление планет
+    /// </summary>
+    private LinkedList<PlanetView> _planetsView;
+
+    /// <summary>
+    /// Представление планет
+    /// </summary>
+    public LinkedList<PlanetView> PlanetsView
+    {
+      get { return _planetsView; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parMap">Модель карты</param>
@@ -90,6 +103,14 @@ namespace Logic.Views.Game
       _sunView = CreateSunView();
       _topBeltView = CreateAsteroidBeltView(Map.TopAsteroidBelt);
       _bottomBeltView = CreateAsteroidBeltView(Map.BottomAsteroidBelt);
+      
+      _planetsView = new LinkedList<PlanetView>();
+      foreach (Planet elPlanet in Map.Planets)
+      {
+        PlanetView newPlanetView = CreatePlanetView(elPlanet);
+        newPlanetView.Map = parMap;
+        _planetsView.AddLast(newPlanetView);
+      }
 
       RocketView.Map = parMap;
       StartPlanetView.Map = parMap;
@@ -111,6 +132,13 @@ namespace Logic.Views.Game
     public abstract PlanetView CreateStartPlanetView();
 
     /// <summary>
+    /// Создает представление генерируемой планеты от Wpf
+    /// </summary>
+    /// <param name="parPlanet">Модель планеты</param>
+    /// <returns>Представление генерируемой планеты от Wpf</returns>
+    public abstract PlanetView CreatePlanetView(Planet parPlanet);
+
+    /// <summary>
     /// Создает представление солнца
     /// </summary>
     /// <returns>Представление солнца</returns>
@@ -119,6 +147,7 @@ namespace Logic.Views.Game
     /// <summary>
     /// Создает представление пояса астероидов
     /// </summary>
+    /// <param name="parAsteroidBelt">Модель пояса астероидов</param>
     /// <returns>Представление пояса астероидов</returns>
     public abstract AsteroidBeltView CreateAsteroidBeltView(AsteroidBelt parAsteroidBelt);
 

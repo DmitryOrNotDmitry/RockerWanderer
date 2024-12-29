@@ -94,6 +94,14 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Генерируемые планеты
+    /// </summary>
+    public LinkedList<Planet> Planets
+    {
+      get { return _planets; }
+    }
+
+    /// <summary>
     /// Размер видимой части карты
     /// </summary>
     public Vector2 VisibleSize
@@ -149,6 +157,31 @@ namespace Logic.Models.Game
 
 
       _planets = new LinkedList<Planet>();
+
+      Random random = new Random();
+
+      int planetStep = 900;
+      double startOffsetX = _startPlanet.Position.X;
+
+      for (int i = 0; i < 10; i++)
+      {
+        double radius = random.Next(70, 131);
+
+        Planet newPlanet = new Planet(radius);
+
+        int xNoiseBorder = 100;
+        int yNoiseBorder = (int)(initMapSize.Y / 2 - asteroidsSize.Y - newPlanet.OrbitRadius);
+
+        int xNoiseOffset = random.Next(-xNoiseBorder, xNoiseBorder);
+        int yNoiseOffset = random.Next(-yNoiseBorder, yNoiseBorder);
+
+        newPlanet.Position = new Vector2(
+          startOffsetX + planetStep * (i + 1) + xNoiseOffset,
+          initMapSize.Y / 2 + yNoiseOffset
+        );
+
+        _planets.AddLast(newPlanet);
+      }
     }
 
     /// <summary>

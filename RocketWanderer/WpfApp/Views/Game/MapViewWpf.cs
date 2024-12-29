@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace WpfApp.Views.Game
 {
@@ -17,6 +18,22 @@ namespace WpfApp.Views.Game
   /// </summary>
   public class MapViewWpf : MapView, IWpfItem
   {
+    /// <summary>
+    /// Относительные пути к изображениям
+    /// </summary>
+    private static List<string> _imagesPath = new List<string>
+    {
+      "planet_1.png",
+      "planet_2.png",
+      "planet_3.png",
+      "planet_4.png",
+    };
+
+    /// <summary>
+    /// Путь к папке с изображениями
+    /// </summary>
+    private static string _imagesFolder = "Images\\";
+
     /// <summary>
     /// Главный контролл представления
     /// </summary>
@@ -42,7 +59,20 @@ namespace WpfApp.Views.Game
       IWpfItem.AddChild(this, TopBeltView);
       IWpfItem.AddChild(this, BottomBeltView);
 
+      foreach (PlanetView elPlanetView in PlanetsView)
+      {
+        IWpfItem.AddChild(this, elPlanetView);
+      }
+
       IWpfItem.AddChild(this, RocketView);
+
+      ImageBrush imageBrush = new ImageBrush
+      {
+        ImageSource = new BitmapImage(new Uri("Images\\space_background.jpg", UriKind.Relative)),
+        Stretch = Stretch.UniformToFill
+      };
+      
+      _canvasControl.Background = imageBrush;
     }
 
     /// <summary>
@@ -53,7 +83,7 @@ namespace WpfApp.Views.Game
       Vector2 parentSize = Parent.AbsoluteSize;
 
       _canvasControl.Width = parentSize.X;
-      _canvasControl.Height = Math.Max(parentSize.Y - 50, 0);
+      _canvasControl.Height = Math.Max(parentSize.Y - 40, 0);
 
       AbsoluteSize = new Vector2(_canvasControl.Width, _canvasControl.Height);
 
@@ -79,6 +109,16 @@ namespace WpfApp.Views.Game
     }
 
     /// <summary>
+    /// Создает представление генерируемой планеты от Wpf
+    /// </summary>
+    /// <param name="parPlanet">Модель планеты</param>
+    /// <returns>Представление генерируемой планеты от Wpf</returns>
+    public override PlanetView CreatePlanetView(Planet parPlanet)
+    {
+      return new PlanetViewWpf(parPlanet, _imagesFolder + _imagesPath[new Random().Next(_imagesPath.Count)]);
+    }
+
+    /// <summary>
     /// Создает представление солнца от Wpf
     /// </summary>
     /// <returns>Представление солнца от Wpf</returns>
@@ -90,6 +130,7 @@ namespace WpfApp.Views.Game
     /// <summary>
     /// Создает представление пояса астероидов от Wpf
     /// </summary>
+    /// <param name="parAsteroidBelt">Модель пояса астероидов</param>
     /// <returns>Представление пояса астероидов от Wpf</returns>
     public override AsteroidBeltView CreateAsteroidBeltView(AsteroidBelt parAsteroidBelt)
     {
