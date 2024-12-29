@@ -52,14 +52,16 @@ namespace WpfApp.Views.Game
       base.Draw();
 
       Vector2 parentSize = Parent.AbsoluteSize;
-      
-      _rocketImage.Width  = parentSize.X * Rocket.Size.X / Map.VisibleSize.X;
-      _rocketImage.Height = parentSize.Y * Rocket.Size.Y / Map.VisibleSize.Y;
+
+      double scale = parentSize.Y / Map.Size.Y;
+
+      _rocketImage.Width  = Rocket.Size.X * scale;
+      _rocketImage.Height = Rocket.Size.Y * scale;
 
       _rocketImage.RenderTransform = new RotateTransform(Rocket.Rotation);
 
-      Canvas.SetLeft(_rocketImage, parentSize.X * Rocket.Position.X / Map.VisibleSize.X - _rocketImage.Width / 2);
-      Canvas.SetTop (_rocketImage, parentSize.Y * Rocket.Position.Y / Map.VisibleSize.Y - _rocketImage.Height / 2);
+      Canvas.SetLeft(_rocketImage, Rocket.Position.X * scale - _rocketImage.Width / 2);
+      Canvas.SetTop (_rocketImage, Rocket.Position.Y * scale - _rocketImage.Height / 2);
     }
   }
 }

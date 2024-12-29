@@ -19,6 +19,11 @@ namespace Logic.Models.Game
     private Vector2 _visibleSize;
 
     /// <summary>
+    /// Размер карты
+    /// </summary>
+    private Vector2 _size;
+
+    /// <summary>
     /// Ракета
     /// </summary>
     private Rocket _rocket;
@@ -98,30 +103,41 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Размер карты
+    /// </summary>
+    public Vector2 Size
+    {
+      get { return _size; }
+      set { _size = value; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parVisibleSize">Размер видимой части карты</param>
     public Map(Vector2 parVisibleSize)
     {
       _visibleSize = parVisibleSize;
+      Vector2 initMapSize = new Vector2(1920, 1080);
+      _size = initMapSize;
 
       _rocket = new Rocket();
-      _rocket.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5 + 170);
-      _rocket.Velocity = new Vector2(_visibleSize.X / 10, 0);
+      _rocket.Position = new Vector2(initMapSize.X * 0.3, initMapSize.Y * 0.5 + 170);
+      _rocket.Velocity = new Vector2(initMapSize.X / 10, 0);
       _rocket.Size = new Vector2(170, 100);
       
       _startPlanet = new Planet(100);
-      _startPlanet.Position = new Vector2(_visibleSize.X * 0.3, _visibleSize.Y * 0.5);
+      _startPlanet.Position = new Vector2(initMapSize.X * 0.3, initMapSize.Y * 0.5);
 
       _rocket.Location = _startPlanet;
       _rocket.ReachedOrbit = 200;
 
-      double sunDiameter = _visibleSize.Y;
+      double sunDiameter = initMapSize.Y;
       _sun = new Sun();
       _sun.Size = new Vector2(sunDiameter, sunDiameter);
-      _sun.Position = new Vector2(-sunDiameter * 0.3, _visibleSize.Y * 0.5);
+      _sun.Position = new Vector2(-sunDiameter * 0.3, initMapSize.Y * 0.5);
 
-      Vector2 asteroidsSize = new Vector2(_visibleSize.X, _visibleSize.Y * 0.1);
+      Vector2 asteroidsSize = new Vector2(initMapSize.X, initMapSize.Y * 0.08);
 
       _topAsteroidBelt = new AsteroidBelt();
       _topAsteroidBelt.Size = asteroidsSize;
@@ -129,7 +145,7 @@ namespace Logic.Models.Game
 
       _bottomAsteroidBelt = new AsteroidBelt();
       _bottomAsteroidBelt.Size = asteroidsSize;
-      _bottomAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, _visibleSize.Y - asteroidsSize.Y / 2);
+      _bottomAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, initMapSize.Y - asteroidsSize.Y / 2);
 
 
       _planets = new LinkedList<Planet>();

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace WpfApp.Views.Game
@@ -18,16 +19,31 @@ namespace WpfApp.Views.Game
   public class AsteroidBeltViewWpf : AsteroidBeltView, IWpfItem
   {
     /// <summary>
-    /// Картинка пояса астероидов
+    /// Максимальное количество элементов массива _beltImages
     /// </summary>
-    private Image _beltImage = new Image();
+    private const int _maxBeltImagesSize = 5;
+
+    /// <summary>
+    /// Контейнер для изображений астероидов
+    /// </summary>
+    private Canvas _canvas = new Canvas();
+
+    /// <summary>
+    /// Контролы для отображения пояса астероидов
+    /// </summary>
+    private List<Image> _beltImages = new List<Image>();
+
+    /// <summary>
+    /// Изображение астероидов
+    /// </summary>
+    private BitmapImage _bitmap;
 
     /// <summary>
     /// Картинка, представляющая объект
     /// </summary>
     public UIElement Control
     {
-      get { return _beltImage; }
+      get { return _canvas; }
     }
 
     /// <summary>
@@ -37,8 +53,26 @@ namespace WpfApp.Views.Game
     public AsteroidBeltViewWpf(AsteroidBelt parAsteroidBelt) 
       : base(parAsteroidBelt)
     {
-      _beltImage.Stretch = System.Windows.Media.Stretch.Uniform;
-      _beltImage.Source = new BitmapImage(new Uri("Images\\asteroid_belt.png", UriKind.Relative));
+      _bitmap = new BitmapImage(new Uri("Images\\asteroid_belt.png", UriKind.Relative));
+      
+      CreateNewBeltImage();
+    }
+
+    /// <summary>
+    /// Создает новый контрол изображения
+    /// </summary>
+    /// <returns>Новый контрол изображения</returns>
+    private Image CreateNewBeltImage()
+    {
+      Image beltImage = new Image();
+
+      beltImage.Stretch = System.Windows.Media.Stretch.Uniform;
+      beltImage.Source = _bitmap;
+
+      _beltImages.Add(beltImage);
+      _canvas.Children.Add(beltImage);
+
+      return beltImage;
     }
 
     /// <summary>
@@ -50,11 +84,34 @@ namespace WpfApp.Views.Game
 
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      _beltImage.Width = parentSize.X * AsteroidBelt.Size.X / Map.VisibleSize.X;
-      _beltImage.Height = parentSize.Y * AsteroidBelt.Size.Y / Map.VisibleSize.Y;
+      _canvas.Width = parentSize.X * AsteroidBelt.Size.X / Map.VisibleSize.X;
+      _canvas.Height = parentSize.Y * AsteroidBelt.Size.Y / Map.VisibleSize.Y;
 
-      Canvas.SetLeft(_beltImage, parentSize.X * AsteroidBelt.Position.X / Map.VisibleSize.X - _beltImage.Width / 2);
-      Canvas.SetTop(_beltImage, parentSize.Y * AsteroidBelt.Position.Y / Map.VisibleSize.Y - _beltImage.Height / 2);
+      int needBeltImage = 1;
+      if (_beltImages[0].ActualWidth != 0)
+      {
+        needBeltImage = (int) (parentSize.X / _beltImages[0].ActualWidth + 1);
+      }
+      needBeltImage = Math.Min(needBeltImage, _maxBeltImagesSize);
+
+      while (_beltImages.Count < needBeltImage)
+      {
+        CreateNewBeltImage();
+      }
+
+      for (int idx = 0; idx < _beltImages.Count; idx++)
+      {
+        Image elBeltImage = _beltImages[idx];
+
+        elBeltImage.Visibility = Visibility.Visible;
+
+        elBeltImage.Height = _canvas.Height;
+
+        Canvas.SetLeft(elBeltImage, elBeltImage.ActualWidth * idx);
+      }
+
+      Canvas.SetLeft(_canvas, parentSize.X * AsteroidBelt.Position.X / Map.VisibleSize.X - _canvas.Width / 2);
+      Canvas.SetTop(_canvas, parentSize.Y * AsteroidBelt.Position.Y / Map.VisibleSize.Y - _canvas.Height / 2);
     }
   }
 }

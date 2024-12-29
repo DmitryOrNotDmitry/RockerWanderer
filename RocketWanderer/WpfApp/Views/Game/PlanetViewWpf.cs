@@ -43,11 +43,9 @@ namespace WpfApp.Views.Game
     /// </summary>
     private Ellipse _orbit = new Ellipse
     {
-      Width = 100,  // Ширина круга
-      Height = 100, // Высота круга
-      Stroke = Brushes.Blue,          // Цвет обводки
-      StrokeThickness = 5,            // Толщина обводки
-      Fill = Brushes.Yellow           // Цвет заливки
+      Stroke = new SolidColorBrush(Color.FromArgb(50, 0, 0, 200)),
+      StrokeThickness = 5,  
+      Fill = new SolidColorBrush(Color.FromArgb(50, 0, 255, 255))
     };
 
     /// <summary>
@@ -73,22 +71,20 @@ namespace WpfApp.Views.Game
       
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      double scaleFactorPlanet = Planet.Radius / Map.VisibleSize.Y;
+      double scale = parentSize.Y / Map.Size.Y;
 
-      _planetImage.Width = parentSize.Y * scaleFactorPlanet;
-      _planetImage.Height = parentSize.Y * scaleFactorPlanet;
+      _planetImage.Width = Planet.Size.X * scale;
+      _planetImage.Height = Planet.Size.Y * scale;
 
-      Canvas.SetLeft(_planetImage, parentSize.X * Planet.Position.X / Map.VisibleSize.X - _planetImage.Width / 2);
-      Canvas.SetTop(_planetImage, parentSize.Y * Planet.Position.Y / Map.VisibleSize.Y - _planetImage.Height / 2);
+      Canvas.SetLeft(_planetImage, Planet.Position.X * scale - _planetImage.Width / 2);
+      Canvas.SetTop (_planetImage, Planet.Position.Y * scale - _planetImage.Height / 2);
 
 
-      double scaleFactorOrbit = Planet.OrbitRadius / Map.VisibleSize.Y;
+      _orbit.Width = 2 * Planet.OrbitRadius * scale;
+      _orbit.Height = 2 * Planet.OrbitRadius * scale;
 
-      _orbit.Width = parentSize.Y * scaleFactorOrbit;
-      _orbit.Height = parentSize.Y * scaleFactorOrbit;
-
-      Canvas.SetLeft(_orbit, parentSize.X * Planet.Position.X / Map.VisibleSize.X - _orbit.Width / 2);
-      Canvas.SetTop(_orbit, parentSize.Y * Planet.Position.Y / Map.VisibleSize.Y - _orbit.Height / 2);
+      Canvas.SetLeft(_orbit, Planet.Position.X * scale - _orbit.Width / 2);
+      Canvas.SetTop (_orbit, Planet.Position.Y * scale - _orbit.Height / 2);
     }
 
   }
