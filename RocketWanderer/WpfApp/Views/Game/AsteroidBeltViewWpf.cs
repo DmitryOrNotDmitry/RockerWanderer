@@ -84,8 +84,8 @@ namespace WpfApp.Views.Game
 
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      _canvas.Width = parentSize.X * AsteroidBelt.Size.X / Map.VisibleSize.X;
-      _canvas.Height = parentSize.Y * AsteroidBelt.Size.Y / Map.VisibleSize.Y;
+      _canvas.Width = parentSize.X * AsteroidBelt.Size.X / Map.Size.X;
+      _canvas.Height = parentSize.Y * AsteroidBelt.Size.Y / Map.Size.Y;
 
       int needBeltImage = 1;
       if (_beltImages[0].ActualWidth != 0)
@@ -110,8 +110,8 @@ namespace WpfApp.Views.Game
         Canvas.SetLeft(elBeltImage, elBeltImage.ActualWidth * idx);
       }
 
-      Canvas.SetLeft(_canvas, parentSize.X * AsteroidBelt.Position.X / Map.VisibleSize.X - _canvas.Width / 2);
-      Canvas.SetTop(_canvas, parentSize.Y * AsteroidBelt.Position.Y / Map.VisibleSize.Y - _canvas.Height / 2);
+      Canvas.SetLeft(_canvas, parentSize.X * AsteroidBelt.Position.X / Map.Size.X - _canvas.Width / 2);
+      Canvas.SetTop(_canvas, parentSize.Y * AsteroidBelt.Position.Y / Map.Size.Y - _canvas.Height / 2);
     }
   }
 }

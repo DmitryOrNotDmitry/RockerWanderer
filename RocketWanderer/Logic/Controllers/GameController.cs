@@ -88,6 +88,18 @@ namespace Logic.Controllers
         }
 
       };
+      
+    }
+
+    /// <summary>
+    /// Запускает отстыковывание ракеты по действию пользователя
+    /// </summary>
+    public void RocketDepartAction()
+    {
+      if (_isGameProcessed)
+      {
+        Map.RocketDepart();
+      }
     }
 
     /// <summary>

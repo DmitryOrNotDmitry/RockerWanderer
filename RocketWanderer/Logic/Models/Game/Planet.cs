@@ -22,8 +22,20 @@ namespace Logic.Models.Game
     /// </summary>
     public double Radius
     {
-      get { return _radius; }
-      set { _radius = value; }
+      get
+      {
+        lock (_lock)
+        {
+          return _radius;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          _radius = value;
+        }
+      }
     }
 
     /// <summary>
@@ -31,7 +43,13 @@ namespace Logic.Models.Game
     /// </summary>
     public double OrbitRadius
     {
-      get { return _radius * 3; }
+      get 
+      {
+        lock (_lock)
+        {
+          return _radius * 3; 
+        }
+      }
     }
 
     /// <summary>
@@ -40,7 +58,7 @@ namespace Logic.Models.Game
     /// <param name="parRadius">Радиус</param>
     public Planet(double parRadius)
     {
-      _radius = parRadius;
+      Radius = parRadius;
 
       Size = new Vector2(_radius * 2, _radius * 2);
     }

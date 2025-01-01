@@ -14,11 +14,6 @@ namespace Logic.Models.Game
   public class Map
   {
     /// <summary>
-    /// Размер видимой части карты
-    /// </summary>
-    private Vector2 _visibleSize;
-
-    /// <summary>
     /// Размер карты
     /// </summary>
     private Vector2 _size;
@@ -52,6 +47,26 @@ namespace Logic.Models.Game
     /// Солнце
     /// </summary>
     private Sun _sun;
+
+    /// <summary>
+    /// Размер карты по y доступное для планеты
+    /// </summary>
+    private double _yPlaceForPlanets;
+
+    /// <summary>
+    /// Шаг, с которым размещаются планеты
+    /// </summary>
+    private readonly int _planetStep;
+    
+    /// <summary>
+    /// Начальный отступ по X размещения планет
+    /// </summary>
+    private double _startOffsetX;
+
+    /// <summary>
+    /// Количество созданных планет
+    /// </summary>
+    private uint _countCreatedPlanets;
 
     /// <summary>
     /// Ракета
@@ -102,15 +117,6 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
-    /// Размер видимой части карты
-    /// </summary>
-    public Vector2 VisibleSize
-    {
-      get { return _visibleSize; }
-      set { _visibleSize = value; }
-    }
-
-    /// <summary>
     /// Размер карты
     /// </summary>
     public Vector2 Size
@@ -125,13 +131,12 @@ namespace Logic.Models.Game
     /// <param name="parVisibleSize">Размер видимой части карты</param>
     public Map(Vector2 parVisibleSize)
     {
-      _visibleSize = parVisibleSize;
       Vector2 initMapSize = new Vector2(1920, 1080);
       _size = initMapSize;
 
       _rocket = new Rocket();
       _rocket.Position = new Vector2(initMapSize.X * 0.3, initMapSize.Y * 0.5 + 170);
-      _rocket.Velocity = new Vector2(initMapSize.X / 10, 0);
+      _rocket.Velocity = new Vector2(initMapSize.X / 10 * 2, 0);
       _rocket.Size = new Vector2(170, 100);
       
       _startPlanet = new Planet(100);
@@ -158,30 +163,38 @@ namespace Logic.Models.Game
 
       _planets = new LinkedList<Planet>();
 
-      Random random = new Random();
-
-      int planetStep = 900;
-      double startOffsetX = _startPlanet.Position.X;
+      _yPlaceForPlanets = initMapSize.Y / 2 - asteroidsSize.Y;
+      _planetStep = 900;
+      _startOffsetX = _startPlanet.Position.X;
+      _countCreatedPlanets = 0;
 
       for (int i = 0; i < 10; i++)
       {
-        double radius = random.Next(70, 131);
-
-        Planet newPlanet = new Planet(radius);
-
-        int xNoiseBorder = 100;
-        int yNoiseBorder = (int)(initMapSize.Y / 2 - asteroidsSize.Y - newPlanet.OrbitRadius);
-
-        int xNoiseOffset = random.Next(-xNoiseBorder, xNoiseBorder);
-        int yNoiseOffset = random.Next(-yNoiseBorder, yNoiseBorder);
-
-        newPlanet.Position = new Vector2(
-          startOffsetX + planetStep * (i + 1) + xNoiseOffset,
-          initMapSize.Y / 2 + yNoiseOffset
-        );
-
-        _planets.AddLast(newPlanet);
+        CreatePlanet();
       }
+    }
+    
+    private void CreatePlanet()
+    {
+      Random random = new Random();
+
+      double radius = random.Next(70, 131);
+
+      Planet newPlanet = new Planet(radius);
+
+      int xNoiseBorder = 100;
+      int yNoiseBorder = (int)(_yPlaceForPlanets - newPlanet.OrbitRadius);
+
+      int xNoiseOffset = random.Next(-xNoiseBorder, xNoiseBorder);
+      int yNoiseOffset = random.Next(-yNoiseBorder, yNoiseBorder);
+
+      newPlanet.Position = new Vector2(
+        _startOffsetX + _planetStep * (_countCreatedPlanets + 1) + xNoiseOffset,
+        _size.Y / 2 + yNoiseOffset
+      );
+
+      _planets.AddLast(newPlanet);
+      _countCreatedPlanets++;
     }
 
     /// <summary>
@@ -190,7 +203,26 @@ namespace Logic.Models.Game
     /// <param name="parDeltaSeconds">Время, прошедшее с предыдущего кадра</param>
     public void Update(double parDeltaSeconds)
     {
-      _rocket.Move(parDeltaSeconds);
+      Rocket.Move(parDeltaSeconds);
+
+      if (Rocket.Location == null)
+      {
+        foreach (Planet elPlanet in _planets)
+        {
+          if (Rocket.TryAttach(elPlanet))
+          {
+            break;
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Заставляет ракету вылететь с орбиты планеты
+    /// </summary>
+    public void RocketDepart()
+    {
+      _rocket.Depart();
     }
 
   }

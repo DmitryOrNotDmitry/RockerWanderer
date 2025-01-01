@@ -19,8 +19,20 @@ namespace Logic.Models.Game
     /// </summary>
     public Vector2 Velocity
     {
-      get {  return _velocity; }
-      set { _velocity = value; }
+      get
+      {
+        lock (_lock)
+        {
+          return _velocity;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          _velocity = value;
+        }
+      }
     }
 
     /// <summary>
@@ -29,7 +41,10 @@ namespace Logic.Models.Game
     /// <param name="parDeltaTimeSec">Прошедшее время в секундах</param>
     public virtual void Move(double parDeltaTimeSec)
     {
-      Position += Velocity.Scale(parDeltaTimeSec); 
+      lock (_lock)
+      {
+        Position += Velocity.Scale(parDeltaTimeSec);
+      }
     }
   }
 }

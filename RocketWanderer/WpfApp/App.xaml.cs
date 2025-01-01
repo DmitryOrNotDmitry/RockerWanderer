@@ -3,8 +3,10 @@ using System.Configuration;
 using System.Data;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using WpfApp.Controllers;
+using WpfApp.Views.Windows;
 
 namespace WpfApp
 {
@@ -44,7 +46,13 @@ namespace WpfApp
       }
       );
 
-      
+      ((Window)(((WindowViewWpf)windowController.WindowView).Control)).KeyDown += (s, e) =>
+      {
+        if (e.Key == Key.Space)
+        {
+          gameController.RocketDepartAction();
+        }
+      };
 
       //List<Record> records = new List<Record>();
       //records.Add(new Record("QWe1", 100));

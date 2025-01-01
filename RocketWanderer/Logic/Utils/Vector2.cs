@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace Logic.Utils
 {
@@ -78,12 +79,46 @@ namespace Logic.Utils
     /// <summary>
     /// Складывает 2 вектора
     /// </summary>
-    /// <param name="v1">вектор 1</param>
-    /// <param name="v2">вектор 2</param>
+    /// <param name="parV1">вектор 1</param>
+    /// <param name="parV2">вектор 2</param>
     /// <returns>Новый вектор как сумма v1 и v2</returns>
-    public static Vector2 operator +(Vector2 v1, Vector2 v2)
+    public static Vector2 operator +(Vector2 parV1, Vector2 parV2)
     {
-      return new Vector2( v1.X + v2.X, v1.Y + v2.Y );
+      return new Vector2(parV1.X + parV2.X, parV1.Y + parV2.Y);
+    }
+
+    /// <summary>
+    /// Поворачивает вектор против часовой стрелки на 90 градусов
+    /// </summary>
+    /// <returns>Новыый вектор, повернутый на 90 градусов</returns>
+    public Vector2 Rotate90()
+    {
+      return new Vector2(-Y, X);
+    }
+
+    /// <summary>
+    /// Ноходит скалярное произведение векторов
+    /// </summary>
+    /// <param name="parOther">вектор 2</param>
+    /// <returns>Cкалярное произведение векторов</returns>
+    public double ScalarProsuct(Vector2 parOther)
+    {
+      return X * parOther.X + Y * parOther.Y;
+    }
+
+    /// <summary>
+    /// Находит угог между 2 векторами
+    /// </summary>
+    /// <param name="parV1">Вектор 1</param>
+    /// <param name="parV2">Вектор 1</param>
+    /// <returns>Угол между 2 векторами</returns>
+    public static double AngleBetween(Vector2 parV1, Vector2 parV2)
+    {
+      double cos = parV1.ScalarProsuct(parV2) / (parV1.Length * parV2.Length);
+
+      cos = Math.Max(-1.0, Math.Min(1.0, cos));
+
+      return Math.Acos(cos);
     }
   }
 }

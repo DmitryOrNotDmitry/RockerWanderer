@@ -9,6 +9,8 @@ namespace Logic.Models.Game
 {
   public abstract class MapItem
   {
+    protected Object _lock = new Object();
+
     /// <summary>
     /// Позиция
     /// </summary>
@@ -24,17 +26,41 @@ namespace Logic.Models.Game
     /// </summary>
     public Vector2 Position
     {
-      get { return _position; }
-      set { _position = value; }
+      get
+      {
+        lock (_lock)
+        {
+          return _position;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          _position = value;
+        }
+      }
     }
 
     /// <summary>
     /// Размер
     /// </summary>
     public Vector2 Size
-    { 
-      get { return _size; }
-      set { _size = value; }
+    {
+      get
+      {
+        lock (_lock)
+        {
+          return _size;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          _size = value;
+        }
+      }
     }
     
     /// <summary>
@@ -42,7 +68,13 @@ namespace Logic.Models.Game
     /// </summary>
     public Vector2 Center
     {
-      get { return new Vector2(Position.X + Size.X / 2, Position.Y + Size.Y / 2); }
+      get 
+      {
+        lock (_lock)
+        {
+          return new Vector2(Position.X + Size.X / 2, Position.Y + Size.Y / 2);
+        }
+      }
     }
 
   }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -19,9 +20,19 @@ namespace Logic.Models.Game
     private double _rotation;
 
     /// <summary>
+    /// Направление с которым ракета движется вокруг планеты
+    /// </summary>
+    private MovingDirection _moveDirection;
+
+    /// <summary>
     /// Планета, рядом с которой сейчас находится ракета
     /// </summary>
     private Planet? _location;
+
+    /// <summary>
+    /// Предыдущая планета, рядом с которой находилась ракета
+    /// </summary>
+    private Planet? _prevLocation;
 
     /// <summary>
     /// Радиус орбиты, по которой движется ракета
@@ -33,8 +44,20 @@ namespace Logic.Models.Game
     /// </summary>
     public double Rotation
     {
-      get { return _rotation; }
-      set { _rotation = value; }
+      get
+      {
+        lock (_lock)
+        {
+          return _rotation;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          _rotation = value;
+        }
+      }
     }
 
     /// <summary>
@@ -42,8 +65,42 @@ namespace Logic.Models.Game
     /// </summary>
     public Planet? Location
     {
-      get { return _location; }
-      set { _location = value; }
+      get
+      {
+        lock (_lock)
+        {
+          return _location;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          if (value == null)
+          {
+            PrevLocation = _location;
+          }
+          _location = value;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Предыдущая планета, рядом с которой находилась ракета
+    /// </summary>
+    public Planet? PrevLocation
+    {
+      get
+      {
+        lock (_lock)
+        {
+          return _prevLocation;
+        }
+      }
+      private set
+      {
+        _prevLocation = value;
+      }
     }
 
     /// <summary>
@@ -51,8 +108,20 @@ namespace Logic.Models.Game
     /// </summary>
     public double ReachedOrbit
     {
-      get { return _reachedOrbit; }
-      set { _reachedOrbit = value; }
+      get
+      {
+        lock (_lock)
+        {
+          return _reachedOrbit;
+        }
+      }
+      set
+      {
+        lock (_lock)
+        {
+          _reachedOrbit = value;
+        }
+      }
     }
 
     /// <summary>
@@ -60,21 +129,24 @@ namespace Logic.Models.Game
     /// </summary>
     public Rocket() 
     {
-      _rotation = 90;
-
-      _reachedOrbit = 0;
+      _moveDirection = MovingDirection.Clockwise;
+      Rotation = 90;
+      ReachedOrbit = 0;
     }
 
     /// <summary>
     /// Перемещает ракету по орбите планеты в Location
     /// </summary>
     /// <param name="parDeltaTimeSec">Прошедшее время в секундах</param>
-    public void MoveAround(double parDeltaTimeSec)
+    private void MoveAround(double parDeltaTimeSec)
     {
       double passedDistance = Velocity.Length * parDeltaTimeSec;
 
-      double passedRadians = passedDistance / _reachedOrbit;
-      passedRadians *= -1;
+      double passedRadians = passedDistance / ReachedOrbit;
+      if (_moveDirection == MovingDirection.Clockwise)
+      {
+        passedRadians *= -1;
+      }
 
       Vector2 planetCenter = Location.Position;
 
@@ -82,13 +154,17 @@ namespace Logic.Models.Game
 
       double newAngle = currentAngle + passedRadians;
 
-      Rotation = newAngle * 180 / Math.PI;
-
       double newX = Math.Cos(newAngle) * ReachedOrbit + planetCenter.X;
       double newY = Math.Sin(newAngle) * ReachedOrbit + planetCenter.Y;
 
-      Position.X = newX;
-      Position.Y = newY;
+      double newRotation = newAngle * 180 / Math.PI;
+      if (_moveDirection == MovingDirection.AntiClockwise)
+      {
+        newRotation += 180;
+      }
+
+      Rotation = newRotation;
+      Position = new Vector2(newX, newY);
     }
 
     /// <summary>
@@ -97,13 +173,82 @@ namespace Logic.Models.Game
     /// <param name="parDeltaTimeSec">Прошедшее время в секундах</param>
     public override void Move(double parDeltaTimeSec)
     {
-      if (Location != null)
+      lock (_lock)
       {
-        MoveAround(parDeltaTimeSec);
+        if (Location != null)
+        {
+          MoveAround(parDeltaTimeSec);
+        }
+        else
+        {
+          base.Move(parDeltaTimeSec);
+        }
       }
-      else
+    }
+
+    /// <summary>
+    /// Отстыковывает ракету от планеты
+    /// </summary>
+    public void Depart()
+    {
+      lock (_lock)
       {
-        base.Move(parDeltaTimeSec);
+        if (Location != null)
+        {
+          Vector2 tmpVector = Location.Position + Position.Scale(-1);
+          tmpVector = tmpVector.Scale(1.0 / tmpVector.Length);
+          tmpVector = tmpVector.Rotate90().Scale(Velocity.Length);
+          
+          if (_moveDirection == MovingDirection.AntiClockwise)
+          {
+            tmpVector = tmpVector.Scale(-1);
+          }
+          Velocity = tmpVector;
+          
+          Location = null;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Попытка начать вращаться вокруг планеты
+    /// </summary>
+    /// <param name="parPlanet">Планета, вокруг которой нужно проверить возможность вращаться</param>
+    /// <returns>true - возможность есть, иначе false </returns>
+    public bool TryAttach(Planet parPlanet)
+    {
+      lock (_lock)
+      {
+        if (parPlanet != PrevLocation)
+        {
+          Vector2 rocketToPlanet = Position + parPlanet.Position.Scale(-1);
+          Vector2 rocketLook = Velocity;
+          double distanceToPlanet = rocketToPlanet.Length;
+
+          if (distanceToPlanet <= parPlanet.OrbitRadius)
+          {
+            double angle = Vector2.AngleBetween(rocketToPlanet, rocketLook) * 180 / Math.PI;
+
+            if (angle > 85 && angle < 95)
+            {
+              if (Center.Y > parPlanet.Center.Y)
+              {
+                _moveDirection = MovingDirection.Clockwise;
+              }
+              else
+              {
+                _moveDirection = MovingDirection.AntiClockwise;
+              }
+
+              ReachedOrbit = distanceToPlanet;
+              Location = parPlanet;
+
+              return true;
+            }
+          }
+        }
+
+        return false;
       }
     }
 
