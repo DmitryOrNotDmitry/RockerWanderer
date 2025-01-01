@@ -50,13 +50,17 @@ namespace WpfApp.Views.Game
 
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      double scale = parentSize.Y / Map.Size.Y;
+      if (Sun.Position.X + Sun.Size.X / 2 > Map.XCameraOffset)
+      {
+        double scale = parentSize.Y / Map.Size.Y;
 
-      _sunImage.Width = Sun.Size.X * scale;
-      _sunImage.Height = Sun.Size.Y * scale;
+        _sunImage.Width = Sun.Size.X * scale;
+        _sunImage.Height = Sun.Size.Y * scale;
 
-      Canvas.SetLeft(_sunImage, Sun.Position.X * scale - _sunImage.Width / 2);
-      Canvas.SetTop (_sunImage, Sun.Position.Y * scale - _sunImage.Height / 2);
+        Canvas.SetLeft(_sunImage, (Sun.Position.X - Map.XCameraOffset) * scale - _sunImage.Width / 2);
+        Canvas.SetTop (_sunImage, Sun.Position.Y * scale - _sunImage.Height / 2);
+      }
+
     }
 
   }

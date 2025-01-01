@@ -13,6 +13,16 @@ namespace Logic.Models.Game
   public class Planet : MapItem
   {
     /// <summary>
+    /// Делегат, представляющий метод, который будет вызываться при срабатывании события уничтожения
+    /// </summary>
+    public delegate void dDespawned();
+
+    /// <summary>
+    /// Событие, которое возникает при уничтожении планеты
+    /// </summary>
+    public event dDespawned? Despawned;
+
+    /// <summary>
     /// Радиус
     /// </summary>
     private double _radius;
@@ -61,6 +71,14 @@ namespace Logic.Models.Game
       Radius = parRadius;
 
       Size = new Vector2(_radius * 2, _radius * 2);
+    }
+
+    /// <summary>
+    /// Активирует событие Despawned
+    /// </summary>
+    public void Despawn()
+    {
+      Despawned?.Invoke();
     }
   }
 }

@@ -107,16 +107,32 @@ namespace Logic.Views.Game
       _planetsView = new LinkedList<PlanetView>();
       foreach (Planet elPlanet in Map.Planets)
       {
-        PlanetView newPlanetView = CreatePlanetView(elPlanet);
-        newPlanetView.Map = parMap;
-        _planetsView.AddLast(newPlanetView);
+        ProcessCreatePlanetView(elPlanet);
       }
+
+      Map.PlanetCreated += ProcessCreatePlanetView;
 
       RocketView.Map = parMap;
       StartPlanetView.Map = parMap;
       SunView.Map = parMap;
       TopBeltView.Map = parMap;
       BottomBeltView.Map = parMap;
+    }
+
+    /// <summary>
+    /// Создает и добавляет в массив новое представление планеты
+    /// </summary>
+    /// <param name="parNewPlanet">Модель планеты</param>
+    protected virtual void ProcessCreatePlanetView(Planet parNewPlanet)
+    {
+      PlanetView newPlanetView = CreatePlanetView(parNewPlanet);
+      newPlanetView.Map = Map;
+      _planetsView.AddLast(newPlanetView);
+
+      parNewPlanet.Despawned += () =>
+      {
+        _planetsView.Remove(newPlanetView);
+      };
     }
 
     /// <summary>

@@ -71,20 +71,35 @@ namespace WpfApp.Views.Game
       
       Vector2 parentSize = Parent.AbsoluteSize;
 
+      double minVisibleX = Map.XCameraOffset - Planet.OrbitRadius;
+      double maxVisibleX = Map.XCameraOffset + parentSize.X / parentSize.Y * Map.Size.Y + Planet.OrbitRadius;
+
       double scale = parentSize.Y / Map.Size.Y;
 
-      _planetImage.Width = Planet.Size.X * scale;
-      _planetImage.Height = Planet.Size.Y * scale;
+      if (Planet.Position.X > minVisibleX && Planet.Position.X < maxVisibleX)
+      {
+        _planetImage.Visibility = Visibility.Visible;
+        _orbit.Visibility = Visibility.Visible;
 
-      Canvas.SetLeft(_planetImage, Planet.Position.X * scale - _planetImage.Width / 2);
-      Canvas.SetTop (_planetImage, Planet.Position.Y * scale - _planetImage.Height / 2);
+        _planetImage.Width = Planet.Size.X * scale;
+        _planetImage.Height = Planet.Size.Y * scale;
+
+        Canvas.SetLeft(_planetImage, (Planet.Position.X - Map.XCameraOffset) * scale - _planetImage.Width / 2);
+        Canvas.SetTop (_planetImage, Planet.Position.Y * scale - _planetImage.Height / 2);
 
 
-      _orbit.Width = 2 * Planet.OrbitRadius * scale;
-      _orbit.Height = 2 * Planet.OrbitRadius * scale;
+        _orbit.Width = 2 * Planet.OrbitRadius * scale;
+        _orbit.Height = 2 * Planet.OrbitRadius * scale;
 
-      Canvas.SetLeft(_orbit, Planet.Position.X * scale - _orbit.Width / 2);
-      Canvas.SetTop (_orbit, Planet.Position.Y * scale - _orbit.Height / 2);
+        Canvas.SetLeft(_orbit, (Planet.Position.X - Map.XCameraOffset) * scale - _orbit.Width / 2);
+        Canvas.SetTop (_orbit, Planet.Position.Y * scale - _orbit.Height / 2);
+      }
+      else
+      {
+        _planetImage.Visibility = Visibility.Hidden;
+        _orbit.Visibility = Visibility.Hidden;
+      }
+
     }
 
   }

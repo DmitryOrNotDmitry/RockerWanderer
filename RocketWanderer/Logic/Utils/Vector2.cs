@@ -97,13 +97,23 @@ namespace Logic.Utils
     }
 
     /// <summary>
-    /// Ноходит скалярное произведение векторов
+    /// Находит скалярное произведение векторов
     /// </summary>
     /// <param name="parOther">вектор 2</param>
     /// <returns>Cкалярное произведение векторов</returns>
-    public double ScalarProsuct(Vector2 parOther)
+    public double ScalarProduct(Vector2 parOther)
     {
       return X * parOther.X + Y * parOther.Y;
+    }
+
+    /// <summary>
+    /// Находит векторное произведение векторов
+    /// </summary>
+    /// <param name="parOther">вектор 2</param>
+    /// <returns>Векторное произведение векторов</returns>
+    public double Product(Vector2 parOther)
+    {
+      return X * parOther.Y - Y * parOther.X;
     }
 
     /// <summary>
@@ -114,7 +124,7 @@ namespace Logic.Utils
     /// <returns>Угол между 2 векторами</returns>
     public static double AngleBetween(Vector2 parV1, Vector2 parV2)
     {
-      double cos = parV1.ScalarProsuct(parV2) / (parV1.Length * parV2.Length);
+      double cos = parV1.ScalarProduct(parV2) / (parV1.Length * parV2.Length);
 
       cos = Math.Max(-1.0, Math.Min(1.0, cos));
 

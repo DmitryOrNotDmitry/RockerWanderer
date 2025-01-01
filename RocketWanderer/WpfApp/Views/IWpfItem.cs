@@ -44,9 +44,30 @@ namespace WpfApp.Views
     }
 
     /// <summary>
+    /// Удаляет дочерний элемент
+    /// </summary>
+    public static void RemoveChild(BaseView parParentItem, BaseView parChildItem)
+    {
+      IWpfItem parent = (IWpfItem)parParentItem;
+      IWpfItem child = (IWpfItem)parChildItem;
+
+      if (parent.Control is Panel panel)
+      {
+        panel.Children.Remove(child.Control);
+      }
+      else if (parent.Control is ContentControl contentControl)
+      {
+        parParentItem.RemoveChildren();
+        contentControl.Content = null;
+      }
+
+      parParentItem.RemoveChild(parChildItem);
+    }
+
+    /// <summary>
     /// Удаляет все дочерние элементы
     /// </summary>
-    void RemoveChildren()
+    public void RemoveChildren()
     {
       if (Control is Panel panel)
       {

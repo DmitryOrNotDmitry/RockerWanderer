@@ -25,11 +25,6 @@ namespace Logic.Views
     private Vector2 _absoluteSize = new Vector2(0, 0);
 
     /// <summary>
-    /// Позиция представления
-    /// </summary>
-    // private UDim2 _position = new UDim2(0, 0);
-
-    /// <summary>
     /// Размер представления
     /// </summary>
     public UDim2 Size 
@@ -46,16 +41,6 @@ namespace Logic.Views
       get { return _absoluteSize; }
       set { _absoluteSize = value; }
     }
-
-
-    /// <summary>
-    /// Позиция представления
-    /// </summary>
-    //public UDim2 Position
-    //{
-    //  get { return _position; }
-    //  set { _position = value; }
-    //}
 
     /// <summary>
     /// Родительский элемент
@@ -74,7 +59,7 @@ namespace Logic.Views
     /// <summary>
     /// Дочерние представления
     /// </summary>
-    private List<BaseView> _children = new List<BaseView>();    
+    private List<BaseView> _children = new List<BaseView>();
 
     /// <summary>
     /// Добавляет новый дочерний объект
@@ -83,7 +68,23 @@ namespace Logic.Views
     public void AddChild(BaseView parChild)
     {
       parChild.Parent = this;
-      _children.Add(parChild);
+      lock (_children)
+      {
+        _children.Add(parChild);
+      }
+    }
+
+    /// <summary>
+    /// Удаляет дочерний объект
+    /// </summary>
+    /// <param name="parChild">Удаляемый дочерний объект</param>
+    public void RemoveChild(BaseView parChild)
+    {
+      parChild.Parent = null;
+      lock (_children)
+      {
+        _children.Remove(parChild);
+      }
     }
 
     /// <summary>
@@ -91,11 +92,14 @@ namespace Logic.Views
     /// </summary>
     public void RemoveChildren()
     {
-      foreach (BaseView elChild in _children) 
+      lock (_children)
       {
-        elChild.Parent = null;
+        foreach (BaseView elChild in _children) 
+        {
+          elChild.Parent = null;
+        }
+        _children.Clear();
       }
-      _children.Clear();
     }
 
     /// <summary>
@@ -116,23 +120,14 @@ namespace Logic.Views
     /// </summary>
     protected void DrawChildren()
     {
-      foreach (BaseView elChild in _children)
+      lock (_children)
       {
-        elChild.Draw();
+        foreach (BaseView elChild in _children)
+        {
+          elChild.Draw();
+        }
       }
     }
 
-    /// <summary>
-    /// Рассчитывает абсолютный размер представления относительно родителя
-    /// </summary>
-    /// <param name="parParentSize">Размер родителя</param>
-    /// <returns>Абсолютный размер представления</returns>
-    //protected Vector2 AbsoluteSize(Vector2 parParentSize)
-    //{
-    //  int x = (int)(_size.X.Scale * parParentSize.X + _size.X.Offset);
-    //  int y = (int)(_size.Y.Scale * parParentSize.Y + _size.Y.Offset);
-
-    //  return new Vector2(x, y);
-    //}
   }
 }

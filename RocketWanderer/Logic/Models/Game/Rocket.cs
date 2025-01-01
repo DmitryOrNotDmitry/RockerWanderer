@@ -217,11 +217,13 @@ namespace Logic.Models.Game
     /// <returns>true - возможность есть, иначе false </returns>
     public bool TryAttach(Planet parPlanet)
     {
+      const double eps = 1;
+
       lock (_lock)
       {
         if (parPlanet != PrevLocation)
         {
-          Vector2 rocketToPlanet = Position + parPlanet.Position.Scale(-1);
+          Vector2 rocketToPlanet = parPlanet.Position + Position.Scale(-1);
           Vector2 rocketLook = Velocity;
           double distanceToPlanet = rocketToPlanet.Length;
 
@@ -229,9 +231,11 @@ namespace Logic.Models.Game
           {
             double angle = Vector2.AngleBetween(rocketToPlanet, rocketLook) * 180 / Math.PI;
 
-            if (angle > 85 && angle < 95)
+            if (angle > 90 - eps && angle < 90 + eps)
             {
-              if (Center.Y > parPlanet.Center.Y)
+              double product = rocketLook.Product(rocketToPlanet);
+
+              if (product < 0)
               {
                 _moveDirection = MovingDirection.Clockwise;
               }

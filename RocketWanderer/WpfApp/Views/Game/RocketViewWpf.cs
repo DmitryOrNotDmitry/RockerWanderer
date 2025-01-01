@@ -42,6 +42,8 @@ namespace WpfApp.Views.Game
       _rocketImage.Source = new BitmapImage(new Uri("Images\\rocket.png", UriKind.Relative));
       _rocketImage.RenderTransform = new RotateTransform(Rocket.Rotation);
       _rocketImage.RenderTransformOrigin = new Point(0.5, 0.5);
+
+      Panel.SetZIndex(_rocketImage, 1000000);
     }
 
     /// <summary>
@@ -60,7 +62,7 @@ namespace WpfApp.Views.Game
 
       _rocketImage.RenderTransform = new RotateTransform(Rocket.Rotation);
 
-      Canvas.SetLeft(_rocketImage, Rocket.Position.X * scale - _rocketImage.Width / 2);
+      Canvas.SetLeft(_rocketImage, (Rocket.Position.X - Map.XCameraOffset) * scale - _rocketImage.Width / 2);
       Canvas.SetTop (_rocketImage, Rocket.Position.Y * scale - _rocketImage.Height / 2);
     }
   }

@@ -1,4 +1,5 @@
-﻿using Logic.Models.Game;
+﻿using Logic.Controllers;
+using Logic.Models.Game;
 using Logic.Utils;
 using Logic.Views.Game;
 using System;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace WpfApp.Views.Game
 {
@@ -54,24 +56,12 @@ namespace WpfApp.Views.Game
     public MapViewWpf(Map parMap)
       : base(parMap)
     {
-      IWpfItem.AddChild(this, StartPlanetView);
-      IWpfItem.AddChild(this, SunView);
-      IWpfItem.AddChild(this, TopBeltView);
-      IWpfItem.AddChild(this, BottomBeltView);
-
-      foreach (PlanetView elPlanetView in PlanetsView)
-      {
-        IWpfItem.AddChild(this, elPlanetView);
-      }
-
-      IWpfItem.AddChild(this, RocketView);
-
       ImageBrush imageBrush = new ImageBrush
       {
         ImageSource = new BitmapImage(new Uri("Images\\space_background.jpg", UriKind.Relative)),
         Stretch = Stretch.UniformToFill
       };
-      
+
       _canvasControl.Background = imageBrush;
     }
 
@@ -96,7 +86,10 @@ namespace WpfApp.Views.Game
     /// <returns>Представление ракеты от Wpf</returns>
     public override RocketView CreateRocketView()
     {
-      return new RocketViewWpf(Map.Rocket);
+      RocketView rocketView = new RocketViewWpf(Map.Rocket);
+      IWpfItem.AddChild(this, rocketView);
+
+      return rocketView;
     }
 
     /// <summary>
@@ -105,7 +98,10 @@ namespace WpfApp.Views.Game
     /// <returns>Представление стартовой планеты от Wpf</returns>
     public override PlanetView CreateStartPlanetView()
     {
-      return new PlanetViewWpf(Map.StartPlanet, "Images\\start_planet.png");
+      PlanetView newStartPlanetView = new PlanetViewWpf(Map.StartPlanet, "Images\\start_planet.png");
+      IWpfItem.AddChild(this, newStartPlanetView);
+
+      return newStartPlanetView;
     }
 
     /// <summary>
@@ -115,7 +111,33 @@ namespace WpfApp.Views.Game
     /// <returns>Представление генерируемой планеты от Wpf</returns>
     public override PlanetView CreatePlanetView(Planet parPlanet)
     {
-      return new PlanetViewWpf(parPlanet, _imagesFolder + _imagesPath[new Random().Next(_imagesPath.Count)]);
+      PlanetView planetView = new PlanetViewWpf(parPlanet, _imagesFolder + _imagesPath[new Random().Next(_imagesPath.Count)]);
+
+      parPlanet.Despawned += () =>
+      {
+        _canvasControl.Dispatcher.Invoke(() =>
+        {
+          IWpfItem.RemoveChild(this, planetView);
+        });
+      };
+
+      return planetView;
+    }
+
+    /// <summary>
+    /// Обрабатывает новое представление планеты
+    /// </summary>
+    /// <param name="parNewPlanet">Модель планеты</param>
+    protected override void ProcessCreatePlanetView(Planet parNewPlanet)
+    {
+      _canvasControl.Dispatcher.Invoke(() =>
+      {
+        base.ProcessCreatePlanetView(parNewPlanet);
+        if (PlanetsView.Last != null)
+        {
+          IWpfItem.AddChild(this, PlanetsView.Last.ValueRef);
+        }
+      });
     }
 
     /// <summary>
@@ -124,7 +146,10 @@ namespace WpfApp.Views.Game
     /// <returns>Представление солнца от Wpf</returns>
     public override SunView CreateSunView()
     {
-      return new SunViewWpf(Map.Sun);
+      SunView sunView = new SunViewWpf(Map.Sun);
+      IWpfItem.AddChild(this, sunView);
+
+      return sunView;
     }
 
     /// <summary>
@@ -134,7 +159,10 @@ namespace WpfApp.Views.Game
     /// <returns>Представление пояса астероидов от Wpf</returns>
     public override AsteroidBeltView CreateAsteroidBeltView(AsteroidBelt parAsteroidBelt)
     {
-      return new AsteroidBeltViewWpf(parAsteroidBelt);
+      AsteroidBeltView newAsteroidBeltView = new AsteroidBeltViewWpf(parAsteroidBelt);
+      IWpfItem.AddChild(this, newAsteroidBeltView);
+
+      return newAsteroidBeltView;
     }
 
   }

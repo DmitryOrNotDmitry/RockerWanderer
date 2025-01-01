@@ -1,10 +1,12 @@
 ﻿using Logic.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using static Logic.Models.Game.Map;
 
 namespace Logic.Models.Game
 {
@@ -13,6 +15,16 @@ namespace Logic.Models.Game
   /// </summary>
   public class Map
   {
+    /// <summary>
+    /// Делегат, представляющий метод, который будет вызываться при создании планеты
+    /// </summary>
+    public delegate void dPlanetCreated(Planet parNewPlanet);
+
+    /// <summary>
+    /// Событие, которое возникает при создании планеты
+    /// </summary>
+    public event dPlanetCreated? PlanetCreated;
+
     /// <summary>
     /// Размер карты
     /// </summary>
@@ -67,6 +79,21 @@ namespace Logic.Models.Game
     /// Количество созданных планет
     /// </summary>
     private uint _countCreatedPlanets;
+
+    /// <summary>
+    /// Текущее смещение камеры по X относительно начала карты
+    /// </summary>
+    private double _xCameraOffset;
+
+    /// <summary>
+    /// Необходимое смещение камеры по X относительно начала карты
+    /// </summary>
+    private double _xCameraMustOffset;
+
+    /// <summary>
+    /// Расстояние от _xCameraOffset, начиная с которого планеты удаляются/генерируются
+    /// </summary>
+    private readonly double _deletePlanetdistance = 3000;
 
     /// <summary>
     /// Ракета
@@ -126,6 +153,14 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Смещение камеры по X относительно начала карты
+    /// </summary>
+    public double XCameraOffset
+    {
+      get { return _xCameraOffset; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parVisibleSize">Размер видимой части карты</param>
@@ -168,12 +203,12 @@ namespace Logic.Models.Game
       _startOffsetX = _startPlanet.Position.X;
       _countCreatedPlanets = 0;
 
-      for (int i = 0; i < 10; i++)
-      {
-        CreatePlanet();
-      }
+      _xCameraOffset = 0;
     }
     
+    /// <summary>
+    /// Создает случайную планету
+    /// </summary>
     private void CreatePlanet()
     {
       Random random = new Random();
@@ -195,6 +230,8 @@ namespace Logic.Models.Game
 
       _planets.AddLast(newPlanet);
       _countCreatedPlanets++;
+
+      PlanetCreated?.Invoke(newPlanet);
     }
 
     /// <summary>
@@ -203,11 +240,64 @@ namespace Logic.Models.Game
     /// <param name="parDeltaSeconds">Время, прошедшее с предыдущего кадра</param>
     public void Update(double parDeltaSeconds)
     {
+      DeletePlanets();
+
+      GeneratePlanets();
+
+      MoveObjects(parDeltaSeconds);
+
+      MoveCamera();
+    }
+
+    /// <summary>
+    /// Уничтожает планеты, которые оказались за картой
+    /// </summary>
+    private void DeletePlanets()
+    {
+      Planet? planet = _planets.First?.Value;
+      while (planet != null)
+      {
+        if (planet.Position.X + _deletePlanetdistance < _xCameraOffset)
+        {
+          planet.Despawn();
+          _planets.RemoveFirst();
+        }
+        else
+        {
+          break;
+        }
+
+        planet = _planets.First?.Value;
+      }
+    }
+
+    /// <summary>
+    /// Создает новые планеты
+    /// </summary>
+    private void GeneratePlanets()
+    {
+      if (_planets.Count == 0)
+      {
+        CreatePlanet();
+      }
+
+      while (_planets.Last.Value.Position.X < _xCameraOffset + _deletePlanetdistance)
+      {
+        CreatePlanet();
+      }
+    }
+
+    /// <summary>
+    /// Обновляет позиции движущихся объектов на карте
+    /// </summary>
+    /// <param name="parDeltaSeconds">Время, прошедшее с предыдущего кадра</param>
+    private void MoveObjects(double parDeltaSeconds)
+    {
       Rocket.Move(parDeltaSeconds);
 
       if (Rocket.Location == null)
       {
-        foreach (Planet elPlanet in _planets)
+        foreach (Planet elPlanet in _planets.AsEnumerable().Reverse())
         {
           if (Rocket.TryAttach(elPlanet))
           {
@@ -215,6 +305,27 @@ namespace Logic.Models.Game
           }
         }
       }
+    }
+
+    /// <summary>
+    /// Передвигает камеру
+    /// </summary>
+    private void MoveCamera()
+    {
+      if (Rocket.Location == null)
+      {
+        _xCameraMustOffset = Rocket.Position.X - _startOffsetX;
+      }
+      else
+      {
+        Planet loc = Rocket.Location;
+        if (loc != null)
+        {
+          _xCameraMustOffset = loc.Position.X - _startOffsetX;
+        }
+      }
+
+      _xCameraOffset += (_xCameraMustOffset - _xCameraOffset) / 1000000;
     }
 
     /// <summary>
