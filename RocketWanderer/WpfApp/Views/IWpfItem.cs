@@ -30,15 +30,18 @@ namespace WpfApp.Views
       IWpfItem parent = (IWpfItem)parParentItem;
       IWpfItem child = (IWpfItem)parChildItem;
 
-      if (parent.Control is Panel panel)
+      parent.Control.Dispatcher.Invoke(() =>
       {
-        panel.Children.Add(child.Control);
-      }
-      else if (parent.Control is ContentControl contentControl)
-      {
-        parParentItem.RemoveChildren();
-        contentControl.Content = child.Control;
-      }
+        if (parent.Control is Panel panel)
+        {
+          panel.Children.Add(child.Control);
+        }
+        else if (parent.Control is ContentControl contentControl)
+        {
+          parParentItem.RemoveChildren();
+          contentControl.Content = child.Control;
+        }
+      });
 
       parParentItem.AddChild(parChildItem);
     }
@@ -51,15 +54,18 @@ namespace WpfApp.Views
       IWpfItem parent = (IWpfItem)parParentItem;
       IWpfItem child = (IWpfItem)parChildItem;
 
-      if (parent.Control is Panel panel)
+      parent.Control.Dispatcher.Invoke(() =>
       {
-        panel.Children.Remove(child.Control);
-      }
-      else if (parent.Control is ContentControl contentControl)
-      {
-        parParentItem.RemoveChildren();
-        contentControl.Content = null;
-      }
+        if (parent.Control is Panel panel)
+        {
+          panel.Children.Remove(child.Control);
+        }
+        else if (parent.Control is ContentControl contentControl)
+        {
+          parParentItem.RemoveChildren();
+          contentControl.Content = null;
+        }
+      });
 
       parParentItem.RemoveChild(parChildItem);
     }

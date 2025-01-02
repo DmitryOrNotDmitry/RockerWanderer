@@ -32,7 +32,7 @@ namespace Logic.Views.Game
     public PlanetView(Planet parPlanet) 
     {
       _planet = parPlanet;
-    }
+    }    
 
   }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace Logic.Views
 {
@@ -107,7 +108,13 @@ namespace Logic.Views
     /// </summary>
     public virtual void Draw()
     {
-      Vector2 parentSize = _parent.AbsoluteSize;
+      if (Parent == null)
+      {
+        _absoluteSize = new Vector2(0, 0);
+        return;
+      }
+
+      Vector2 parentSize = Parent.AbsoluteSize;
 
       int x = (int)(_size.X.Scale * parentSize.X + _size.X.Offset);
       int y = (int)(_size.Y.Scale * parentSize.Y + _size.Y.Offset);

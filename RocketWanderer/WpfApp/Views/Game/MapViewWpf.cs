@@ -165,5 +165,17 @@ namespace WpfApp.Views.Game
       return newAsteroidBeltView;
     }
 
+    /// <summary>
+    /// Сбрасывает представление карты от Wpf
+    /// </summary>
+    public override void Reset()
+    {
+      foreach (PlanetView elPlanetView in PlanetsView)
+      {
+        IWpfItem.RemoveChild(this, elPlanetView);
+      }
+      base.Reset();
+    }
+
   }
 }

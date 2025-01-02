@@ -26,6 +26,16 @@ namespace Logic.Models.Game
     public event dPlanetCreated? PlanetCreated;
 
     /// <summary>
+    /// Делегат, представляющий метод, который будет вызываться при сбросе карты
+    /// </summary>
+    public delegate void dReseted();
+
+    /// <summary>
+    /// Событие, которое возникает при сбросе карты
+    /// </summary>
+    public event dReseted? Reseted;
+
+    /// <summary>
     /// Размер карты
     /// </summary>
     private Vector2 _size;
@@ -163,49 +173,59 @@ namespace Logic.Models.Game
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parVisibleSize">Размер видимой части карты</param>
-    public Map(Vector2 parVisibleSize)
+    /// <param name="parSize">Размер начальной части карты</param>
+    public Map(Vector2 parSize)
     {
-      Vector2 initMapSize = new Vector2(1920, 1080);
-      _size = initMapSize;
+      _size = parSize;
 
       _rocket = new Rocket();
-      _rocket.Position = new Vector2(initMapSize.X * 0.3, initMapSize.Y * 0.5 + 170);
-      _rocket.Velocity = new Vector2(initMapSize.X / 10 * 2, 0);
-      _rocket.Size = new Vector2(170, 100);
-      
+
       _startPlanet = new Planet(100);
-      _startPlanet.Position = new Vector2(initMapSize.X * 0.3, initMapSize.Y * 0.5);
+      _startPlanet.Position = new Vector2(_size.X * 0.3, _size.Y * 0.5);
 
-      _rocket.Location = _startPlanet;
-      _rocket.ReachedOrbit = 200;
-
-      double sunDiameter = initMapSize.Y;
       _sun = new Sun();
+      double sunDiameter = _size.Y;
       _sun.Size = new Vector2(sunDiameter, sunDiameter);
-      _sun.Position = new Vector2(-sunDiameter * 0.3, initMapSize.Y * 0.5);
+      _sun.Position = new Vector2(-sunDiameter * 0.3, _size.Y * 0.5);
 
-      Vector2 asteroidsSize = new Vector2(initMapSize.X, initMapSize.Y * 0.08);
-
+      Vector2 asteroidsSize = new Vector2(_size.X, _size.Y * 0.08);
       _topAsteroidBelt = new AsteroidBelt();
       _topAsteroidBelt.Size = asteroidsSize;
       _topAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, asteroidsSize.Y / 2);
 
       _bottomAsteroidBelt = new AsteroidBelt();
       _bottomAsteroidBelt.Size = asteroidsSize;
-      _bottomAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, initMapSize.Y - asteroidsSize.Y / 2);
-
+      _bottomAsteroidBelt.Position = new Vector2(asteroidsSize.X / 2, _size.Y - asteroidsSize.Y / 2);
 
       _planets = new LinkedList<Planet>();
 
-      _yPlaceForPlanets = initMapSize.Y / 2 - asteroidsSize.Y;
+      _yPlaceForPlanets = _size.Y / 2 - asteroidsSize.Y;
       _planetStep = 900;
       _startOffsetX = _startPlanet.Position.X;
-      _countCreatedPlanets = 0;
 
-      _xCameraOffset = 0;
+      Reset();
     }
-    
+
+    /// <summary>
+    /// Возвращает карту в состояние, которое готово к новой игре
+    /// </summary>
+    public void Reset()
+    {
+      _rocket.Position = new Vector2(_size.X * 0.3, _size.Y * 0.5 + 170);
+      _rocket.Velocity = new Vector2(_size.X / 10 * 2, 0);
+      _rocket.Size = new Vector2(53, 100);
+      _rocket.Location = _startPlanet;
+      _rocket.ReachedOrbit = 200;
+
+      _planets.Clear();
+
+      _countCreatedPlanets = 0;
+      _xCameraMustOffset = 0;
+      _xCameraOffset = 0;
+
+      Reseted?.Invoke();
+    }
+
     /// <summary>
     /// Создает случайную планету
     /// </summary>
@@ -246,11 +266,16 @@ namespace Logic.Models.Game
 
       MoveObjects(parDeltaSeconds);
 
+      if (CheckCollisions())
+      {
+        Rocket.Destroy();
+      }
+
       MoveCamera();
     }
 
     /// <summary>
-    /// Уничтожает планеты, которые оказались за картой
+    /// Удаляет планеты, которые оказались за картой
     /// </summary>
     private void DeletePlanets()
     {
@@ -326,6 +351,37 @@ namespace Logic.Models.Game
       }
 
       _xCameraOffset += (_xCameraMustOffset - _xCameraOffset) / 1000000;
+    }
+
+    /// <summary>
+    /// Проверяет коллиции объектов
+    /// </summary>
+    private bool CheckCollisions()
+    {
+      if (Sun.IsCollideWith(Rocket))
+      {
+        return true;
+      }
+
+      if (TopAsteroidBelt.IsCollideWith(Rocket))
+      {
+        return true;
+      }
+
+      if (BottomAsteroidBelt.IsCollideWith(Rocket))
+      {
+        return true;
+      }
+
+      foreach (Planet elPlanet in _planets)
+      {
+        if (elPlanet.IsCollideWith(Rocket))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     /// <summary>

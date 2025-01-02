@@ -117,6 +117,8 @@ namespace Logic.Views.Game
       SunView.Map = parMap;
       TopBeltView.Map = parMap;
       BottomBeltView.Map = parMap;
+
+      Map.Reseted += Reset;
     }
 
     /// <summary>
@@ -133,6 +135,14 @@ namespace Logic.Views.Game
       {
         _planetsView.Remove(newPlanetView);
       };
+    }
+
+    /// <summary>
+    /// Сбрасывает представление карты
+    /// </summary>
+    public virtual void Reset()
+    {
+      _planetsView.Clear();      
     }
 
     /// <summary>

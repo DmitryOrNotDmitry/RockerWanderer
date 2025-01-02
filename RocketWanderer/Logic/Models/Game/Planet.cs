@@ -10,7 +10,7 @@ namespace Logic.Models.Game
   /// <summary>
   /// Планета
   /// </summary>
-  public class Planet : MapItem
+  public class Planet : MapItem, IRocketDestroyer
   {
     /// <summary>
     /// Делегат, представляющий метод, который будет вызываться при срабатывании события уничтожения
@@ -79,6 +79,21 @@ namespace Logic.Models.Game
     public void Despawn()
     {
       Despawned?.Invoke();
+    }
+
+    /// <summary>
+    /// Проверяет столкнулась ли ракета с планетой
+    /// </summary>
+    /// <param name="parRocket">Ракета</param>
+    /// <returns>true - столкновение произошло, иначе false</returns>
+    public bool IsCollideWith(Rocket parRocket)
+    {
+      double rocketRadius = (parRocket.Size.Y + parRocket.Size.X) / 4;
+      rocketRadius *= 0.5;
+
+      Vector2 rocketToSun = parRocket.Position + Position.Scale(-1);
+
+      return rocketToSun.Length <= (Radius + rocketRadius);
     }
   }
 }

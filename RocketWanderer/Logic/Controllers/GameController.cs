@@ -3,6 +3,7 @@ using Logic.Models.Windows;
 using Logic.Utils;
 using Logic.Views.Game;
 using Logic.Views.Screens;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,6 +22,11 @@ namespace Logic.Controllers
     /// Рассчитываются ли сейчас данные игры
     /// </summary>
     private bool _isGameProcessed = false;
+
+    /// <summary>
+    /// На паузе ли сейчас игра
+    /// </summary>
+    private bool _isGamePaused = false;
 
     /// <summary>
     /// Модель карты
@@ -51,44 +57,52 @@ namespace Logic.Controllers
     /// <summary>
     /// Конструктор
     /// </summary>
-    public GameController(WindowData parWindowData) 
+    public GameController(WindowView parWindowView) 
     {
       _map = new Map(new Vector2(1920, 1080));
-      
       _mapView = CreateMapView();
 
-      parWindowData.ScreenChanged += 
+      Map.Rocket.Destroyed += () =>
+      {
+        _isGameProcessed = false;
+        parWindowView.Window.ChangeScreen(ScreenType.MainMenu);
+      };
+
+      parWindowView.Window.ScreenChanged += 
         (parScreenType) =>
       {
         if (parScreenType == ScreenType.Game)
         {
-          Task.Run(() =>
-          {
-            _isGameProcessed = true;
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            double lastFrameTime = stopwatch.Elapsed.TotalSeconds;
-            double currentFrameTime = 0;
-
-            while (_isGameProcessed) 
-            {
-              currentFrameTime = stopwatch.Elapsed.TotalSeconds;
-
-              Map.Update(currentFrameTime - lastFrameTime);
-
-              lastFrameTime = currentFrameTime;
-
-            }
-
-          });
+          Map.Reset();
+          RunGameCalculating();
         }
-        else
-        {
-          _isGameProcessed = false;
-        }
-
       };
-      
+    }
+
+    /// <summary>
+    /// Запускает отдельный поток с вычислением данных игры
+    /// </summary>
+    private void RunGameCalculating()
+    {
+      Task.Run(() =>
+      {
+        _isGamePaused = false;
+        _isGameProcessed = true;
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        double lastFrameTime = stopwatch.Elapsed.TotalSeconds;
+        double currentFrameTime = 0;
+
+        while (_isGameProcessed && !_isGamePaused)
+        {
+          currentFrameTime = stopwatch.Elapsed.TotalSeconds;
+
+          Map.Update(currentFrameTime - lastFrameTime);
+
+          lastFrameTime = currentFrameTime;
+        }
+
+      });
     }
 
     /// <summary>
@@ -99,6 +113,24 @@ namespace Logic.Controllers
       if (_isGameProcessed)
       {
         Map.RocketDepart();
+      }
+    }
+
+    /// <summary>
+    /// Останавливает/возобновляет игру по действию пользователя
+    /// </summary>
+    public void OnPauseAction()
+    {
+      if (_isGameProcessed)
+      {
+        if (_isGamePaused)
+        {
+          RunGameCalculating();
+        }
+        else
+        {
+          _isGamePaused = true;
+        }
       }
     }
 

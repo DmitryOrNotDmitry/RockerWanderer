@@ -15,6 +15,16 @@ namespace Logic.Models.Game
   public class Rocket : MovableItem
   {
     /// <summary>
+    /// Делегат, представляющий метод, который будет вызываться при уничтожении корабля
+    /// </summary>
+    public delegate void dDestroyed();
+
+    /// <summary>
+    /// Событие, которое возникает при уничтожении корабля
+    /// </summary>
+    public event dDestroyed? Destroyed;
+
+    /// <summary>
     /// Угол поворота
     /// </summary>
     private double _rotation;
@@ -254,6 +264,14 @@ namespace Logic.Models.Game
 
         return false;
       }
+    }
+
+    /// <summary>
+    /// Уничтожает корабль
+    /// </summary>
+    public void Destroy()
+    {
+      Destroyed?.Invoke();
     }
 
   }

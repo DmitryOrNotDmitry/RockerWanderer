@@ -23,7 +23,7 @@ namespace WpfApp
       
       MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView, screenController.MainMenuScreenView);
 
-      GameControllerWpf gameController = new GameControllerWpf(screenController.GameScreenView, windowController.Window);
+      GameControllerWpf gameController = new GameControllerWpf(screenController.GameScreenView, windowController.WindowView);
 
       Task.Run(() =>
       {
@@ -45,14 +45,6 @@ namespace WpfApp
         }
       }
       );
-
-      ((Window)(((WindowViewWpf)windowController.WindowView).Control)).KeyDown += (s, e) =>
-      {
-        if (e.Key == Key.Space)
-        {
-          gameController.RocketDepartAction();
-        }
-      };
 
       //List<Record> records = new List<Record>();
       //records.Add(new Record("QWe1", 100));
