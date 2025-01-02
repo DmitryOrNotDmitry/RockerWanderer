@@ -1,7 +1,10 @@
 ﻿using Logic.Models.Game;
+using Logic.Models.Menus;
+using Logic.Models.Pause;
 using Logic.Models.Windows;
 using Logic.Utils;
 using Logic.Views.Game;
+using Logic.Views.Menus;
 using Logic.Views.Screens;
 using Logic.Views.Windows;
 using System;
@@ -37,7 +40,17 @@ namespace Logic.Controllers
     /// Представление карты
     /// </summary>
     private MapView _mapView;
- 
+
+    /// <summary>
+    /// Модель меню паузы
+    /// </summary>
+    private PauseMenu _pauseMenu;
+
+    /// <summary>
+    /// Представление меню паузы
+    /// </summary>
+    private MenuView _pauseMenuView;
+
     /// <summary>
     /// Модель карты
     /// </summary>
@@ -55,20 +68,39 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Модель меню паузы
+    /// </summary>
+    public PauseMenu PauseMenu
+    {
+      get { return _pauseMenu; }
+    }
+
+    /// <summary>
+    /// Представление меню паузы
+    /// </summary>
+    public MenuView PauseMenuView
+    {
+      get { return _pauseMenuView; }
+    }
+
+    /// <summary>
+    /// Главное окно приложения
+    /// </summary>
+    private WindowData _window;
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     public GameController(WindowView parWindowView) 
     {
+      _window = parWindowView.Window;
+
       _map = new Map(new Vector2(1920, 1080));
       _mapView = CreateMapView();
 
-      Map.Rocket.Destroyed += () =>
-      {
-        _isGameProcessed = false;
-        parWindowView.Window.ChangeScreen(ScreenType.MainMenu);
-      };
+      Map.Rocket.Destroyed += StopGame;
 
-      parWindowView.Window.ScreenChanged += 
+      _window.ScreenChanged += 
         (parScreenType) =>
       {
         if (parScreenType == ScreenType.Game)
@@ -77,6 +109,30 @@ namespace Logic.Controllers
           RunGameCalculating();
         }
       };
+
+
+      _pauseMenu = new PauseMenu();
+
+      _pauseMenu.AddItem(new MenuItem(MenuItemAction.Resume, "Продолжить"));
+      _pauseMenu.AddItem(new MenuItem(MenuItemAction.Back, "Главное меню"));
+
+      _pauseMenu[MenuItemAction.Resume].Selected += OnPauseAction;
+      _pauseMenu[MenuItemAction.Back].Selected += StopGame;
+
+
+      _pauseMenuView = CreatePauseMenuView();
+
+      foreach (MenuItem elMenuItem in PauseMenu.Items)
+      {
+        (PauseMenuView[elMenuItem.Action]).Enter += (action) =>
+        {
+          PauseMenu.Focus(action);
+          PauseMenu.SelectFocusedItem();
+          PauseMenu.Unfocus();
+        };
+
+        (PauseMenuView[elMenuItem.Action]).Focused += PauseMenu.Focus;
+      }
     }
 
     /// <summary>
@@ -106,6 +162,17 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Заканчивает рассчет логики игровых объектов
+    /// </summary>
+    private void StopGame()
+    {
+      _isGamePaused = false;
+      PauseMenu.IsEnabled = false;
+      _isGameProcessed = false;
+      _window.ChangeScreen(ScreenType.MainMenu);
+    }
+
+    /// <summary>
     /// Запускает отстыковывание ракеты по действию пользователя
     /// </summary>
     public void RocketDepartAction()
@@ -123,6 +190,8 @@ namespace Logic.Controllers
     {
       if (_isGameProcessed)
       {
+        PauseMenu.IsEnabled = !PauseMenu.IsEnabled;
+
         if (_isGamePaused)
         {
           RunGameCalculating();
@@ -138,7 +207,13 @@ namespace Logic.Controllers
     /// Создает представление карты
     /// </summary>
     /// <returns>Представление карты</returns>
-    public abstract MapView CreateMapView();    
+    public abstract MapView CreateMapView();
+
+    /// <summary>
+    /// Создает представление меню паузы
+    /// </summary>
+    /// <returns>Представление меню паузы</returns>
+    public abstract MenuView CreatePauseMenuView();
 
   }
 }

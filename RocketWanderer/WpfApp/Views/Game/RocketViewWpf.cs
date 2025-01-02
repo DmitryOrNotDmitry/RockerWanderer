@@ -39,7 +39,7 @@ namespace WpfApp.Views.Game
       : base(parRocket)
     {
       _rocketImage.Stretch = System.Windows.Media.Stretch.Uniform;
-      _rocketImage.Source = new BitmapImage(new Uri(ImagesFolder._path + "rocket.png", UriKind.Relative));
+      _rocketImage.Source = new BitmapImage(new Uri(ImagesFolder.RelativePath + "rocket.png", UriKind.Relative));
       _rocketImage.RenderTransform = new RotateTransform(Rocket.Rotation);
       _rocketImage.RenderTransformOrigin = new Point(0.5, 0.5);
 

@@ -36,6 +36,16 @@ namespace WpfApp.Views.Menus
     private Brush _brush = null;
 
     /// <summary>
+    /// Кисть для наведенного состояния пункта меню
+    /// </summary>
+    private Brush _focusedBrush = Brushes.Magenta;
+
+    /// <summary>
+    /// Кисть для выбранного состояния пункта меню
+    /// </summary>
+    private Brush _selectedBrush = Brushes.Red;
+
+    /// <summary>
     /// Элемент WPF, представляющий данный объект
     /// </summary>
     public UIElement Control
@@ -81,11 +91,11 @@ namespace WpfApp.Views.Menus
 
       if (Item.State == MenuItemState.Focused)
       {
-        _button.Background = Brushes.Magenta;
+        _button.Background = _focusedBrush;
         _button.Focus();
       }
       else if (Item.State == MenuItemState.Selected)
-        _button.Background = Brushes.Red;
+        _button.Background = _selectedBrush;
       else
         _button.Background = _brush;
     }

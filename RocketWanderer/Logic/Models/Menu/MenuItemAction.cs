@@ -35,5 +35,10 @@ namespace Logic.Models.Menus
     /// Назад
     /// </summary>
     Back,
+
+    /// <summary>
+    /// Продолжить
+    /// </summary>
+    Resume,
   }
 }

@@ -38,7 +38,7 @@ namespace WpfApp.Views.Game
       : base(parSun)
     {
       _sunImage.Stretch = System.Windows.Media.Stretch.Uniform;
-      _sunImage.Source = new BitmapImage(new Uri(ImagesFolder._path + "sun.png", UriKind.Relative));
+      _sunImage.Source = new BitmapImage(new Uri(ImagesFolder.RelativePath + "sun.png", UriKind.Relative));
     }
 
     /// <summary>

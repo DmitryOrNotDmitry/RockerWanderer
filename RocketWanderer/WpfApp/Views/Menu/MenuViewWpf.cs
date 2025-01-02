@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Logic.Models.Menus;
-using Logic.Models.Windows;
 using Logic.Utils;
-using Logic.Views;
 using Logic.Views.Menus;
 using WpfApp.Views.Windows;
 
@@ -21,7 +19,7 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Контейнер для пунктов меню
     /// </summary>
-    private System.Windows.Controls.StackPanel _stackPanel = null;
+    protected System.Windows.Controls.StackPanel _stackPanel = null;
 
     /// <summary>
     /// Элемент WPF, представляющий данный объект
@@ -34,15 +32,15 @@ namespace WpfApp.Views.Menus
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parSubMenuItem"></param>
-    public MenuViewWpf(Menu parSubMenuItem) : base(parSubMenuItem)
+    /// <param name="parMenu"></param>
+    public MenuViewWpf(Menu parMenu) : base(parMenu)
     {
       Size = new UDim2(0.2, 0.25);
 
       _stackPanel = new System.Windows.Controls.StackPanel();
       _stackPanel.VerticalAlignment = VerticalAlignment.Center;
       _stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-
+      
       foreach (MenuItemViewWpf elViewMenuItem in Items)
       {
         IWpfItem.AddChild(this, elViewMenuItem);
@@ -64,13 +62,26 @@ namespace WpfApp.Views.Menus
       _stackPanel.Width = menuSize.X;
       _stackPanel.Height = menuSize.Y;
 
-      double leftOffset = parentSize.X / 2 - menuSize.X / 2;
-      double topOffset  = parentSize.Y / 2 - menuSize.Y / 2 + parentSize.Y / 20;
+      Vector2 position = GetPosition(parentSize);
 
-      System.Windows.Controls.Canvas.SetLeft(_stackPanel, leftOffset);
-      System.Windows.Controls.Canvas.SetTop(_stackPanel, topOffset);
+      System.Windows.Controls.Canvas.SetLeft(_stackPanel, position.X);
+      System.Windows.Controls.Canvas.SetTop(_stackPanel, position.Y);
 
       DrawChildren();
+    }
+
+    /// <summary>
+    /// Возвращает позицию меню
+    /// </summary>
+    /// <returns>Позицию меню</returns>
+    protected virtual Vector2 GetPosition(Vector2 parParentSize)
+    {
+      Vector2 menuSize = AbsoluteSize;
+     
+      double leftOffset = parParentSize.X / 2 - menuSize.X / 2;
+      double topOffset = parParentSize.Y / 2 - menuSize.Y / 2 + parParentSize.Y / 20;
+
+      return new Vector2(leftOffset, topOffset);
     }
 
     /// <summary>

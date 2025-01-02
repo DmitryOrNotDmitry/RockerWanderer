@@ -1,6 +1,7 @@
 ﻿using Logic.Controllers;
 using Logic.Models.Windows;
 using Logic.Views.Game;
+using Logic.Views.Menus;
 using Logic.Views.Screens;
 using Logic.Views.Windows;
 using System;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfApp.Views;
 using WpfApp.Views.Game;
+using WpfApp.Views.Menus;
 using WpfApp.Views.Windows;
 
 namespace WpfApp.Controllers
@@ -30,6 +32,7 @@ namespace WpfApp.Controllers
       : base(parWindowView)
     {
       IWpfItem.AddChild(parGameScreenView, MapView);
+      IWpfItem.AddChild(parGameScreenView, PauseMenuView);
 
       ((Window)(((WindowViewWpf)parWindowView).Control)).KeyDown += (s, e) =>
       {
@@ -47,12 +50,21 @@ namespace WpfApp.Controllers
     }
 
     /// <summary>
-    /// Создает представление карты
+    /// Создает представление карты от Wpf
     /// </summary>
-    /// <returns>Представление карты</returns>
+    /// <returns>Представление карты от Wpf</returns>
     public override MapView CreateMapView()
     {
       return new MapViewWpf(Map);
+    }
+
+    /// <summary>
+    /// Создает представление меню паузы от Wpf
+    /// </summary>
+    /// <returns>Представление меню паузы от Wpf</returns>
+    public override MenuView CreatePauseMenuView()
+    {
+      return new PauseMenuViewWpf(PauseMenu);
     }
   }
 }

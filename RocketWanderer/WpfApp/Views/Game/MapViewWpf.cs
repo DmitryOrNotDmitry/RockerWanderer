@@ -34,12 +34,22 @@ namespace WpfApp.Views.Game
     /// <summary>
     /// Путь к папке с изображениями
     /// </summary>
-    private static string _imagesFolder = ImagesFolder._path;
+    private static string _imagesFolder = ImagesFolder.RelativePath;
 
     /// <summary>
     /// Главный контролл представления
     /// </summary>
     private Canvas _canvasControl = new Canvas();
+
+    /// <summary>
+    /// Изображение иконки паузы
+    /// </summary>
+    private Image _pauseImage = new Image();
+
+    /// <summary>
+    /// Изображение горячей клавиши для паузы
+    /// </summary>
+    private Label _pauseLabel = new Label();
 
     /// <summary>
     /// Canvas, представляющий объект
@@ -58,11 +68,21 @@ namespace WpfApp.Views.Game
     {
       ImageBrush imageBrush = new ImageBrush
       {
-        ImageSource = new BitmapImage(new Uri(ImagesFolder._path + "space_background.jpg", UriKind.Relative)),
+        ImageSource = new BitmapImage(new Uri(ImagesFolder.RelativePath + "space_background.jpg", UriKind.Relative)),
         Stretch = Stretch.UniformToFill
       };
 
       _canvasControl.Background = imageBrush;
+      _canvasControl.Children.Add(_pauseImage);
+      _canvasControl.Children.Add(_pauseLabel);
+
+      _pauseImage.Stretch = System.Windows.Media.Stretch.Uniform;
+      _pauseImage.Source = new BitmapImage(new Uri(ImagesFolder.RelativePath + "pause.png", UriKind.Relative));
+
+      _pauseLabel.Content = "[Esc]";
+      _pauseLabel.FontSize = 20;
+      _pauseLabel.Foreground = Brushes.White;
+      _pauseLabel.RenderTransform = new RotateTransform(-10);
     }
 
     /// <summary>
@@ -76,6 +96,17 @@ namespace WpfApp.Views.Game
       _canvasControl.Height = Math.Max(parentSize.Y - 40, 0);
 
       AbsoluteSize = new Vector2(_canvasControl.Width, _canvasControl.Height);
+
+      _pauseImage.Height = _canvasControl.Height / 15;
+      _pauseImage.Width = _pauseImage.Height;
+      
+      double scale = parentSize.Y / Map.Size.Y;
+
+      Canvas.SetTop(_pauseImage, TopBeltView.AsteroidBelt.Size.Y * scale);
+
+      _pauseLabel.FontSize = _pauseImage.Width / 2.5;
+      Canvas.SetLeft(_pauseLabel, _pauseImage.Width * 0.9);
+      Canvas.SetTop (_pauseLabel, TopBeltView.AsteroidBelt.Size.Y * scale);
 
       DrawChildren();
     }
@@ -98,7 +129,7 @@ namespace WpfApp.Views.Game
     /// <returns>Представление стартовой планеты от Wpf</returns>
     public override PlanetView CreateStartPlanetView()
     {
-      PlanetView newStartPlanetView = new PlanetViewWpf(Map.StartPlanet, ImagesFolder._path + "start_planet.png");
+      PlanetView newStartPlanetView = new PlanetViewWpf(Map.StartPlanet, ImagesFolder.RelativePath + "start_planet.png");
       IWpfItem.AddChild(this, newStartPlanetView);
 
       return newStartPlanetView;
