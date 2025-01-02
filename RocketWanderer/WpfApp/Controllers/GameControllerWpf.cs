@@ -33,6 +33,7 @@ namespace WpfApp.Controllers
     {
       IWpfItem.AddChild(parGameScreenView, MapView);
       IWpfItem.AddChild(parGameScreenView, PauseMenuView);
+      IWpfItem.AddChild(parGameScreenView, ScoresView);
 
       ((Window)(((WindowViewWpf)parWindowView).Control)).KeyDown += (s, e) =>
       {
@@ -65,6 +66,15 @@ namespace WpfApp.Controllers
     public override MenuView CreatePauseMenuView()
     {
       return new PauseMenuViewWpf(PauseMenu);
+    }
+
+    /// <summary>
+    /// Создает представление очков игрока
+    /// </summary>
+    /// <returns>Представление очков игрока</returns>
+    public override ScoresView CreateScoresView()
+    {
+      return new ScoresViewWpf(Scores, Map);
     }
   }
 }

@@ -60,7 +60,6 @@ namespace WpfApp.Views.Game
         Canvas.SetLeft(_sunImage, (Sun.Position.X - Map.XCameraOffset) * scale - _sunImage.Width / 2);
         Canvas.SetTop (_sunImage, Sun.Position.Y * scale - _sunImage.Height / 2);
       }
-
     }
 
   }

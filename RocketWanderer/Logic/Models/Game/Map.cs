@@ -169,6 +169,14 @@ namespace Logic.Models.Game
     {
       get { return _xCameraOffset; }
     }
+    
+    /// <summary>
+    /// Смещение камеры по X относительно начала карты
+    /// </summary>
+    public double XMustCameraOffset
+    {
+      get { return _xCameraMustOffset; }
+    }
 
     /// <summary>
     /// Конструктор

@@ -52,6 +52,37 @@ namespace Logic.Controllers
     private MenuView _pauseMenuView;
 
     /// <summary>
+    /// Главное окно приложения
+    /// </summary>
+    private WindowData _window;
+
+    /// <summary>
+    /// Модель очков игрока
+    /// </summary>
+    private Scores _scores;
+
+    /// <summary>
+    /// Представление очков игрока
+    /// </summary>
+    private ScoresView _scoresView;
+
+    /// <summary>
+    /// Модель очков игрока
+    /// </summary>
+    public Scores Scores
+    {
+      get { return _scores; }
+    }
+
+    /// <summary>
+    /// Представление очков игрока
+    /// </summary>
+    public ScoresView ScoresView
+    {
+      get { return _scoresView; }
+    }
+
+    /// <summary>
     /// Модель карты
     /// </summary>
     public Map Map
@@ -82,11 +113,6 @@ namespace Logic.Controllers
     {
       get { return _pauseMenuView; }
     }
-
-    /// <summary>
-    /// Главное окно приложения
-    /// </summary>
-    private WindowData _window;
 
     /// <summary>
     /// Конструктор
@@ -133,6 +159,9 @@ namespace Logic.Controllers
 
         (PauseMenuView[elMenuItem.Action]).Focused += PauseMenu.Focus;
       }
+
+      _scores = new Scores();
+      _scoresView = CreateScoresView();
     }
 
     /// <summary>
@@ -154,6 +183,7 @@ namespace Logic.Controllers
           currentFrameTime = stopwatch.Elapsed.TotalSeconds;
 
           Map.Update(currentFrameTime - lastFrameTime);
+          Scores.Current = (int)Map.XMustCameraOffset;
 
           lastFrameTime = currentFrameTime;
         }
@@ -214,6 +244,12 @@ namespace Logic.Controllers
     /// </summary>
     /// <returns>Представление меню паузы</returns>
     public abstract MenuView CreatePauseMenuView();
+
+    /// <summary>
+    /// Создает представление очков игрока
+    /// </summary>
+    /// <returns>Представление очков игрока</returns>
+    public abstract ScoresView CreateScoresView();
 
   }
 }
