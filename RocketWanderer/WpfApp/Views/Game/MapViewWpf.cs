@@ -34,7 +34,7 @@ namespace WpfApp.Views.Game
     /// <summary>
     /// Путь к папке с изображениями
     /// </summary>
-    private static string _imagesFolder = "Images\\";
+    private static string _imagesFolder = ImagesFolder._path;
 
     /// <summary>
     /// Главный контролл представления
@@ -58,7 +58,7 @@ namespace WpfApp.Views.Game
     {
       ImageBrush imageBrush = new ImageBrush
       {
-        ImageSource = new BitmapImage(new Uri("Images\\space_background.jpg", UriKind.Relative)),
+        ImageSource = new BitmapImage(new Uri(ImagesFolder._path + "space_background.jpg", UriKind.Relative)),
         Stretch = Stretch.UniformToFill
       };
 
@@ -98,7 +98,7 @@ namespace WpfApp.Views.Game
     /// <returns>Представление стартовой планеты от Wpf</returns>
     public override PlanetView CreateStartPlanetView()
     {
-      PlanetView newStartPlanetView = new PlanetViewWpf(Map.StartPlanet, "Images\\start_planet.png");
+      PlanetView newStartPlanetView = new PlanetViewWpf(Map.StartPlanet, ImagesFolder._path + "start_planet.png");
       IWpfItem.AddChild(this, newStartPlanetView);
 
       return newStartPlanetView;

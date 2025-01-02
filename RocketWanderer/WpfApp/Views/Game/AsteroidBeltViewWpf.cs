@@ -53,7 +53,7 @@ namespace WpfApp.Views.Game
     public AsteroidBeltViewWpf(AsteroidBelt parAsteroidBelt) 
       : base(parAsteroidBelt)
     {
-      _bitmap = new BitmapImage(new Uri("Images\\asteroid_belt.png", UriKind.Relative));
+      _bitmap = new BitmapImage(new Uri(ImagesFolder._path + "asteroid_belt.png", UriKind.Relative));
       
       CreateNewBeltImage();
     }
