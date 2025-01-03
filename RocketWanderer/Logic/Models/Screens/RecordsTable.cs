@@ -35,7 +35,7 @@ namespace Logic.Models.Screens
     {
       get
       {
-        _records.Sort((x, y) => x.Score.CompareTo(y.Score));
+        _records.Sort((x, y) => -x.Score.CompareTo(y.Score));
 
         return _records.ToArray();
       }

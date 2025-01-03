@@ -1,5 +1,5 @@
 ﻿using Logic.Models.Menus;
-using Logic.Models.Pause;
+using Logic.Models.Menus;
 using Logic.Utils;
 using Logic.Views.Menus;
 using System;
@@ -14,10 +14,10 @@ using WpfApp.Views.Menus;
 
 namespace WpfApp.Views.Menus
 {
-  /// <summary>
-  /// Представление меню паузы от Wpf
-  /// </summary>
-  public class PauseMenuViewWpf : MenuViewWpf, IWpfItem
+    /// <summary>
+    /// Представление меню паузы от Wpf
+    /// </summary>
+    public class PauseMenuViewWpf : MenuViewWpf, IWpfItem
   {
     /// <summary>
     /// Заголовок меню
@@ -31,7 +31,7 @@ namespace WpfApp.Views.Menus
     public PauseMenuViewWpf(Menu parMenu)
       : base(parMenu)
     {
-      Size = new UDim2(0.2, 0.20);
+      Size = new UDim2(0.25, 0.25);
 
       _stackPanel.Background = new SolidColorBrush(Color.FromArgb(128, 105, 105, 105));
 
@@ -67,7 +67,7 @@ namespace WpfApp.Views.Menus
       Vector2 menuSize = AbsoluteSize;
 
       double leftOffset = parParentSize.X / 2 - menuSize.X / 2;
-      double topOffset = parParentSize.Y / 2 - menuSize.Y / 2 - parParentSize.Y / 10;
+      double topOffset = parParentSize.Y / 2 - menuSize.Y / 2;
 
       return new Vector2(leftOffset, topOffset);
     }
@@ -77,7 +77,7 @@ namespace WpfApp.Views.Menus
     /// </summary>
     public override void Draw()
     {
-      if (((PauseMenu)Menu).IsEnabled)
+      if (((SwitchedMenu)Menu).IsEnabled)
       {
         Control.IsEnabled = true;
         Control.Visibility = Visibility.Visible;

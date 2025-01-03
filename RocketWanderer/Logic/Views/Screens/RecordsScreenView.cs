@@ -48,14 +48,6 @@ namespace Logic.Views.Screens
       _recordsScreen = parRecordsScreen;
 
       _recordsTableView = CreateRecordsTableView();
-
-      for (int i = 0; i < 1; i++) // TODO
-      {
-        _recordsTableView.RecordsTable.Add(new Record("QWe1", 100));
-        _recordsTableView.RecordsTable.Add(new Record("QWe2", 200));
-        _recordsTableView.RecordsTable.Add(new Record("QWerwer", 50));
-      }
-
     }
 
     /// <summary>

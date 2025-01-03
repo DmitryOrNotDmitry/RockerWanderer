@@ -53,8 +53,11 @@ namespace WpfApp.Views.Windows
     /// </summary>
     public override void Draw()
     {
-      Window.Height = (int)_windowControl.ActualHeight;
-      Window.Width = (int)_windowControl.ActualWidth;
+      double clientWidth = _windowControl.ActualWidth;
+      double clientHeight = _windowControl.ActualHeight - SystemParameters.CaptionHeight * 1.75;
+
+      Window.Width = (int)clientWidth;
+      Window.Height = (int)clientHeight;
 
       AbsoluteSize = AbsSize();
 

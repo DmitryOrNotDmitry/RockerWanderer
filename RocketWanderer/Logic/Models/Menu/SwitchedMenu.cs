@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Models.Pause
-{
+namespace Logic.Models.Menus
+  {
   /// <summary>
-  /// Модель меню паузы
+  /// Модель выключаемого меню
   /// </summary>
-  public class PauseMenu : Menu
+  public class SwitchedMenu : Menu
   {
     /// <summary>
     /// Доступно ли сейчас меню
@@ -29,9 +29,9 @@ namespace Logic.Models.Pause
     /// <summary>
     /// Конструктор
     /// </summary>
-    public PauseMenu() 
+    public SwitchedMenu()
     {
       _isEnabled = false;
-    } 
+    }
   }
 }

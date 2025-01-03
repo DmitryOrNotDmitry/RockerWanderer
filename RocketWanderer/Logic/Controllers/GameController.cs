@@ -1,7 +1,9 @@
 ﻿using Logic.Models.Game;
 using Logic.Models.Menus;
-using Logic.Models.Pause;
+using Logic.Models.Menus;
+using Logic.Models.Screens;
 using Logic.Models.Windows;
+using Logic.Records;
 using Logic.Utils;
 using Logic.Views.Game;
 using Logic.Views.Menus;
@@ -16,10 +18,10 @@ using System.Threading.Tasks;
 
 namespace Logic.Controllers
 {
-  /// <summary>
-  /// Контроллер для процесса игры
-  /// </summary>
-  public abstract class GameController : BaseController
+    /// <summary>
+    /// Контроллер для процесса игры
+    /// </summary>
+    public abstract class GameController : BaseController
   {
     /// <summary>
     /// Рассчитываются ли сейчас данные игры
@@ -44,12 +46,22 @@ namespace Logic.Controllers
     /// <summary>
     /// Модель меню паузы
     /// </summary>
-    private PauseMenu _pauseMenu;
+    private SwitchedMenu _pauseMenu;
 
     /// <summary>
     /// Представление меню паузы
     /// </summary>
     private MenuView _pauseMenuView;
+
+    /// <summary>
+    /// Модель меню конца игры
+    /// </summary>
+    private SwitchedMenu _gameOverMenu;
+
+    /// <summary>
+    /// Представление меню конца игры
+    /// </summary>
+    private GameOverMenuView _gameOverMenuView;
 
     /// <summary>
     /// Главное окно приложения
@@ -65,6 +77,16 @@ namespace Logic.Controllers
     /// Представление очков игрока
     /// </summary>
     private ScoresView _scoresView;
+
+    /// <summary>
+    /// Настройки игрока
+    /// </summary>
+    private PlayerSettings _playerSettings;
+
+    /// <summary>
+    /// Таблица рекордов
+    /// </summary>
+    private RecordsTable _recordsTable;
 
     /// <summary>
     /// Модель очков игрока
@@ -101,7 +123,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Модель меню паузы
     /// </summary>
-    public PauseMenu PauseMenu
+    public SwitchedMenu PauseMenu
     {
       get { return _pauseMenu; }
     }
@@ -112,6 +134,40 @@ namespace Logic.Controllers
     public MenuView PauseMenuView
     {
       get { return _pauseMenuView; }
+    }
+
+    /// <summary>
+    /// Модель меню конца игры
+    /// </summary>
+    public SwitchedMenu GameOverMenu
+    {
+      get { return _gameOverMenu;}
+    }
+
+    /// <summary>
+    /// Представление меню конца игры
+    /// </summary>
+    public GameOverMenuView GameOverMenuView
+    {
+      get { return _gameOverMenuView; }
+    }
+
+    /// <summary>
+    /// Настройки игрока
+    /// </summary>
+    public PlayerSettings PlayerSettings
+    {
+      get { return _playerSettings; }
+      set { _playerSettings = value; }
+    }
+
+    /// <summary>
+    /// Таблица рекордов
+    /// </summary>
+    public RecordsTable RecordsTable
+    {
+      get { return _recordsTable; }
+      set { _recordsTable = value; }
     }
 
     /// <summary>
@@ -137,10 +193,10 @@ namespace Logic.Controllers
       };
 
 
-      _pauseMenu = new PauseMenu();
+      _pauseMenu = new SwitchedMenu();
 
       _pauseMenu.AddItem(new MenuItem(MenuItemAction.Resume, "Продолжить"));
-      _pauseMenu.AddItem(new MenuItem(MenuItemAction.Back, "Главное меню"));
+      _pauseMenu.AddItem(new MenuItem(MenuItemAction.Back, "Закончить игру"));
 
       _pauseMenu[MenuItemAction.Resume].Selected += OnPauseAction;
       _pauseMenu[MenuItemAction.Back].Selected += StopGame;
@@ -160,8 +216,41 @@ namespace Logic.Controllers
         (PauseMenuView[elMenuItem.Action]).Focused += PauseMenu.Focus;
       }
 
+
       _scores = new Scores();
       _scoresView = CreateScoresView();
+
+
+      _gameOverMenu = new SwitchedMenu();
+      
+      _gameOverMenu.AddItem(new MenuItem(MenuItemAction.NewGame, "Заново"));
+      _gameOverMenu.AddItem(new MenuItem(MenuItemAction.Back, "Главное меню"));
+
+      _gameOverMenu[MenuItemAction.NewGame].Selected += () =>
+      {
+        GameOverMenu.IsEnabled = false;
+        _window.ChangeScreen(ScreenType.Game);
+      };
+
+      _gameOverMenu[MenuItemAction.Back].Selected += () =>
+      {
+        GameOverMenu.IsEnabled = false;
+        _window.ChangeScreen(ScreenType.MainMenu);
+      };
+
+      _gameOverMenuView = CreateGameOverMenuView();
+
+      foreach (MenuItem elMenuItem in GameOverMenu.Items)
+      {
+        (GameOverMenuView[elMenuItem.Action]).Enter += (action) =>
+        {
+          GameOverMenu.Focus(action);
+          GameOverMenu.SelectFocusedItem();
+          GameOverMenu.Unfocus();
+        };
+
+        (GameOverMenuView[elMenuItem.Action]).Focused += GameOverMenu.Focus;
+      }
     }
 
     /// <summary>
@@ -196,10 +285,14 @@ namespace Logic.Controllers
     /// </summary>
     private void StopGame()
     {
-      _isGamePaused = false;
+      GameOverMenu.IsEnabled = true;
       PauseMenu.IsEnabled = false;
+
+      _isGamePaused = false;
       _isGameProcessed = false;
-      _window.ChangeScreen(ScreenType.MainMenu);
+
+      _recordsTable.Add(new Record(PlayerSettings.Name, Scores.Current));
+      //_window.ChangeScreen(ScreenType.MainMenu);
     }
 
     /// <summary>
@@ -250,6 +343,12 @@ namespace Logic.Controllers
     /// </summary>
     /// <returns>Представление очков игрока</returns>
     public abstract ScoresView CreateScoresView();
+
+    /// <summary>
+    /// Создает представление меню конца игры
+    /// </summary>
+    /// <returns>Представление меню конца игры</returns>
+    public abstract GameOverMenuView CreateGameOverMenuView();
 
   }
 }

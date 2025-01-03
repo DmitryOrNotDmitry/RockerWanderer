@@ -22,7 +22,7 @@ namespace Logic.Models.Game
     public int Current
     {
       get { return _current; }
-      set { _current = value; }
+      set { _current = Math.Max(0, value); }
     }
 
     /// <summary>

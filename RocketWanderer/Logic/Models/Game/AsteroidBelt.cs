@@ -20,9 +20,15 @@ namespace Logic.Models.Game
     public bool IsCollideWith(Rocket parRocket)
     {
       Vector2 rocketRightBottom = parRocket.Position + parRocket.Size;
+
+      Vector2 beltLeftTop = Position;
       Vector2 beltRightBottom = Position + Size;
 
-      bool intersectsY = Position.Y <= rocketRightBottom.Y && beltRightBottom.Y >= parRocket.Position.Y;
+      double epsilon = 0.35;
+      beltLeftTop     =     beltLeftTop + new Vector2(0,  Size.Y * epsilon);
+      beltRightBottom = beltRightBottom + new Vector2(0, -Size.Y * epsilon);
+
+      bool intersectsY = beltLeftTop.Y <= rocketRightBottom.Y && beltRightBottom.Y >= parRocket.Position.Y;
 
       return intersectsY;
     }

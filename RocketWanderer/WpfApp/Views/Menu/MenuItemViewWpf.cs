@@ -88,6 +88,7 @@ namespace WpfApp.Views.Menus
       _button.Height = buttinSize.Y;
 
       _button.FontSize = parentSize.Y * 0.08;
+      _button.Margin = new Thickness(buttinSize.Y / 10);
 
       if (Item.State == MenuItemState.Focused)
       {

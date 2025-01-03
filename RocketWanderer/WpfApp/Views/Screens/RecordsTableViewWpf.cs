@@ -64,40 +64,43 @@ namespace WpfApp.Views.Screens
     /// </summary>
     private void UpdateRecords()
     {
-      _stackPanel.Children.Clear();
-
-      Brush evenBrush = new SolidColorBrush(Color.FromRgb(217, 217, 217));
-      Brush oddBrush = new SolidColorBrush(Color.FromRgb(235, 232, 232));
-
-      int i = 0;
-
-      foreach (Record elRecord in RecordsTable.OrderedRecords)
+      _stackPanel.Dispatcher.Invoke(() =>
       {
-        Label labelRecord = new Label();
-        labelRecord.Content = $"Ник: {elRecord.Name} | очки: {elRecord.Score}";
+        _stackPanel.Children.Clear();
 
-        labelRecord.HorizontalContentAlignment = HorizontalAlignment.Center;
-        labelRecord.VerticalContentAlignment = VerticalAlignment.Center;
+        Brush evenBrush = new SolidColorBrush(Color.FromRgb(217, 217, 217));
+        Brush oddBrush = new SolidColorBrush(Color.FromRgb(235, 232, 232));
 
-        labelRecord.HorizontalAlignment = HorizontalAlignment.Stretch;
-        labelRecord.Height = 50;
-        labelRecord.FontSize = 30;
+        int i = 0;
 
-        labelRecord.Margin = new Thickness(3);
-
-        if (i % 2 == 0)
+        foreach (Record elRecord in RecordsTable.OrderedRecords)
         {
-          labelRecord.Background = evenBrush;
-        }
-        else
-        {
-          labelRecord.Background = oddBrush;
-        }
+          Label labelRecord = new Label();
+          labelRecord.Content = $"Ник: {elRecord.Name} | очки: {elRecord.Score}";
 
-        _stackPanel.Children.Add(labelRecord);
+          labelRecord.HorizontalContentAlignment = HorizontalAlignment.Center;
+          labelRecord.VerticalContentAlignment = VerticalAlignment.Center;
 
-        i++;
-      }
+          labelRecord.HorizontalAlignment = HorizontalAlignment.Stretch;
+          labelRecord.Height = 50;
+          labelRecord.FontSize = 30;
+
+          labelRecord.Margin = new Thickness(3);
+
+          if (i % 2 == 0)
+          {
+            labelRecord.Background = evenBrush;
+          }
+          else
+          {
+            labelRecord.Background = oddBrush;
+          }
+
+          _stackPanel.Children.Add(labelRecord);
+
+          i++;
+        }
+      });
     }
 
     /// <summary>

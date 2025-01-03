@@ -93,7 +93,7 @@ namespace WpfApp.Views.Game
       Vector2 parentSize = Parent.AbsoluteSize;
 
       _canvasControl.Width = parentSize.X;
-      _canvasControl.Height = Math.Max(parentSize.Y - 40, 0);
+      _canvasControl.Height = parentSize.Y;
 
       AbsoluteSize = new Vector2(_canvasControl.Width, _canvasControl.Height);
 

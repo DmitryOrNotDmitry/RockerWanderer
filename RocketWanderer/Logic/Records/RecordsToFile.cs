@@ -27,6 +27,11 @@ namespace Logic.Records
     {
       string jsonString = JsonSerializer.Serialize(parRecords);
 
+      if (!File.Exists(parOutFilePath))
+      {
+        File.Create(parOutFilePath).Close();
+      }
+        
       File.WriteAllText(parOutFilePath, jsonString);
     }
 
@@ -34,18 +39,21 @@ namespace Logic.Records
     /// Импортирует рекорды из файла в коллекцию рекордов в формате JSON
     /// </summary>
     /// <param name="parRecords">Рекорды</param>
-    /// <param name="parOutFilePath">Путь файла вывода</param>
+    /// <param name="parInFilePath">Путь файла вывода</param>
     public static void ImportJSON(ICollection<Record> parRecords, string parInFilePath)
     {
-      string jsonString = File.ReadAllText(parInFilePath);
-
-      ICollection<Record>? deserCollection = JsonSerializer.Deserialize<ICollection<Record>>(jsonString);
-      if (deserCollection != null) 
+      if (File.Exists(parInFilePath))
       {
-        parRecords.Clear();
-        foreach (Record elRecord in deserCollection)
+        string jsonString = File.ReadAllText(parInFilePath);
+
+        ICollection<Record>? deserCollection = JsonSerializer.Deserialize<ICollection<Record>>(jsonString);
+        if (deserCollection != null) 
         {
-          parRecords.Add(elRecord);
+          parRecords.Clear();
+          foreach (Record elRecord in deserCollection)
+          {
+            parRecords.Add(elRecord);
+          }
         }
       }
     }

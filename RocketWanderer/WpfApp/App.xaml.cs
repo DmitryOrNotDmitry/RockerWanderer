@@ -1,7 +1,9 @@
-﻿using Logic.Records;
+﻿using Logic.Models.Screens;
+using Logic.Records;
 using System.Configuration;
 using System.Data;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -11,10 +13,23 @@ using WpfApp.Views.Windows;
 namespace WpfApp
 {
   /// <summary>
-  /// Interaction logic for App.xaml
+  /// Приложение
   /// </summary>
   public partial class App : Application
   {
+    /// <summary>
+    /// Путь к файлу с рекордами
+    /// </summary>
+    private string _recordsFilePath = "records.json";
+
+    /// <summary>
+    /// Таблица рекордов
+    /// </summary>
+    private RecordsTable _recordsTable;
+
+    /// <summary>
+    /// Запускает компоненты приложения
+    /// </summary>
     private void Application_Startup(object sender, StartupEventArgs e)
     {
       WindowControllerWpf windowController = new WindowControllerWpf();
@@ -24,6 +39,12 @@ namespace WpfApp
       MenuControllerWpf menuController = new MenuControllerWpf(windowController.WindowView, screenController.MainMenuScreenView);
 
       GameControllerWpf gameController = new GameControllerWpf(screenController.GameScreenView, windowController.WindowView);
+      gameController.RecordsTable = screenController.RecordsScreenView.RecordsTableView.RecordsTable;
+      gameController.PlayerSettings = screenController.MainMenuScreen.PlayerSettings;
+
+      _recordsTable = gameController.RecordsTable;
+
+      ReadRecordsFile();
 
       Task.Run(() =>
       {
@@ -45,16 +66,27 @@ namespace WpfApp
         }
       }
       );
+    }
 
-      //List<Record> records = new List<Record>();
-      //records.Add(new Record("QWe1", 100));
-      //records.Add(new Record("QWe2", 200));
+    /// <summary>
+    /// Сохраняет рекорды в файл
+    /// </summary>
+    private void ReadRecordsFile()
+    {
+      List<Record> records = new List<Record>();
+      RecordsToFile.ImportJSON(records, _recordsFilePath);
+      foreach (Record record in records)
+      {
+        _recordsTable.Add(record);
+      }
+    }
 
-      //RecordsToFile.ExportJSON(records, "records.json");
-
-      //List<Record> records = new List<Record>();
-      //RecordsToFile.ImportJSON(records, "records.json");
+    /// <summary>
+    /// Останавливает компоненты приложения
+    /// </summary>
+    private void Application_Exit(object sender, ExitEventArgs e)
+    {
+      RecordsToFile.ExportJSON(_recordsTable.OrderedRecords, _recordsFilePath);
     }
   }
-
 }

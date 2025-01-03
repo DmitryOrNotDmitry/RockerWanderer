@@ -34,6 +34,7 @@ namespace WpfApp.Controllers
       IWpfItem.AddChild(parGameScreenView, MapView);
       IWpfItem.AddChild(parGameScreenView, PauseMenuView);
       IWpfItem.AddChild(parGameScreenView, ScoresView);
+      IWpfItem.AddChild(parGameScreenView, GameOverMenuView);
 
       ((Window)(((WindowViewWpf)parWindowView).Control)).KeyDown += (s, e) =>
       {
@@ -48,6 +49,15 @@ namespace WpfApp.Controllers
         }
       };
 
+    }
+
+    /// <summary>
+    /// Создает представление меню конца игры от Wpf
+    /// </summary>
+    /// <returns>Представление меню конца игры от Wpf</returns>
+    public override GameOverMenuView CreateGameOverMenuView()
+    {
+      return new GameOverMenuViewWpf(GameOverMenu, Scores);
     }
 
     /// <summary>
