@@ -11,13 +11,5 @@
     public BaseController()
     {
     }
-
-    /// <summary>
-    /// Запуск контроллера
-    /// </summary>
-    public virtual void Start()
-    {
-      throw new NotImplementedException();
-    }
   }
 }

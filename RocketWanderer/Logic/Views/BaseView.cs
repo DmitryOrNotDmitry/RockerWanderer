@@ -1,4 +1,5 @@
-﻿using Logic.Utils;
+﻿using Logic.Controllers;
+using Logic.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,9 +69,9 @@ namespace Logic.Views
     /// <param name="parChild">Новый дочерний объект</param>
     public void AddChild(BaseView parChild)
     {
-      parChild.Parent = this;
       lock (_children)
       {
+        parChild.Parent = this;
         _children.Add(parChild);
       }
     }
@@ -81,9 +82,9 @@ namespace Logic.Views
     /// <param name="parChild">Удаляемый дочерний объект</param>
     public void RemoveChild(BaseView parChild)
     {
-      parChild.Parent = null;
       lock (_children)
       {
+        parChild.Parent = null;
         _children.Remove(parChild);
       }
     }

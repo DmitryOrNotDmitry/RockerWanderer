@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WpfApp.Views.Menus;
 
 namespace WpfApp.Views.Windows
@@ -53,15 +54,18 @@ namespace WpfApp.Views.Windows
     /// </summary>
     public override void Draw()
     {
-      double clientWidth = _windowControl.ActualWidth;
-      double clientHeight = _windowControl.ActualHeight - SystemParameters.CaptionHeight * 1.75;
+      _windowControl.Dispatcher.Invoke(() =>
+      {
+        double clientWidth = _windowControl.ActualWidth;
+        double clientHeight = _windowControl.ActualHeight - SystemParameters.CaptionHeight * 1.75;
 
-      Window.Width = (int)clientWidth;
-      Window.Height = (int)clientHeight;
+        Window.Width = (int)clientWidth;
+        Window.Height = (int)clientHeight;
 
-      AbsoluteSize = AbsSize();
+        AbsoluteSize = AbsSize();
 
-      DrawChildren();
+        DrawChildren();
+      });
     }
 
     /// <summary>
