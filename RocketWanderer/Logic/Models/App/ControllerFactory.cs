@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Logic.Models.App
 {
+  /// <summary>
+  /// Фабрика по созданию контроллеров
+  /// </summary>
   public abstract class ControllerFactory
   {
     /// <summary>

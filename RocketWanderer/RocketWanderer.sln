@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{8D1F06D6-13A9-4609-8712-2715D59E14FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp", "WpfApp\WpfApp.csproj", "{4C6FF2AD-9A0A-450F-832C-B276D9F081E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp", "WpfApp\WpfApp.csproj", "{4C6FF2AD-9A0A-450F-832C-B276D9F081E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "Console\ConsoleApp.csproj", "{E225BDB3-43DC-44E6-A94F-8EB8928A8A5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4C6FF2AD-9A0A-450F-832C-B276D9F081E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C6FF2AD-9A0A-450F-832C-B276D9F081E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C6FF2AD-9A0A-450F-832C-B276D9F081E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E225BDB3-43DC-44E6-A94F-8EB8928A8A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E225BDB3-43DC-44E6-A94F-8EB8928A8A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E225BDB3-43DC-44E6-A94F-8EB8928A8A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E225BDB3-43DC-44E6-A94F-8EB8928A8A5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -128,6 +128,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Конструктор
     /// </summary>
+    /// <param name="parWindowData">Модель окна</param>
     public ScreenController(WindowData parWindowData)
     {
       _mainMenuScreen = new MainMenuScreen("RocketWanderer");
@@ -172,12 +173,14 @@ namespace Logic.Controllers
     /// <summary>
     /// Создает представление экрана описания
     /// </summary>
+    /// <param name="parWindowData">Модель окна</param>
     /// <returns>Представление экрана описания</returns>
     public abstract DescriptionScreenView CreateDescriptionScreenView(WindowData parWindowData);
 
     /// <summary>
     /// Создает представление экрана рекордов
     /// </summary>
+    /// <param name="parWindowData">Модель окна</param>
     /// <returns>Представление экрана рекордов</returns>
     public abstract RecordsScreenView CreateRecordsScreenView(WindowData parWindowData);
 

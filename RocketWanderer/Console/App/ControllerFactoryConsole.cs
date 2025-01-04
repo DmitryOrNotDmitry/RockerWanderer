@@ -1,18 +1,18 @@
-﻿using Logic.Controllers;
+﻿using ConsoleApp.Controllers;
+using Logic.Controllers;
 using Logic.Models.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfApp.Controllers;
 
-namespace WpfApp.App
+namespace ConsoleApp.App
 {
   /// <summary>
-  /// Фабрика по созданию контроллеров от Wpf
+  /// Фабрика по созданию контроллеров от Console
   /// </summary>
-  public class ControllerFactoryWpf : ControllerFactory
+  public class ControllerFactoryConsole : ControllerFactory
   {
     /// <summary>
     /// Создает контроллер игры
@@ -20,8 +20,7 @@ namespace WpfApp.App
     /// <returns>Контроллер игры</returns>
     public override GameController CreateGameController()
     {
-      GameController gameController = new GameControllerWpf(
-        App.ScreenController.GameScreenView,
+      GameController gameController = new GameControllerConsole(
         App.WindowController.WindowView
       );
 
@@ -37,9 +36,8 @@ namespace WpfApp.App
     /// <returns>Контроллер главного меню</returns>
     public override MenuController CreateMenuController()
     {
-      return new MenuControllerWpf(
-        App.WindowController.WindowView,
-        App.ScreenController.MainMenuScreenView
+      return new MenuControllerConsole(
+        App.WindowController.WindowView
       );
     }
 
@@ -49,7 +47,7 @@ namespace WpfApp.App
     /// <returns>Контроллер экранов</returns>
     public override ScreenController CreateScreenController()
     {
-      return new ScreenControllerWpf(App.WindowController.WindowView);
+      return new ScreenControllerConsole(App.WindowController.WindowView.Window);
     }
 
     /// <summary>
@@ -58,7 +56,7 @@ namespace WpfApp.App
     /// <returns>Контроллер игры окна приложения</returns>
     public override WindowController CreateWindowController()
     {
-      return new WindowControllerWpf();
+      return new WindowControllerConsole();
     }
   }
 }
