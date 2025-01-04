@@ -23,5 +23,15 @@ namespace ConsoleApp.Views.Screens
     {
       return new PlayerSettingsViewConsole(MainMenuScreen.PlayerSettings);
     }
+
+    /// <summary>
+    /// Отрисовывает главный экран
+    /// </summary>
+    public override void Draw()
+    {
+      base.Draw();
+
+      DrawChildren();
+    }
   }
 }

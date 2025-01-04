@@ -63,12 +63,27 @@ namespace Logic.Utils
     }
 
     /// <summary>
+    /// Создает UDim2 по offset
+    /// </summary>
+    /// <param name="parXOffset">Смещение по оси X</param>
+    /// <param name="parYOffset">Смещение по оси Y</param>
+    public static UDim2 FromOffset(int parXOffset, int parYOffset)
+    {
+      return new UDim2(0, parXOffset, 0, parYOffset);
+    }
+
+    /// <summary>
     /// Возвращает UDim2 с нулевыми компонентами
     /// </summary>
     /// <returns></returns>
     public static UDim2 Zero()
     {
       return new UDim2(0, 0, 0, 0);
+    }
+
+    public static UDim2 FromOffset(double v1, int v2)
+    {
+      throw new NotImplementedException();
     }
   }
 }

@@ -22,5 +22,20 @@ namespace ConsoleApp.Views.Windows
     {
       Environment.Exit(0);
     }
+
+    /// <summary>
+    /// Отрисовывает окно
+    /// </summary>
+    public override void Draw()
+    {
+      Console.Clear();
+
+      Window.Width = Console.BufferWidth;
+      Window.Height = Console.BufferHeight;
+
+      AbsoluteSize = AbsSize();
+
+      DrawChildren();
+    }
   }
 }

@@ -22,6 +22,11 @@ namespace Logic.Views
     private UDim2 _size = new UDim2(1, 1);
 
     /// <summary>
+    /// Позиция представления
+    /// </summary>
+    private Vector2 _position = new Vector2(0, 0);
+
+    /// <summary>
     /// Абсолютный размер представления
     /// </summary>
     private Vector2 _absoluteSize = new Vector2(0, 0);
@@ -29,10 +34,19 @@ namespace Logic.Views
     /// <summary>
     /// Размер представления
     /// </summary>
-    public UDim2 Size 
-    { 
-      get { return _size; } 
+    public UDim2 Size
+    {
+      get { return _size; }
       set { _size = value; }
+    }
+
+    /// <summary>
+    /// Позиция представления
+    /// </summary>
+    public Vector2 Position
+    {
+      get { return _position; }
+      set { _position = value; }
     }
 
     /// <summary>

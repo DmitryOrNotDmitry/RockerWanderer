@@ -75,7 +75,7 @@ namespace WpfApp.Views.Menus
     }
 
     /// <summary>
-    /// Отрисовывает объект
+    /// Отрисовывает пункт меню
     /// </summary>
     public override void Draw()
     {

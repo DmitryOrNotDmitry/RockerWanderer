@@ -1,7 +1,9 @@
 ﻿using ConsoleApp.Views.Screens;
 using Logic.Controllers;
 using Logic.Models.Windows;
+using Logic.Views;
 using Logic.Views.Screens;
+using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +17,18 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class ScreenControllerConsole : ScreenController
   {
+    private WindowView _appWindowView;
+
     /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parWindowData">Модель окна</param>
-    public ScreenControllerConsole(WindowData parWindowData) 
-      : base(parWindowData)
+    public ScreenControllerConsole(WindowView parWindowView) 
+      : base(parWindowView.Window)
     {
+      _appWindowView = parWindowView;
+     
+      ChangeScreen(ScreenType.MainMenu);
     }
 
     /// <summary>
@@ -30,7 +37,15 @@ namespace ConsoleApp.Controllers
     /// <param name="parNewScreenType">Новый тип экрана</param>
     public override void ChangeScreen(ScreenType parNewScreenType)
     {
-      throw new NotImplementedException();
+      BaseView? newScreen = GetScreen(parNewScreenType);
+
+      if (newScreen is null)
+      {
+        throw new ArgumentException("Переданного типа экрана еще не реализовано");
+      }
+
+      _appWindowView.RemoveChildren();
+      _appWindowView.AddChild(newScreen);
     }
 
     /// <summary>

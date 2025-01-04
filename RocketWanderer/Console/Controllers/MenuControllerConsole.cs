@@ -1,6 +1,7 @@
 ﻿using ConsoleApp.Views.Menu;
 using Logic.Controllers;
 using Logic.Views.Menus;
+using Logic.Views.Screens;
 using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,10 @@ namespace ConsoleApp.Controllers
     /// Конструктор
     /// </summary>
     /// <param name="parWindowView">Представление окна</param>
-    public MenuControllerConsole(WindowView parWindowView) 
+    public MenuControllerConsole(WindowView parWindowView, MainMenuScreenView parMainMenuScreen) 
       : base(parWindowView)
     {
+      parMainMenuScreen.AddChild(MenuView);
     }
 
     /// <summary>

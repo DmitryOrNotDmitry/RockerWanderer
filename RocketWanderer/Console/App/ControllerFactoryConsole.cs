@@ -37,7 +37,8 @@ namespace ConsoleApp.App
     public override MenuController CreateMenuController()
     {
       return new MenuControllerConsole(
-        App.WindowController.WindowView
+        App.WindowController.WindowView,
+        App.ScreenController.MainMenuScreenView
       );
     }
 
@@ -47,7 +48,7 @@ namespace ConsoleApp.App
     /// <returns>Контроллер экранов</returns>
     public override ScreenController CreateScreenController()
     {
-      return new ScreenControllerConsole(App.WindowController.WindowView.Window);
+      return new ScreenControllerConsole(App.WindowController.WindowView);
     }
 
     /// <summary>
