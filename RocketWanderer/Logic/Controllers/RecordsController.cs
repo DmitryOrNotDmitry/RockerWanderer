@@ -13,7 +13,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Путь к файлу с рекордами
     /// </summary>
-    private string _recordsFilePath = "records.json";
+    private string _recordsFilePath = "..\\..\\..\\..\\records.json";
 
     /// <summary>
     /// Таблица рекордов
