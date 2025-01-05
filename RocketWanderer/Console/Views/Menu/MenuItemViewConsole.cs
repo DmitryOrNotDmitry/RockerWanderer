@@ -23,12 +23,25 @@ namespace ConsoleApp.Views.Menu
     {
       base.Draw();
 
-      int xOffset = -(Item.Title.Length) / 2;
+      int xOffset = -(Item.Title.Length - 1) / 2;
 
       Console.CursorLeft = (int)(Position.X) + xOffset;
       Console.CursorTop = (int)(Position.Y);
       ConsoleColor savColor = Console.ForegroundColor;
-      Console.ForegroundColor = ConsoleColor.Red;
+
+      if (Item.State == MenuItemState.Focused)
+      {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+      }
+      else if (Item.State == MenuItemState.Selected)
+      {
+        Console.ForegroundColor = ConsoleColor.Red;
+      }
+      else
+      {
+        Console.ForegroundColor = ConsoleColor.Green;
+      }
+
       Console.Write(Item.Title);
       Console.ForegroundColor = savColor;
     }

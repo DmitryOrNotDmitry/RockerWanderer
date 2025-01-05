@@ -1,4 +1,5 @@
 ﻿using Logic.Controllers;
+using Logic.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +104,11 @@ namespace Logic.Models.App
           {
             while (true)
             {
-              _windowController.WindowView.Draw();
+              if (Redrawer.NeedRedraw)
+              {
+                Redrawer.NeedRedraw = false;
+                _windowController.WindowView.Draw();
+              }
             }
           }
           catch (TaskCanceledException e)

@@ -13,6 +13,7 @@ namespace ConsoleApp.Views.Windows
     public WindowViewConsole(WindowData parWindow) 
       : base(parWindow)
     {
+      Console.CursorVisible = false;
     }
 
     /// <summary>

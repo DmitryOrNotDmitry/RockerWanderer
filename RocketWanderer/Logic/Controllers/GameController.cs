@@ -292,7 +292,6 @@ namespace Logic.Controllers
       _isGameProcessed = false;
 
       _recordsTable.Add(new Record(PlayerSettings.Name, Scores.Current));
-      //_window.ChangeScreen(ScreenType.MainMenu);
     }
 
     /// <summary>

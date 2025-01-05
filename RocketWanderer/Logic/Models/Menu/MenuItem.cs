@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,7 @@ namespace Logic.Models.Menus
         _state = value;
         if (_state == MenuItemState.Selected)
           Selected?.Invoke();
+        Redrawer.NeedRedraw = true;
       }
     }
 

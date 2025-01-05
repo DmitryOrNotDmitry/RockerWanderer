@@ -36,7 +36,7 @@ namespace WpfApp.Controllers
       IWpfItem.AddChild(parGameScreenView, ScoresView);
       IWpfItem.AddChild(parGameScreenView, GameOverMenuView);
 
-      ((Window)(((WindowViewWpf)parWindowView).Control)).KeyDown += (s, e) =>
+      ((Window)((WindowViewWpf)parWindowView).Control).KeyDown += (s, e) =>
       {
         if (e.Key == Key.Space)
         {

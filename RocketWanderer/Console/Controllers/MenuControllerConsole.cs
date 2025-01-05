@@ -1,5 +1,7 @@
 ﻿using ConsoleApp.Views.Menu;
 using Logic.Controllers;
+using Logic.Models.Menus;
+using Logic.Models.Windows;
 using Logic.Views.Menus;
 using Logic.Views.Screens;
 using Logic.Views.Windows;
@@ -16,6 +18,7 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class MenuControllerConsole : MenuController
   {
+    private bool _needExit = false;
     /// <summary>
     /// Конструктор
     /// </summary>
@@ -24,6 +27,32 @@ namespace ConsoleApp.Controllers
       : base(parWindowView)
     {
       parMainMenuScreen.AddChild(MenuView);
+
+      Menu[MenuItemAction.Exit].Selected += () => { _needExit = true; };
+
+      Task.Run(() =>
+      {
+        while (!_needExit)
+        {
+          if (parWindowView.Window.CurrentScreen == ScreenType.MainMenu)
+          {
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            switch (keyInfo.Key)
+            {
+              case ConsoleKey.UpArrow:
+                Menu.FocusPrev();
+                break;
+              case ConsoleKey.DownArrow:
+                Menu.FocusNext();
+                break;
+              case ConsoleKey.Enter:
+                Menu.SelectFocusedItem();
+                Menu.Focus(MenuItemAction.NewGame);
+                break;
+            }
+          }
+        }
+      });
     }
 
     /// <summary>

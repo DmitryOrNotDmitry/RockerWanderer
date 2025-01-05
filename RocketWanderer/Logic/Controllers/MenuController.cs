@@ -21,12 +21,12 @@ namespace Logic.Controllers
     /// <summary>
     /// Модель главного меню
     /// </summary>
-    private Menu _menu;
+    private NavigatedMenu _menu;
 
     /// <summary>
     /// Модель главного меню
     /// </summary>
-    public Menu Menu
+    public NavigatedMenu Menu
     {
       get { return _menu; }
     }
@@ -49,7 +49,7 @@ namespace Logic.Controllers
     /// </summary>
     public MenuController(WindowView parWindowView)
     {
-      _menu = new Menu();
+      _menu = new NavigatedMenu();
 
       _menu.AddItem(new MenuItem(MenuItemAction.NewGame, "Новая игра"));
       _menu.AddItem(new MenuItem(MenuItemAction.Records, "Рекорды"));

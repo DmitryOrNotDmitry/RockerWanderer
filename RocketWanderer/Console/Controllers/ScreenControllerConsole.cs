@@ -1,6 +1,7 @@
 ﻿using ConsoleApp.Views.Screens;
 using Logic.Controllers;
 using Logic.Models.Windows;
+using Logic.Utils;
 using Logic.Views;
 using Logic.Views.Screens;
 using Logic.Views.Windows;
@@ -29,6 +30,23 @@ namespace ConsoleApp.Controllers
       _appWindowView = parWindowView;
      
       ChangeScreen(ScreenType.MainMenu);
+
+      Task.Run(() =>
+      {
+        while (true)
+        {
+          ScreenType currentScreen = _appWindowView.Window.CurrentScreen;
+          if (currentScreen == ScreenType.Description || currentScreen == ScreenType.Records)
+          {
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            if (keyInfo.Key == ConsoleKey.Backspace)
+            {
+              _appWindowView.Window.ChangeScreen(ScreenType.MainMenu);
+              Redrawer.NeedRedraw = true;
+            }
+          }
+        }
+      });
     }
 
     /// <summary>

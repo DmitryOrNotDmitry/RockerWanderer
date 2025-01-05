@@ -46,6 +46,14 @@ namespace Logic.Models.Windows
     }
 
     /// <summary>
+    /// Текущий экран
+    /// </summary>
+    public ScreenType CurrentScreen
+    {
+      get { return _currentScreen; }
+    }
+
+    /// <summary>
     /// Делегат, представляющий метод, который будет вызываться при смене экрана
     /// </summary>
     /// <param name="parNewScreen">Новый тип экрана</param>
