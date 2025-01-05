@@ -3,6 +3,7 @@ using ConsoleApp.Views.Menu;
 using Logic.Controllers;
 using Logic.Views.Game;
 using Logic.Views.Menus;
+using Logic.Views.Screens;
 using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,13 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class GameControllerConsole : GameController
   {
-    public GameControllerConsole(WindowView parWindowView) 
+    public GameControllerConsole(GameScreenView parGameScreenView, WindowView parWindowView) 
       : base(parWindowView)
     {
+      parGameScreenView.AddChild(MapView);
+      parGameScreenView.AddChild(PauseMenuView);
+      parGameScreenView.AddChild(ScoresView);
+      parGameScreenView.AddChild(GameOverMenuView);
     }
 
     /// <summary>

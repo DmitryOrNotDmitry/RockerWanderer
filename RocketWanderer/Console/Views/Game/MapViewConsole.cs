@@ -23,7 +23,7 @@ namespace ConsoleApp.Views.Game
     public override RocketView CreateRocketView()
     {
       RocketView rocketView = new RocketViewConsole(Map.Rocket);
-      //IWpfItem.AddChild(this, rocketView);
+      this.AddChild(rocketView);
 
       return rocketView;
     }
@@ -35,7 +35,7 @@ namespace ConsoleApp.Views.Game
     public override PlanetView CreateStartPlanetView()
     {
       PlanetView newStartPlanetView = new PlanetViewConsole(Map.StartPlanet);
-      //IWpfItem.AddChild(this, newStartPlanetView);
+      this.AddChild(newStartPlanetView);
 
       return newStartPlanetView;
     }
@@ -51,7 +51,7 @@ namespace ConsoleApp.Views.Game
 
       parPlanet.Despawned += () =>
       {
-        //IWpfItem.RemoveChild(this, planetView);
+        this.RemoveChild(planetView);
       };
 
       return planetView;
@@ -63,6 +63,11 @@ namespace ConsoleApp.Views.Game
     /// <param name="parNewPlanet">Модель планеты</param>
     protected override void ProcessCreatePlanetView(Planet parNewPlanet)
     {
+      base.ProcessCreatePlanetView(parNewPlanet);
+      if (PlanetsView.Last != null)
+      {
+        this.AddChild(PlanetsView.Last.ValueRef);
+      }
     }
 
     /// <summary>
@@ -72,7 +77,7 @@ namespace ConsoleApp.Views.Game
     public override SunView CreateSunView()
     {
       SunView sunView = new SunViewConsole(Map.Sun);
-      //IWpfItem.AddChild(this, sunView);
+      this.AddChild(sunView);
 
       return sunView;
     }
@@ -85,7 +90,7 @@ namespace ConsoleApp.Views.Game
     public override AsteroidBeltView CreateAsteroidBeltView(AsteroidBelt parAsteroidBelt)
     {
       AsteroidBeltView newAsteroidBeltView = new AsteroidBeltViewConsole(parAsteroidBelt);
-      //IWpfItem.AddChild(this, newAsteroidBeltView);
+      this.AddChild(newAsteroidBeltView);
 
       return newAsteroidBeltView;
     }
@@ -96,6 +101,20 @@ namespace ConsoleApp.Views.Game
     public override void Reset()
     {
       base.Reset();
+    }
+
+    /// <summary>
+    /// Отрисовывает карту
+    /// </summary>
+    public override void Draw()
+    {
+      base.Draw();
+
+      Vector2 parentSize = Parent.AbsoluteSize;
+
+      double scale = parentSize.Y / Map.Size.Y;
+
+      DrawChildren();
     }
   }
 }

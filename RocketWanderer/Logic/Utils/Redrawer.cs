@@ -30,7 +30,7 @@ namespace Logic.Utils
       { 
         lock (_lock)
         {
-          return _needRedraw;
+          return true;
         }
       }
       set 

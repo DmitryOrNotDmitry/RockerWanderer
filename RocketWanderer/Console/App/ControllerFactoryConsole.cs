@@ -21,6 +21,7 @@ namespace ConsoleApp.App
     public override GameController CreateGameController()
     {
       GameController gameController = new GameControllerConsole(
+        App.ScreenController.GameScreenView,
         App.WindowController.WindowView
       );
 

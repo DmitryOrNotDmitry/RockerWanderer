@@ -14,5 +14,15 @@ namespace ConsoleApp.Views.Screens
       : base(parGameScreen)
     {
     }
+
+    /// <summary>
+    /// Отрисовывает экран игры
+    /// </summary>
+    public override void Draw()
+    {
+      base.Draw();
+
+      DrawChildren();
+    }
   }
 }
