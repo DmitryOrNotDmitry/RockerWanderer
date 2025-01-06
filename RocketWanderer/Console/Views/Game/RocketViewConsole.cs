@@ -1,4 +1,5 @@
-﻿using Logic.Models.Game;
+﻿using ConsoleApp.App;
+using Logic.Models.Game;
 using Logic.Utils;
 using Logic.Views.Game;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace ConsoleApp.Views.Game
 {
@@ -16,6 +18,8 @@ namespace ConsoleApp.Views.Game
     {
     }
 
+    private Vector2 _prevPosition = new Vector2(0, 0);
+
     /// <summary>
     /// Отрисовывает ракету
     /// </summary>
@@ -23,17 +27,21 @@ namespace ConsoleApp.Views.Game
     {
       base.Draw();
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+      
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      double scale = parentSize.Y / Map.Size.Y;
+      double scaleY = parentSize.Y / Map.Size.Y;
+      double scaleX = scaleY * FontInfo.FontYScale;
 
-      Vector2 center = Rocket.Center;
-      Vector2 consoleCenter = center.Scale(scale);
+      Vector2 center = Rocket.Position;
+      Vector2 rocketCenter = new Vector2((center.X - Map.XCameraOffset) * scaleX, center.Y * scaleY);
 
       char fillChar = '#';
-      Console.SetCursorPosition((int)consoleCenter.X, (int)consoleCenter.Y);
-      Console.Write(fillChar);
 
+      //console.WriteBuffer((int)_prevPosition.X, (int)_prevPosition.Y, ' ');
+      console.WriteBuffer((int)rocketCenter.X, (int)rocketCenter.Y, fillChar);
+      _prevPosition = rocketCenter;
     }
   }
 }

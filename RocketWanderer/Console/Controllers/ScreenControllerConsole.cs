@@ -1,5 +1,6 @@
 ﻿using ConsoleApp.Views.Screens;
 using Logic.Controllers;
+using Logic.Models.Menus;
 using Logic.Models.Windows;
 using Logic.Utils;
 using Logic.Views;
@@ -30,23 +31,6 @@ namespace ConsoleApp.Controllers
       _appWindowView = parWindowView;
      
       ChangeScreen(ScreenType.MainMenu);
-
-      Task.Run(() =>
-      {
-        while (true)
-        {
-          ScreenType currentScreen = _appWindowView.Window.CurrentScreen;
-          if (currentScreen == ScreenType.Description || currentScreen == ScreenType.Records)
-          {
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
-            if (keyInfo.Key == ConsoleKey.Backspace)
-            {
-              _appWindowView.Window.ChangeScreen(ScreenType.MainMenu);
-              Redrawer.NeedRedraw = true;
-            }
-          }
-        }
-      });
     }
 
     /// <summary>
@@ -102,6 +86,19 @@ namespace ConsoleApp.Controllers
     public override RecordsScreenView CreateRecordsScreenView(WindowData parWindowData)
     {
       return new RecordsScreenViewConsole(RecordsScreen);
+    }
+
+    /// <summary>
+    /// Обработчик события на нажатие клавиши "Backspace"
+    /// </summary>
+    public void OnBackspace()
+    {
+      ScreenType currentScreen = _appWindowView.Window.CurrentScreen;
+      if (currentScreen == ScreenType.Description || currentScreen == ScreenType.Records)
+      {
+        _appWindowView.Window.ChangeScreen(ScreenType.MainMenu);
+        Redrawer.NeedRedraw = true;
+      }
     }
 
   }

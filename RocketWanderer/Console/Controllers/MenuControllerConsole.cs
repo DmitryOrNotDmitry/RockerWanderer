@@ -18,7 +18,8 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class MenuControllerConsole : MenuController
   {
-    private bool _needExit = false;
+    private WindowData _window;
+
     /// <summary>
     /// Конструктор
     /// </summary>
@@ -26,33 +27,9 @@ namespace ConsoleApp.Controllers
     public MenuControllerConsole(WindowView parWindowView, MainMenuScreenView parMainMenuScreen) 
       : base(parWindowView)
     {
+      _window = parWindowView.Window;
+
       parMainMenuScreen.AddChild(MenuView);
-
-      Menu[MenuItemAction.Exit].Selected += () => { _needExit = true; };
-
-      Task.Run(() =>
-      {
-        while (!_needExit)
-        {
-          if (parWindowView.Window.CurrentScreen == ScreenType.MainMenu)
-          {
-            ConsoleKeyInfo keyInfo = Console.ReadKey();
-            switch (keyInfo.Key)
-            {
-              case ConsoleKey.UpArrow:
-                Menu.FocusPrev();
-                break;
-              case ConsoleKey.DownArrow:
-                Menu.FocusNext();
-                break;
-              case ConsoleKey.Enter:
-                Menu.SelectFocusedItem();
-                Menu.Focus(MenuItemAction.NewGame);
-                break;
-            }
-          }
-        }
-      });
     }
 
     /// <summary>
@@ -62,6 +39,40 @@ namespace ConsoleApp.Controllers
     public override MenuView CreateMenuView()
     {
       return new MenuViewConsole(Menu);
+    }
+
+    /// <summary>
+    /// Обработчик события на нажатие клавиши "Вверх"
+    /// </summary>
+    public void OnArrowUp()
+    {
+      if (_window.CurrentScreen == ScreenType.MainMenu)
+      {
+        Menu.FocusPrev();
+      }
+    }
+
+    /// <summary>
+    /// Обработчик события на нажатие клавиши "Вниз"
+    /// </summary>
+    public void OnArrowDown()
+    {
+      if (_window.CurrentScreen == ScreenType.MainMenu)
+      {
+        Menu.FocusNext();
+      }
+    }
+
+    /// <summary>
+    /// Обработчик события на нажатие клавиши "Enter"
+    /// </summary>
+    public void OnEnter()
+    {
+      if (_window.CurrentScreen == ScreenType.MainMenu)
+      {
+        Menu.SelectFocusedItem();
+        Menu.Focus(MenuItemAction.NewGame);
+      }
     }
   }
 }

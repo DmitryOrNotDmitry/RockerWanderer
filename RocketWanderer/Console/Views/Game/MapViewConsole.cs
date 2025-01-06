@@ -1,8 +1,10 @@
-﻿using Logic.Models.Game;
+﻿using ConsoleApp.App;
+using Logic.Models.Game;
 using Logic.Utils;
 using Logic.Views.Game;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,7 +68,7 @@ namespace ConsoleApp.Views.Game
       base.ProcessCreatePlanetView(parNewPlanet);
       if (PlanetsView.Last != null)
       {
-        this.AddChild(PlanetsView.Last.ValueRef);
+        this.SetFirstChild(PlanetsView.Last.ValueRef);
       }
     }
 
@@ -110,9 +112,18 @@ namespace ConsoleApp.Views.Game
     {
       base.Draw();
 
+      string scoreLabel = "Пауза - Backspace";
+
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      double scale = parentSize.Y / Map.Size.Y;
+      double scaleY = parentSize.Y / Map.Size.Y;
+
+      int y = (int)(Map.TopAsteroidBelt.Size.Y * scaleY);
+      int x = 2;
+
+      console.WriteBuffer(x, y, scoreLabel);
 
       DrawChildren();
     }

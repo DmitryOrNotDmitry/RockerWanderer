@@ -91,6 +91,19 @@ namespace Logic.Views
     }
 
     /// <summary>
+    /// Добавляет новый дочерний объект в начало
+    /// </summary>
+    /// <param name="parChild">Новый дочерний объект</param>
+    public void SetFirstChild(BaseView parChild)
+    {
+      lock (_children)
+      {
+        parChild.Parent = this;
+        _children.Insert(0, parChild);
+      }
+    }
+
+    /// <summary>
     /// Удаляет дочерний объект
     /// </summary>
     /// <param name="parChild">Удаляемый дочерний объект</param>

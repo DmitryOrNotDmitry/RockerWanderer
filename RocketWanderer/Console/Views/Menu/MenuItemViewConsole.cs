@@ -16,34 +16,44 @@ namespace ConsoleApp.Views.Menu
     {
     }
 
+    private Vector2 prevPosition = new Vector2(0, 0);
+
     /// <summary>
     /// Отрисовывает пункт меню
     /// </summary>
     public override void Draw()
     {
       base.Draw();
-
+      
       int xOffset = -(Item.Title.Length - 1) / 2;
 
-      Console.CursorLeft = (int)(Position.X) + xOffset;
-      Console.CursorTop = (int)(Position.Y);
-      ConsoleColor savColor = Console.ForegroundColor;
+      Vector2 curPosition = new Vector2(Position.X + xOffset, Position.Y);
 
-      if (Item.State == MenuItemState.Focused)
+      if (curPosition != prevPosition)
       {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-      }
-      else if (Item.State == MenuItemState.Selected)
-      {
-        Console.ForegroundColor = ConsoleColor.Red;
-      }
-      else
-      {
-        Console.ForegroundColor = ConsoleColor.Green;
+        prevPosition = curPosition;
+
+        Console.CursorLeft = (int)(curPosition.X);
+        Console.CursorTop = (int)(curPosition.Y);
+        ConsoleColor savColor = Console.ForegroundColor;
+
+        if (Item.State == MenuItemState.Focused)
+        {
+          Console.ForegroundColor = ConsoleColor.Yellow;
+        }
+        else if (Item.State == MenuItemState.Selected)
+        {
+          Console.ForegroundColor = ConsoleColor.Red;
+        }
+        else
+        {
+          Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        Console.Write(Item.Title);
+        Console.ForegroundColor = savColor;
       }
 
-      Console.Write(Item.Title);
-      Console.ForegroundColor = savColor;
     }
   }
 }

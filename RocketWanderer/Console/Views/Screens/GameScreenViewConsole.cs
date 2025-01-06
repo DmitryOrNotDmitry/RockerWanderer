@@ -1,4 +1,5 @@
-﻿using Logic.Models.Screens;
+﻿using ConsoleApp.App;
+using Logic.Models.Screens;
 using Logic.Views.Screens;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,12 @@ namespace ConsoleApp.Views.Screens
     {
       base.Draw();
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+      console.ClearBuffer();
+
       DrawChildren();
+
+      console.DropBuffer();
     }
   }
 }

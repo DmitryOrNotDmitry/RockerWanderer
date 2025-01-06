@@ -1,4 +1,5 @@
-﻿using Logic.Models.Game;
+﻿using ConsoleApp.App;
+using Logic.Models.Game;
 using Logic.Utils;
 using Logic.Views.Game;
 using System;
@@ -25,10 +26,15 @@ namespace ConsoleApp.Views.Game
 
       Vector2 parentSize = Parent.AbsoluteSize;
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+
       double scale = parentSize.Y / Map.Size.Y;
 
-      int startY = (int)((AsteroidBelt.Position.Y - AsteroidBelt.Size.Y / 2) * scale);
-      int endY =   (int)((AsteroidBelt.Position.Y + AsteroidBelt.Size.Y / 2) * scale);
+      int countStrs = (int)(AsteroidBelt.Size.Y * scale);
+
+      int startY = (int)Math.Round((AsteroidBelt.Position.Y - AsteroidBelt.Size.Y / 2) * scale);
+      int endY =   startY + countStrs;
+      endY = Math.Min(endY, Console.BufferHeight);
 
       char fillChar = '+';
 
@@ -36,8 +42,7 @@ namespace ConsoleApp.Views.Game
       {
         for (int x = 0; x < Console.BufferWidth; x++)
         {
-          Console.SetCursorPosition(x, y);
-          Console.Write(fillChar);
+          console.WriteBuffer(x, y, fillChar);
         }
       }
     }

@@ -1,5 +1,8 @@
 ﻿using ConsoleApp.App;
+using ConsoleApp.Controllers;
+using Logic.Controllers;
 using Logic.Models.App;
+using Logic.Models.Menus;
 
 /// <summary>
 /// Приложение Wpf
@@ -25,9 +28,30 @@ public class AppConsole
       _app.OnExit();
     };
 
+    FontInfo.Init();
+
     while (true) 
     {
-      
+      ConsoleKeyInfo keyInfo = Console.ReadKey();
+      switch (keyInfo.Key)
+      {
+        case ConsoleKey.UpArrow:
+          ((MenuControllerConsole)_app.MenuController).OnArrowUp();
+          break;
+        case ConsoleKey.DownArrow:
+          ((MenuControllerConsole)_app.MenuController).OnArrowDown();
+          break;
+        case ConsoleKey.Enter:
+          ((MenuControllerConsole)_app.MenuController).OnEnter();
+          break;
+        case ConsoleKey.Backspace:
+          ((ScreenControllerConsole)_app.ScreenController).OnBackspace();
+          _app.GameController.OnPauseAction();
+          break;
+        case ConsoleKey.Spacebar:
+          _app.GameController.RocketDepartAction();
+          break;
+      }
     }
   }
 
