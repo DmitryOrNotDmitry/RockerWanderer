@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Screens
 {
+  /// <summary>
+  /// Представление экрана описания от Console
+  /// </summary>
   public class DescriptionScreenViewConsole : DescriptionScreenView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parDescriptionScreen">Модель экрана описания</param>
     public DescriptionScreenViewConsole(DescriptionScreen parDescriptionScreen) 
       : base(parDescriptionScreen)
     {

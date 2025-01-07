@@ -11,8 +11,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Menu
 {
+  /// <summary>
+  /// Представление меню конца игры от Console
+  /// </summary>
   public class GameOverMenuViewConsole : GameOverMenuView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parMenu">Модель меню</param>
+    /// <param name="parScores">Модель очков игрока</param>
     public GameOverMenuViewConsole(Logic.Models.Menus.Menu parMenu, Scores parScores) 
       : base(parMenu, parScores)
     {

@@ -18,12 +18,16 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class MenuControllerConsole : MenuController
   {
+    /// <summary>
+    /// Модель окна приложения
+    /// </summary>
     private WindowData _window;
 
     /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parWindowView">Представление окна</param>
+    /// <param name="parMainMenuScreen">Представление экрана главного меню</param>
     public MenuControllerConsole(WindowView parWindowView, MainMenuScreenView parMainMenuScreen) 
       : base(parWindowView)
     {

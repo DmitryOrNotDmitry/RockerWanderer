@@ -11,8 +11,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Screens
 {
+  /// <summary>
+  /// Представление экрана главного меню от Console
+  /// </summary>
   public class MainMenuScreenViewConsole : MainMenuScreenView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parMainMenuScreen">Модель экрана главного меню</param>
     public MainMenuScreenViewConsole(MainMenuScreen parMainMenuScreen)
       : base(parMainMenuScreen)
     {
@@ -28,7 +35,7 @@ namespace ConsoleApp.Views.Screens
     }
 
     /// <summary>
-    /// Отрисовывает главный экран
+    /// Отрисовывает экран главного меню
     /// </summary>
     public override void Draw()
     {

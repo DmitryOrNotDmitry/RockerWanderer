@@ -24,6 +24,11 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class GameControllerConsole : GameController
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parGameScreenView">Модель экрана игры</param>
+    /// <param name="parWindowView">Представление окна приложения</param>
     public GameControllerConsole(GameScreenView parGameScreenView, WindowView parWindowView) 
       : base(parWindowView)
     {
@@ -79,7 +84,8 @@ namespace ConsoleApp.Controllers
       {
         if (!PauseMenu.IsEnabled)
         {
-          ConsoleAdapter.Instance.Clear();
+          ConsoleAdapter console = ConsoleAdapter.Instance;
+          console.Clear(new Rect(console.Width / 2 - 10, console.Height / 2 - 8, 20, 16));
         }
       }
     }
@@ -91,7 +97,9 @@ namespace ConsoleApp.Controllers
     {
       if (IsGameProcessed)
       {
-        ConsoleAdapter.Instance.Clear();
+        ConsoleAdapter console = ConsoleAdapter.Instance;
+        console.Clear(new Rect(console.Width / 2 - 10, console.Height / 2 - 8, 20, 16));
+
         base.StopGame();
       }
     }

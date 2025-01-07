@@ -11,13 +11,23 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace ConsoleApp.Views.Game
 {
+  /// <summary>
+  /// Представление ракеты от Console
+  /// </summary>
   public class RocketViewConsole : RocketView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parRocket">Модель ракеты</param>
     public RocketViewConsole(Rocket parRocket)
       : base(parRocket)
     {
     }
 
+    /// <summary>
+    /// Предыдущая позиция ракеты
+    /// </summary>
     private Vector2 _prevPosition = new Vector2(0, 0);
 
     /// <summary>

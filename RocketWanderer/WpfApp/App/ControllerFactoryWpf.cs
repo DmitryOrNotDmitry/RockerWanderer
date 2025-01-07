@@ -1,5 +1,5 @@
-﻿using Logic.Controllers;
-using Logic.Models.App;
+﻿using Logic.App;
+using Logic.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ using WpfApp.Controllers;
 
 namespace WpfApp.App
 {
-  /// <summary>
-  /// Фабрика по созданию контроллеров от Wpf
-  /// </summary>
-  public class ControllerFactoryWpf : ControllerFactory
+    /// <summary>
+    /// Фабрика по созданию контроллеров от Wpf
+    /// </summary>
+    public class ControllerFactoryWpf : ControllerFactory
   {
     /// <summary>
     /// Создает контроллер игры

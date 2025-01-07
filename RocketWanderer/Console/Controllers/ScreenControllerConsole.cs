@@ -19,12 +19,15 @@ namespace ConsoleApp.Controllers
   /// </summary>
   public class ScreenControllerConsole : ScreenController
   {
+    /// <summary>
+    /// Представление окна приложения
+    /// </summary>
     private WindowView _appWindowView;
 
     /// <summary>
     /// Конструктор
     /// </summary>
-    /// <param name="parWindowData">Модель окна</param>
+    /// <param name="parWindowView">Представление окна приложения</param>
     public ScreenControllerConsole(WindowView parWindowView) 
       : base(parWindowView.Window)
     {
@@ -120,10 +123,8 @@ namespace ConsoleApp.Controllers
           string name = MainMenuScreenView.PlayerSettingsView.PlayerSettings.Name;
 
           MainMenuScreenView.PlayerSettingsView.PlayerSettings.Name = name + parKeyInfo.KeyChar;
-        }
+        }     
       }
-
-      Redrawer.NeedRedraw = true;
     }
 
   }

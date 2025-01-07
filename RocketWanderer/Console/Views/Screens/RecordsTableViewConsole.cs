@@ -13,8 +13,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Screens
 {
+  /// <summary>
+  /// Представление таблицы рекордов от Console
+  /// </summary>
   public class RecordsTableViewConsole : RecordsTableView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parRecordsTable">Модель таблицы рекордов</param>
     public RecordsTableViewConsole(RecordsTable parRecordsTable) 
       : base(parRecordsTable)
     {

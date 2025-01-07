@@ -12,15 +12,28 @@ using static ConsoleApp.Views.Game.PlanetViewConsole;
 
 namespace ConsoleApp.Views.Game
 {
+  /// <summary>
+  /// Представление солнца от Console
+  /// </summary>
   public class SunViewConsole : SunView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parSun">Модель солнца</param>
     public SunViewConsole(Sun parSun) 
       : base(parSun)
     {
     }
 
+    /// <summary>
+    /// Прямоугольник, который был отрисован последний раз
+    /// </summary>
     private Rect prevLocation = new Rect();
 
+    /// <summary>
+    /// Прямоугольник, который был отрисован последний раз
+    /// </summary>
     public Rect PrevLocation
     {
       get { return prevLocation; }
@@ -53,7 +66,6 @@ namespace ConsoleApp.Views.Game
         char fillChar = '@';
         
         prevLocation = new Rect((int)xPosOffset - radiusX, (int)yPosOffset - radiusY, (int)width, (int)height);
-        prevLocation.Positive();
 
         CircleDrawer.Draw(radiusX, radiusY, xPosOffset, yPosOffset, fillChar,
           (distance) =>

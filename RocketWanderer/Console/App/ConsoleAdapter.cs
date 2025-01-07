@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ConsoleApp.App
 {
   /// <summary>
-  /// Адаптер класса Console
+  /// Адаптер класса Console, представляет двойную буферизацию
   /// </summary>
   public class ConsoleAdapter
   {
@@ -52,26 +52,10 @@ namespace ConsoleApp.App
     /// </summary>
     private char[,] _prevBuffer;
 
-    struct ConsoleStringOut
-    {
-      public int _x;
-      public int _y;
-      public string _out;
-      public ConsoleColor _color;
-
-      public ConsoleStringOut(int parX, int parY, string parString, ConsoleColor parColor)
-      {
-        _x = parX;
-        _y = parY;
-        _out = parString;
-        _color = parColor;
-      }
-    }
-
     /// <summary>
     /// Буфер цветных строк
     /// </summary>
-    private List<ConsoleStringOut> _coloredOut = new();
+    private List<ConsoleFormatOut> _coloredOut = new();
 
     /// <summary>
     /// Ширина консоли
@@ -117,7 +101,27 @@ namespace ConsoleApp.App
       lock (_prevBuffer)
       {
         Console.Clear();
-        ClearBuffer(_prevBuffer);
+        ClearBuffer(_prevBuffer, new Rect(0, 0, Width, Height));
+      }
+    }
+
+    /// <summary>
+    /// Заполняет консоль пустыми символами в заданной области
+    /// </summary>
+    public void Clear(Rect parRect)
+    {
+      string emptyStr = new(_emptyChar, parRect.Width);
+      int endY = parRect.Y + parRect.Height;
+
+      lock (_prevBuffer)
+      {
+        for (int y = parRect.Y; y < endY; y++)
+        {
+          Console.SetCursorPosition(parRect.X, y);
+          Console.Write(emptyStr);
+        }
+
+        ClearBuffer(_prevBuffer, parRect);
       }
     }
 
@@ -143,14 +147,18 @@ namespace ConsoleApp.App
     }
 
     /// <summary>
-    /// Полностью очищает буфер
-    /// </summary>
+    /// Очищает буфер в области
+    /// </summary> 
     /// <param name="parBuffer">Буфер, который требуется очистить</param>
-    private void ClearBuffer(char[,] parBuffer)
+    /// <param name="parRect">Область, которая будет очищена</param>
+    private void ClearBuffer(char[,] parBuffer, Rect parRect)
     {
-      for (int y = 0; y < Height; y++)
+      int endY = parRect.Y + parRect.Height;
+      int endX = parRect.X + parRect.Width;
+
+      for (int y = parRect.Y; y < endY; y++)
       {
-        for (int x = 0; x < Width; x++)
+        for (int x = parRect.X; x < endX; x++)
         {
           parBuffer[y, x] = _emptyChar;
         }
@@ -164,7 +172,7 @@ namespace ConsoleApp.App
     {
       lock (_buffer)
       {
-        ClearBuffer(_buffer);
+        ClearBuffer(_buffer, new Rect(0, 0, Width, Height));
       }
     }
 
@@ -233,7 +241,7 @@ namespace ConsoleApp.App
     {
       lock (_coloredOut)
       {
-        _coloredOut.Add(new ConsoleStringOut(parX, parY, parString, parColor));
+        _coloredOut.Add(new ConsoleFormatOut(parX, parY, parString, parColor));
       }
     }
 
@@ -278,12 +286,12 @@ namespace ConsoleApp.App
       lock (_coloredOut)
       {
         ConsoleColor oldColor = Console.ForegroundColor;
-        foreach (ConsoleStringOut elOut in _coloredOut)
+        foreach (ConsoleFormatOut elOut in _coloredOut)
         {
-          Console.ForegroundColor = elOut._color;
+          Console.ForegroundColor = elOut.Color;
 
-          Console.SetCursorPosition(elOut._x, elOut._y);
-          Console.Write(elOut._out);
+          Console.SetCursorPosition(elOut.X, elOut.Y);
+          Console.Write(elOut.Out);
         }
         Console.ForegroundColor = oldColor;
         _coloredOut.Clear();

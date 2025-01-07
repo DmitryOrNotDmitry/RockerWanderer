@@ -1,5 +1,5 @@
-﻿using Logic.Controllers;
-using Logic.Models.App;
+﻿using Logic.App;
+using Logic.Controllers;
 using Logic.Models.Screens;
 using Logic.Records;
 using System.Configuration;
@@ -15,10 +15,10 @@ using WpfApp.Views.Windows;
 
 namespace WpfApp
 {
-  /// <summary>
-  /// Приложение Wpf
-  /// </summary>
-  public partial class AppWpf : Application
+    /// <summary>
+    /// Приложение Wpf
+    /// </summary>
+    public partial class AppWpf : Application
   {
     /// <summary>
     /// Главный объект приложения

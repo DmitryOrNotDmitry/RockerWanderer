@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Windows
 {
+  /// <summary>
+  /// Представление главного окна игры от Console
+  /// </summary>
   public class WindowViewConsole : WindowView
   {
     /// <summary>
@@ -18,6 +21,10 @@ namespace ConsoleApp.Views.Windows
     /// </summary>
     private ConsoleAdapter _console;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parWindow">Модель окна приложения</param>
     public WindowViewConsole(WindowData parWindow) 
       : base(parWindow)
     {

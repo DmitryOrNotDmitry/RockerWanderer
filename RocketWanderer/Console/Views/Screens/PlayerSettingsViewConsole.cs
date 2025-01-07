@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Screens
 {
+  /// <summary>
+  /// Представление настроек игрока от Console
+  /// </summary>
   public class PlayerSettingsViewConsole : PlayerSettingsView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parPlayerSettings">Модель настроек игрока</param>
     public PlayerSettingsViewConsole(PlayerSettings parPlayerSettings) 
       : base(parPlayerSettings)
     {

@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Menu
 {
+  /// <summary>
+  /// Представление меню паузы от Console
+  /// </summary>
   public class PauseMenuViewConsole : MenuViewConsole
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parMenu">Модель меню</param>
     public PauseMenuViewConsole(Logic.Models.Menus.Menu parMenu) 
       : base(parMenu)
     {

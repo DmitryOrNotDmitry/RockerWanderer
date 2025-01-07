@@ -1,8 +1,9 @@
 ﻿using ConsoleApp.App;
 using ConsoleApp.Controllers;
+using Logic.App;
 using Logic.Controllers;
-using Logic.Models.App;
 using Logic.Models.Menus;
+using Logic.Utils;
 
 /// <summary>
 /// Приложение Wpf
@@ -32,7 +33,10 @@ public class AppConsole
     
     while (true) 
     {
-      ConsoleKeyInfo keyInfo = Console.ReadKey();
+      ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+      
+      ((ScreenControllerConsole)_app.ScreenController).OnNickEnter(keyInfo);
+
       switch (keyInfo.Key)
       {
         case ConsoleKey.UpArrow:
@@ -56,7 +60,7 @@ public class AppConsole
           break;
       }
 
-      ((ScreenControllerConsole)_app.ScreenController).OnNickEnter(keyInfo);
+      Redrawer.NeedRedraw = true;
     }
   }
 

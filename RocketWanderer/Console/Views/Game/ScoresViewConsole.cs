@@ -11,15 +11,23 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace ConsoleApp.Views.Game
 {
+  /// <summary>
+  /// Представление табла очков от Console
+  /// </summary>
   public class ScoresViewConsole : ScoresView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parScores">Модель очков игрока</param>
+    /// <param name="parMap">Модель карты</param>
     public ScoresViewConsole(Scores parScores, Map parMap) 
       : base(parScores, parMap)
     {
     }
 
     /// <summary>
-    /// Отрисовывает ракету
+    /// Отрисовывает очки игрока
     /// </summary>
     public override void Draw()
     {

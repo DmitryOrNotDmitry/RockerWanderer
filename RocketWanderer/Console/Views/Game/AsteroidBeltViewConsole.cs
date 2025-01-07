@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Game
 {
+  /// <summary>
+  /// Представление пояса астероидов от Console
+  /// </summary>
   public class AsteroidBeltViewConsole : AsteroidBeltView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parAsteroidBelt">Модель пояса астероидов</param>
     public AsteroidBeltViewConsole(AsteroidBelt parAsteroidBelt) 
       : base(parAsteroidBelt)
     {

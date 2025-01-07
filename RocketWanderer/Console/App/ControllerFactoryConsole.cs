@@ -1,6 +1,6 @@
 ﻿using ConsoleApp.Controllers;
+using Logic.App;
 using Logic.Controllers;
-using Logic.Models.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.App
 {
-  /// <summary>
-  /// Фабрика по созданию контроллеров от Console
-  /// </summary>
-  public class ControllerFactoryConsole : ControllerFactory
+    /// <summary>
+    /// Фабрика по созданию контроллеров от Console
+    /// </summary>
+    public class ControllerFactoryConsole : ControllerFactory
   {
     /// <summary>
     /// Создает контроллер игры

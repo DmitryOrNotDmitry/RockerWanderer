@@ -11,8 +11,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Game
 {
+  /// <summary>
+  /// Представление карты от Console
+  /// </summary>
   public class MapViewConsole : MapView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parMap">Модель карты</param>
     public MapViewConsole(Map parMap) 
       : base(parMap)
     {

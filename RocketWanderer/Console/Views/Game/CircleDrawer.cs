@@ -9,7 +9,7 @@ using static ConsoleApp.Views.Game.PlanetViewConsole;
 namespace ConsoleApp.Views.Game
 {
   /// <summary>
-  /// Художник по кругу
+  /// Художник круга
   /// </summary>
   public class CircleDrawer
   {

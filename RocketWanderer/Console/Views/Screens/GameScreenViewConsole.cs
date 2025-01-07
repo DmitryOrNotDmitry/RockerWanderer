@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Screens
 {
+  /// <summary>
+  /// Представление экрана игры от Console
+  /// </summary>
   public class GameScreenViewConsole : GameScreenView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parGameScreen">Модель экрана игры</param>
     public GameScreenViewConsole(GameScreen parGameScreen) 
       : base(parGameScreen)
     {

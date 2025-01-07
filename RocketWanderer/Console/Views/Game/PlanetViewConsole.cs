@@ -12,16 +12,28 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Game
 {
+  /// <summary>
+  /// Представление планеты от Console
+  /// </summary>
   public class PlanetViewConsole : PlanetView
   {
-
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parPlanet">Модель планеты</param>
     public PlanetViewConsole(Planet parPlanet) 
       : base(parPlanet)
     {
     }
 
+    /// <summary>
+    /// Прямоугольник, который был отрисован последний раз
+    /// </summary>
     private Rect prevLocation = new Rect();
 
+    /// <summary>
+    /// Прямоугольник, который был отрисован последний раз
+    /// </summary>
     public Rect PrevLocation
     {
       get { return prevLocation; }

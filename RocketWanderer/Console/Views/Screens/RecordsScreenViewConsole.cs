@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Screens
 {
+  /// <summary>
+  /// Представление экрана рекордов от Console
+  /// </summary>
   public class RecordsScreenViewConsole : RecordsScreenView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parRecordsScreen">Модель экрана рекордов</param>
     public RecordsScreenViewConsole(RecordsScreen parRecordsScreen) 
       : base(parRecordsScreen)
     {
@@ -28,7 +35,7 @@ namespace ConsoleApp.Views.Screens
     }
 
     /// <summary>
-    /// Отрисовывает элемент
+    /// Отрисовывает экран рекордов
     /// </summary>
     public override void Draw()
     {

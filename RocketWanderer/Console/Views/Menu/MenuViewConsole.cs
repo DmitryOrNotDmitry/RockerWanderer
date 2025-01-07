@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Menu
 {
+  /// <summary>
+  /// Представление меню от Console
+  /// </summary>
   public class MenuViewConsole : MenuView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parMenu">Модель меню</param>
     public MenuViewConsole(Logic.Models.Menus.Menu parMenu) 
       : base(parMenu)
     {      

@@ -11,14 +11,24 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Views.Menu
 {
+  /// <summary>
+  /// Представление пункта меню от Console
+  /// </summary>
   public class MenuItemViewConsole : MenuItemView
   {
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="parMenuItem">Модель пункта меню</param>
     public MenuItemViewConsole(MenuItem parMenuItem) 
       : base(parMenuItem)
     {
     }
 
-    private Vector2 prevPosition = new Vector2(0, 0);
+    /// <summary>
+    /// Предыдущая позиция пункта меню
+    /// </summary>
+    private Vector2 _prevPosition = new Vector2(0, 0);
 
     /// <summary>
     /// Отрисовывает пункт меню
@@ -33,9 +43,9 @@ namespace ConsoleApp.Views.Menu
       
       Vector2 curPosition = new Vector2(Position.X + xOffset, Position.Y);
 
-      if (curPosition != prevPosition)
+      if (curPosition != _prevPosition)
       {
-        prevPosition = curPosition;
+        _prevPosition = curPosition;
 
         ConsoleColor color;
 
