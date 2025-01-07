@@ -33,7 +33,7 @@ namespace ConsoleApp.Views.Game
 
       double scaleY = parentSize.Y / Map.Size.Y;
 
-      int y = (int)((Map.Size.Y - Map.BottomAsteroidBelt.Size.Y) * scaleY);
+      int y = (int)Math.Ceiling((Map.Size.Y - Map.BottomAsteroidBelt.Size.Y) * scaleY) - 1;
       int x = 2;
 
       console.WriteBuffer(x, y, scoreLabel);

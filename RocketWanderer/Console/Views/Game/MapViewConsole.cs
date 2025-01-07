@@ -116,6 +116,14 @@ namespace ConsoleApp.Views.Game
 
       ConsoleAdapter console = ConsoleAdapter.Instance;
 
+      console.ClearBuffer(((SunViewConsole)SunView).PrevLocation.Positive());
+      console.ClearBuffer(((PlanetViewConsole)StartPlanetView).PrevLocation.Positive());
+
+      foreach (PlanetViewConsole elPlanetView in PlanetsView)
+      {
+        console.ClearBuffer(elPlanetView.PrevLocation.Positive());
+      }
+
       Vector2 parentSize = Parent.AbsoluteSize;
 
       double scaleY = parentSize.Y / Map.Size.Y;

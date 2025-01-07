@@ -16,6 +16,7 @@ namespace ConsoleApp.Views.Windows
       : base(parWindow)
     {
       Console.CursorVisible = false;
+      Console.SetBufferSize(120, 30);
     }
 
     /// <summary>

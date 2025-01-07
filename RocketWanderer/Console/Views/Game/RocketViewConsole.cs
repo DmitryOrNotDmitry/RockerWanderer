@@ -39,7 +39,7 @@ namespace ConsoleApp.Views.Game
 
       char fillChar = '#';
 
-      //console.WriteBuffer((int)_prevPosition.X, (int)_prevPosition.Y, ' ');
+      console.WriteBuffer((int)_prevPosition.X, (int)_prevPosition.Y, ' ');
       console.WriteBuffer((int)rocketCenter.X, (int)rocketCenter.Y, fillChar);
       _prevPosition = rocketCenter;
     }

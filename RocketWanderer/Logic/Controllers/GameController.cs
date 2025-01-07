@@ -274,6 +274,8 @@ namespace Logic.Controllers
           Map.Update(currentFrameTime - lastFrameTime);
           Scores.Current = (int)Map.XMustCameraOffset;
 
+          Redrawer.NeedRedraw = true;
+
           lastFrameTime = currentFrameTime;
         }
 
@@ -292,6 +294,8 @@ namespace Logic.Controllers
       _isGameProcessed = false;
 
       _recordsTable.Add(new Record(PlayerSettings.Name, Scores.Current));
+
+      Redrawer.NeedRedraw = true;
     }
 
     /// <summary>
@@ -322,6 +326,8 @@ namespace Logic.Controllers
         {
           _isGamePaused = true;
         }
+
+        Redrawer.NeedRedraw = true;
       }
     }
 

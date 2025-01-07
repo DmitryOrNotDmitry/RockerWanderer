@@ -24,7 +24,7 @@ namespace ConsoleApp.Views.Screens
       base.Draw();
 
       ConsoleAdapter console = ConsoleAdapter.Instance;
-      console.ClearBuffer();
+      //console.ClearBuffer();
 
       DrawChildren();
 

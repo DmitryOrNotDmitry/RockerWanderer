@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -86,14 +87,19 @@ namespace ConsoleApp.App
       Console.Clear();
     }
 
-    public void ClearRectangle(Rectangle parRect)
+    public void ClearBuffer(Rect parRect)
     {
-      string emptyLine = new string(' ', parRect.Width); // Строка пробелов длиной, равной ширине квадрата
+      //string emptyLine = new string(' ', parRect.Width);
 
-      for (int y = parRect.Y; y < parRect.Y + parRect.Height; y++)
+      int endY = parRect.Y + parRect.Height;
+      int endX = parRect.X + parRect.Width;
+
+      for (int y = parRect.Y; y < endY; y++)
       {
-        Console.SetCursorPosition(parRect.X, y);
-        Console.Write(emptyLine);
+        for (int x = parRect.X; x < endX; x++)
+        {
+          _buffer[y, x] = ' ';
+        }
       }
     }
 

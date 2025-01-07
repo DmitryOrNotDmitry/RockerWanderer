@@ -96,7 +96,6 @@ namespace Logic.Models.App
       
       _recordsController = parFactory.CreateRecordsController();
 
-
       Task.Run(() =>
       {
         {

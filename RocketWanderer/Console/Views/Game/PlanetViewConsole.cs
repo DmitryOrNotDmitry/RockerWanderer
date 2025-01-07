@@ -20,6 +20,13 @@ namespace ConsoleApp.Views.Game
     {
     }
 
+    private Rect prevLocation = new Rect();
+
+    public Rect PrevLocation
+    {
+      get { return prevLocation; }
+    }
+
     /// <summary>
     /// Отрисовывает планету
     /// </summary>
@@ -55,6 +62,8 @@ namespace ConsoleApp.Views.Game
 
         int orbitRadiusX = (int)(Planet.OrbitRadius * scaleX);
         int orbitRadiusY = (int)(Planet.OrbitRadius * scaleY);
+
+        prevLocation = new Rect((int)xPosOffset - orbitRadiusX - 1, (int)yPosOffset - orbitRadiusY - 1, (int)orbitRadiusX * 2 + 2, (int)orbitRadiusX * 2 + 2);
 
         CircleDrawer.Draw(orbitRadiusX, orbitRadiusY, xPosOffset, yPosOffset, fillChar, 
           (distance) =>
