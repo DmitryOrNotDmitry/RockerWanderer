@@ -24,7 +24,7 @@ namespace Logic.Controllers
     public abstract class GameController : BaseController
   {
     /// <summary>
-    /// Рассчитываются ли сейчас данные игры
+    /// Не закончена ли сейчас игра
     /// </summary>
     private bool _isGameProcessed = false;
 
@@ -171,6 +171,14 @@ namespace Logic.Controllers
     }
 
     /// <summary>
+    /// Не закончена ли сейчас игра
+    /// </summary>
+    protected bool IsGameProcessed
+    {
+      get { return _isGameProcessed; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     public GameController(WindowView parWindowView) 
@@ -285,7 +293,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Заканчивает рассчет логики игровых объектов
     /// </summary>
-    private void StopGame()
+    protected virtual void StopGame()
     {
       GameOverMenu.IsEnabled = true;
       PauseMenu.IsEnabled = false;
@@ -295,6 +303,7 @@ namespace Logic.Controllers
 
       _recordsTable.Add(new Record(PlayerSettings.Name, Scores.Current));
 
+      GameOverMenu.Focus(MenuItemAction.NewGame);
       Redrawer.NeedRedraw = true;
     }
 
@@ -312,7 +321,7 @@ namespace Logic.Controllers
     /// <summary>
     /// Останавливает/возобновляет игру по действию пользователя
     /// </summary>
-    public void OnPauseAction()
+    public virtual void OnPauseAction()
     {
       if (_isGameProcessed)
       {
@@ -325,6 +334,7 @@ namespace Logic.Controllers
         else
         {
           _isGamePaused = true;
+          PauseMenu.Focus(MenuItemAction.Resume);
         }
 
         Redrawer.NeedRedraw = true;

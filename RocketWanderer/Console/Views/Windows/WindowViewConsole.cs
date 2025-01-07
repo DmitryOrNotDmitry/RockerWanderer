@@ -16,7 +16,14 @@ namespace ConsoleApp.Views.Windows
       : base(parWindow)
     {
       Console.CursorVisible = false;
-      Console.SetBufferSize(120, 30);
+      Console.SetWindowSize(120, 30);
+
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+      parWindow.ScreenChanged += (parNewScreen) =>
+      {
+        console.Clear();
+        console.ClearBuffer();
+      };
     }
 
     /// <summary>
@@ -26,8 +33,6 @@ namespace ConsoleApp.Views.Windows
     {
       Environment.Exit(0);
     }
-
-    private ScreenType _prevScreen = ScreenType.Description;
 
     private int _prevWidth = Console.BufferWidth;
     private int _prevHeight = Console.BufferHeight;
@@ -39,12 +44,7 @@ namespace ConsoleApp.Views.Windows
     {
       ConsoleAdapter console = ConsoleAdapter.Instance;
 
-      if (_prevScreen != Window.CurrentScreen)
-      {
-        _prevScreen = Window.CurrentScreen;
-        console.Clear();
-      }
-      else if (_prevWidth != Console.BufferWidth || _prevHeight != Console.BufferHeight)
+      if (_prevWidth != Console.BufferWidth || _prevHeight != Console.BufferHeight)
       {
         _prevWidth = Console.BufferWidth;
         _prevHeight = Console.BufferHeight;

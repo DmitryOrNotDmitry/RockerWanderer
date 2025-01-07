@@ -1,4 +1,5 @@
 ﻿using ConsoleApp.App;
+using ConsoleApp.Views.Menu;
 using Logic.Models.Screens;
 using Logic.Views.Screens;
 using System;
@@ -24,7 +25,6 @@ namespace ConsoleApp.Views.Screens
       base.Draw();
 
       ConsoleAdapter console = ConsoleAdapter.Instance;
-      //console.ClearBuffer();
 
       DrawChildren();
 

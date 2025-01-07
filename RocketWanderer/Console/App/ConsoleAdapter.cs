@@ -47,6 +47,9 @@ namespace ConsoleApp.App
     /// </summary>
     private char[,] _buffer;
 
+    /// <summary>
+    /// Буфер, хранящий прерыдущее состояние главного буфера _buffer
+    /// </summary>
     private char[,] _prevBuffer;
 
     /// <summary>
@@ -59,10 +62,18 @@ namespace ConsoleApp.App
 
       _buffer = new char[_height, _width];
       _prevBuffer = new char[_height, _width];
+
+      for(int y = 0; y < _height; y++)
+      {
+        for (int x = 0; x < _width; x++)
+        {
+          _prevBuffer[y, x] = '1';
+        }
+      }
     }
 
     /// <summary>
-    /// Заполняет символ консоли
+    /// Напрямую заполняет символ консоли
     /// </summary>
     /// <param name="parX">Координата по X</param>
     /// <param name="parY">Координата по Y</param>
@@ -80,37 +91,75 @@ namespace ConsoleApp.App
     }
 
     /// <summary>
+    /// Напрямую заполняет консоль строкой
+    /// </summary>
+    /// <param name="parX">Координата по X</param>
+    /// <param name="parY">Координата по Y</param>
+    /// <param name="parStr">Выводимая строка</param>
+    public void Write(int parX, int parY, string parStr)
+    {
+      for (int i = 0; i < parStr.Length; i++)
+      {
+        Write(parX + i, parY, parStr[i]);
+      }
+    }
+
+    /// <summary>
     /// Заполняет консоль пустыми символами
     /// </summary>
     public void Clear()
     {
-      Console.Clear();
+      lock (_prevBuffer)
+      {
+        Console.Clear();
+        ClearBuffer(_prevBuffer);
+      }
     }
 
+    /// <summary>
+    /// Очищает буфер в заданной области
+    /// </summary>
+    /// <param name="parRect">Область буфера, которая будет очищена</param>
     public void ClearBuffer(Rect parRect)
     {
-      //string emptyLine = new string(' ', parRect.Width);
-
       int endY = parRect.Y + parRect.Height;
       int endX = parRect.X + parRect.Width;
 
-      for (int y = parRect.Y; y < endY; y++)
+      lock (_buffer)
       {
-        for (int x = parRect.X; x < endX; x++)
+        for (int y = parRect.Y; y < endY; y++)
         {
-          _buffer[y, x] = ' ';
+          for (int x = parRect.X; x < endX; x++)
+          {
+            _buffer[y, x] = _emptyChar;
+          }
         }
       }
     }
 
-    public void ClearBuffer()
+    /// <summary>
+    /// Полностью очищает буфер
+    /// </summary>
+    /// <param name="parBuffer">Буфер, который требуется очистить</param>
+    private void ClearBuffer(char[,] parBuffer)
     {
       for (int y = 0; y < Console.BufferHeight; y++)
       {
         for (int x = 0; x < Console.BufferWidth; x++)
         {
-          _buffer[y, x] = ' ';
+          parBuffer[y, x] = _emptyChar;
         }
+      }
+    }
+
+    /// <summary>
+    /// Очищает главный буфер
+    /// </summary>
+    public void ClearBuffer()
+    {
+      lock (_buffer)
+      {
+        ClearBuffer(_buffer);
       }
     }
 
@@ -139,31 +188,42 @@ namespace ConsoleApp.App
     /// <param name="parString">Строка</param>
     public void WriteBuffer(int parX, int parY, string parString)
     {
-      for (int i = 0; i < parString.Length; i++)
+      lock (_buffer)
       {
-        WriteBuffer(parX + i, parY, parString[i]);
+        for (int i = 0; i < parString.Length; i++)
+        {
+          WriteBuffer(parX + i, parY, parString[i]);
+        }
       }
     }
 
+    /// <summary>
+    /// Скидывает буфер в консоль, но только измененные символы
+    /// </summary>
     public void DropBuffer()
     {
       int height = Console.BufferHeight;
       int width = Console.BufferWidth;
 
-      for (int y = 0; y < height; y++)
+      lock (_buffer)
       {
-        for (int x = 0; x < width; x++)
+        lock (_prevBuffer)
         {
-          if (_buffer[y, x] != _prevBuffer[y, x])
+          for (int y = 0; y < height; y++)
           {
-            Console.SetCursorPosition(x, y);
-            Console.Write(_buffer[y, x]);
-            _prevBuffer[y, x] = _buffer[y, x];
+            for (int x = 0; x < width; x++)
+            {
+              if (_buffer[y, x] != _prevBuffer[y, x])
+              {
+                Console.SetCursorPosition(x, y);
+                Console.Write(_buffer[y, x]);
+                _prevBuffer[y, x] = _buffer[y, x];
+              }
+            }
           }
         }
       }
     }
-
 
   }
 }

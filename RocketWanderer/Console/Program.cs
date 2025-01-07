@@ -37,12 +37,15 @@ public class AppConsole
       {
         case ConsoleKey.UpArrow:
           ((MenuControllerConsole)_app.MenuController).OnArrowUp();
+          ((GameControllerConsole)_app.GameController).OnArrowUp();
           break;
         case ConsoleKey.DownArrow:
           ((MenuControllerConsole)_app.MenuController).OnArrowDown();
+          ((GameControllerConsole)_app.GameController).OnArrowDown();
           break;
         case ConsoleKey.Enter:
           ((MenuControllerConsole)_app.MenuController).OnEnter();
+          ((GameControllerConsole)_app.GameController).OnEnter();
           break;
         case ConsoleKey.Backspace:
           ((ScreenControllerConsole)_app.ScreenController).OnBackspace();

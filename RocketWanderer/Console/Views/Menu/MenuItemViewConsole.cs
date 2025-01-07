@@ -1,4 +1,5 @@
-﻿using Logic.Models.Menus;
+﻿using ConsoleApp.App;
+using Logic.Models.Menus;
 using Logic.Utils;
 using Logic.Views.Menus;
 using System;
@@ -27,14 +28,14 @@ namespace ConsoleApp.Views.Menu
       
       int xOffset = -(Item.Title.Length - 1) / 2;
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+      
       Vector2 curPosition = new Vector2(Position.X + xOffset, Position.Y);
 
       if (curPosition != prevPosition)
       {
         prevPosition = curPosition;
 
-        Console.CursorLeft = (int)(curPosition.X);
-        Console.CursorTop = (int)(curPosition.Y);
         ConsoleColor savColor = Console.ForegroundColor;
 
         if (Item.State == MenuItemState.Focused)
@@ -50,7 +51,7 @@ namespace ConsoleApp.Views.Menu
           Console.ForegroundColor = ConsoleColor.Green;
         }
 
-        Console.Write(Item.Title);
+        console.Write((int)curPosition.X, (int)curPosition.Y, Item.Title);
         Console.ForegroundColor = savColor;
       }
 

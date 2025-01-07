@@ -10,7 +10,7 @@ namespace Logic.Models.Menus
   /// <summary>
   /// Модель выключаемого меню
   /// </summary>
-  public class SwitchedMenu : Menu
+  public class SwitchedMenu : NavigatedMenu
   {
     /// <summary>
     /// Доступно ли сейчас меню

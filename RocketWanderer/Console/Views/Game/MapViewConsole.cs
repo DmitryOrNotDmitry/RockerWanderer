@@ -102,6 +102,10 @@ namespace ConsoleApp.Views.Game
     /// </summary>
     public override void Reset()
     {
+      foreach (PlanetView elPlanetView in PlanetsView)
+      {
+        this.RemoveChild(elPlanetView);
+      }
       base.Reset();
     }
 
@@ -112,13 +116,12 @@ namespace ConsoleApp.Views.Game
     {
       base.Draw();
 
-      string scoreLabel = "Пауза - Backspace";
+      string mangeButtonsInfo = "Пауза [Backspace], Действие [Space]";
 
       ConsoleAdapter console = ConsoleAdapter.Instance;
 
       console.ClearBuffer(((SunViewConsole)SunView).PrevLocation.Positive());
       console.ClearBuffer(((PlanetViewConsole)StartPlanetView).PrevLocation.Positive());
-
       foreach (PlanetViewConsole elPlanetView in PlanetsView)
       {
         console.ClearBuffer(elPlanetView.PrevLocation.Positive());
@@ -131,7 +134,7 @@ namespace ConsoleApp.Views.Game
       int y = (int)(Map.TopAsteroidBelt.Size.Y * scaleY);
       int x = 2;
 
-      console.WriteBuffer(x, y, scoreLabel);
+      console.WriteBuffer(x, y, mangeButtonsInfo);
 
       DrawChildren();
     }
