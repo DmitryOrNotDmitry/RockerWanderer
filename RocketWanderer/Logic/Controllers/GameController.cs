@@ -304,7 +304,6 @@ namespace Logic.Controllers
       _recordsTable.Add(new Record(PlayerSettings.Name, Scores.Current));
 
       GameOverMenu.Focus(MenuItemAction.NewGame);
-      Redrawer.NeedRedraw = true;
     }
 
     /// <summary>
@@ -336,8 +335,6 @@ namespace Logic.Controllers
           _isGamePaused = true;
           PauseMenu.Focus(MenuItemAction.Resume);
         }
-
-        Redrawer.NeedRedraw = true;
       }
     }
 

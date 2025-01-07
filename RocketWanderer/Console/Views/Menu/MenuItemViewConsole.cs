@@ -4,6 +4,7 @@ using Logic.Utils;
 using Logic.Views.Menus;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,23 +37,22 @@ namespace ConsoleApp.Views.Menu
       {
         prevPosition = curPosition;
 
-        ConsoleColor savColor = Console.ForegroundColor;
+        ConsoleColor color;
 
         if (Item.State == MenuItemState.Focused)
         {
-          Console.ForegroundColor = ConsoleColor.Yellow;
+          color = ConsoleColor.Yellow;
         }
         else if (Item.State == MenuItemState.Selected)
         {
-          Console.ForegroundColor = ConsoleColor.Red;
+          color = ConsoleColor.Red;
         }
         else
         {
-          Console.ForegroundColor = ConsoleColor.Green;
+          color = ConsoleColor.Green;
         }
 
-        console.Write((int)curPosition.X, (int)curPosition.Y, Item.Title);
-        Console.ForegroundColor = savColor;
+        console.WriteBuffer((int)curPosition.X, (int)curPosition.Y, Item.Title, color);
       }
 
     }

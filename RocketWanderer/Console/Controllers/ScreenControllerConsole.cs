@@ -97,8 +97,33 @@ namespace ConsoleApp.Controllers
       if (currentScreen == ScreenType.Description || currentScreen == ScreenType.Records)
       {
         _appWindowView.Window.ChangeScreen(ScreenType.MainMenu);
-        Redrawer.NeedRedraw = true;
       }
+    }
+
+    /// <summary>
+    /// Обработчик события на ввод ника
+    /// </summary>
+    public void OnNickEnter(ConsoleKeyInfo parKeyInfo)
+    {
+      if (_appWindowView.Window.CurrentScreen == ScreenType.MainMenu)
+      {
+        if (parKeyInfo.Key == ConsoleKey.Backspace)
+        {
+          string name = MainMenuScreenView.PlayerSettingsView.PlayerSettings.Name;
+
+          if (name.Length > 0)
+            MainMenuScreenView.PlayerSettingsView.PlayerSettings.Name = name.Substring(0, name.Length - 1);
+        }
+
+        if (char.IsAsciiLetterOrDigit(parKeyInfo.KeyChar))
+        {
+          string name = MainMenuScreenView.PlayerSettingsView.PlayerSettings.Name;
+
+          MainMenuScreenView.PlayerSettingsView.PlayerSettings.Name = name + parKeyInfo.KeyChar;
+        }
+      }
+
+      Redrawer.NeedRedraw = true;
     }
 
   }

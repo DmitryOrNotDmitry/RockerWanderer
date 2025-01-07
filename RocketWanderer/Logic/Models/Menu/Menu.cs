@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,11 +79,12 @@ namespace Logic.Models.Menus
     {
       if (_focusedAction.HasValue)
       {
-          this[_focusedAction.Value].State = MenuItemState.Normal;
+        this[_focusedAction.Value].State = MenuItemState.Normal;
       }
 
       _focusedAction = parNewFocusedAction;
       this[_focusedAction.Value].State = MenuItemState.Focused;
+      Redrawer.NeedRedraw = true;
     }
 
     /// <summary>

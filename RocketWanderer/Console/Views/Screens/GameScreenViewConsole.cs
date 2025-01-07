@@ -24,11 +24,7 @@ namespace ConsoleApp.Views.Screens
     {
       base.Draw();
 
-      ConsoleAdapter console = ConsoleAdapter.Instance;
-
       DrawChildren();
-
-      console.DropBuffer();
     }
   }
 }

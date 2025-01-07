@@ -1,4 +1,5 @@
-﻿using Logic.Models.Menus;
+﻿using ConsoleApp.App;
+using Logic.Models.Menus;
 using Logic.Models.Screens;
 using Logic.Utils;
 using Logic.Views.Screens;
@@ -33,16 +34,12 @@ namespace ConsoleApp.Views.Screens
     {
       base.Draw();
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+      
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      Console.CursorLeft = (int)(parentSize.X * 0.3);
-      Console.CursorTop = (int)(parentSize.Y * 0.3);
-      ConsoleColor savColor = Console.ForegroundColor;
-
-      Console.ForegroundColor = ConsoleColor.White;
-
-      Console.Write(MainMenuScreen.GameTitle);
-      Console.ForegroundColor = savColor;
+      Vector2 position = parentSize.Scale(0.3);
+      console.WriteBuffer(position, MainMenuScreen.GameTitle, ConsoleColor.White);
 
       DrawChildren();
     }

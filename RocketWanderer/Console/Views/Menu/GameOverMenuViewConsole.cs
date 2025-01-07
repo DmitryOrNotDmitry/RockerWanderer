@@ -25,7 +25,10 @@ namespace ConsoleApp.Views.Menu
     /// <returns>Представление пункта меню</returns>
     public override MenuItemView CreateMenuItemView(MenuItem parMenuItem)
     {
-      return new MenuItemViewConsole(parMenuItem);
+      MenuItemView menuItemView = new MenuItemViewConsole(parMenuItem);
+      this.AddChild(menuItemView);
+
+      return menuItemView;
     }
 
     /// <summary>
@@ -40,25 +43,25 @@ namespace ConsoleApp.Views.Menu
         ConsoleAdapter console = ConsoleAdapter.Instance;
 
         int sizeX = 20;
-        int startX = (Console.BufferWidth - sizeX) / 2;
+        int startX = (console.Width - sizeX) / 2;
         int endX = startX + sizeX;
 
         int sizeY = 9;
-        int startY = (Console.BufferHeight - sizeY) / 2;
+        int startY = (console.Height - sizeY) / 2;
         int endY = startY + sizeY;
 
         for (int y = startY; y < endY; y++)
         {
           for (int x = startX; x < endX; x++)
           {
-            console.Write(x, y, ' ');
+            console.WriteBuffer(x, y, ' ');
           }
         }
 
-        console.Write(startX + sizeX / 2 - 4, startY + 1, "Конец игры");
+        console.WriteBuffer(startX + sizeX / 2 - 4, startY + 1, "Конец игры");
 
         string scoreLabel = "Очки: " + Scores.Current;
-        console.Write(startX + (sizeX - scoreLabel.Length + 2) / 2, startY + 3, scoreLabel);
+        console.WriteBuffer(startX + (sizeX - scoreLabel.Length + 2) / 2, startY + 3, scoreLabel);
 
         Vector2 parentSize = Parent.AbsoluteSize;
 

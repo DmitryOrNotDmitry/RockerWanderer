@@ -1,4 +1,5 @@
-﻿using Logic.Models.Screens;
+﻿using ConsoleApp.App;
+using Logic.Models.Screens;
 using Logic.Records;
 using Logic.Utils;
 using Logic.Views.Screens;
@@ -26,12 +27,16 @@ namespace ConsoleApp.Views.Screens
     {
       base.Draw();
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      ConsoleColor savColor = Console.ForegroundColor;
-      Console.ForegroundColor = ConsoleColor.Green;
+      Vector2 position = parentSize.Scale(0.3);
+      console.WriteBuffer(position, "Рекорды", ConsoleColor.White);
 
-      int maxStrs = (int)((Console.BufferHeight - parentSize.Y * 0.3 - 2) / 2);
+      ConsoleColor selColor = ConsoleColor.Green;
+
+      int maxStrs = (int)((console.Height - parentSize.Y * 0.3 - 2) / 2);
       int i = 0;
       foreach (Record elRecord in RecordsTable.OrderedRecords)
       {
@@ -42,15 +47,10 @@ namespace ConsoleApp.Views.Screens
 
         string outStr = $"{i + 1}. Ник: {elRecord.Name} | очки: {elRecord.Score}";
 
-        Console.CursorLeft = (int)(parentSize.X * 0.5 - outStr.Length / 2);
-        Console.CursorTop = (int)(parentSize.Y * 0.3 + (i + 1) * 2);
-
-        Console.Write(outStr);
-
+        position = new Vector2(parentSize.X * 0.5 - outStr.Length / 2, parentSize.Y * 0.3 + (i + 1) * 2);
+        console.WriteBuffer(position, outStr, selColor);
         i++;
       }
-
-      Console.ForegroundColor = savColor;
     }
   }
 }

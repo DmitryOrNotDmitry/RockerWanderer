@@ -74,5 +74,6 @@ namespace ConsoleApp.Controllers
         Menu.Focus(MenuItemAction.NewGame);
       }
     }
+    
   }
 }

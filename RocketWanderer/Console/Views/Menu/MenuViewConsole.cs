@@ -1,4 +1,5 @@
-﻿using Logic.Models.Menus;
+﻿using ConsoleApp.App;
+using Logic.Models.Menus;
 using Logic.Utils;
 using Logic.Views.Menus;
 using System;
@@ -35,7 +36,7 @@ namespace ConsoleApp.Views.Menu
     public override void Draw()
     {
       base.Draw();
-
+      
       Vector2 parentSize = Parent.AbsoluteSize;
 
       int yOffset = -(Items.Length - 1);

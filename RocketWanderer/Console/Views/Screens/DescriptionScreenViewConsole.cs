@@ -1,4 +1,5 @@
-﻿using Logic.Models.Screens;
+﻿using ConsoleApp.App;
+using Logic.Models.Screens;
 using Logic.Utils;
 using Logic.Views.Screens;
 using System;
@@ -17,7 +18,7 @@ namespace ConsoleApp.Views.Screens
     }
 
     /// <summary>
-    /// Отрисовывает элемент
+    /// Отрисовывает экран описания
     /// </summary>
     public override void Draw()
     {
@@ -25,23 +26,17 @@ namespace ConsoleApp.Views.Screens
 
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      ConsoleColor savColor = Console.ForegroundColor;
-      Console.ForegroundColor = ConsoleColor.White;
+      Vector2 position = new Vector2(1, 1);
+      
+      ConsoleAdapter console = ConsoleAdapter.Instance;
 
-      Console.CursorLeft = 1;
-      Console.CursorTop = 1;
-      Console.Write("Назад [Backspace]");
+      console.WriteBuffer(position, "Назад [Backspace]", ConsoleColor.White);
 
-      Console.CursorLeft = (int)(parentSize.X * 0.3);
-      Console.CursorTop = (int)(parentSize.Y * 0.3);
-      Console.Write("Описание");
+      console.WriteBuffer(parentSize.Scale(0.3), "Описание", ConsoleColor.White);
 
-      Console.CursorLeft = (int)(parentSize.X * 0.1);
-      Console.CursorTop = (int)(parentSize.Y * 0.3 + 2);
-      Console.Write(DescriptionScreen.GameDescription);
+      position = new Vector2(parentSize.X * 0.1, parentSize.Y * 0.3 + 2);
 
-
-      Console.ForegroundColor = savColor;
+      console.WriteBuffer(position, DescriptionScreen.GameDescription, ConsoleColor.White);
 
       DrawChildren();
     }

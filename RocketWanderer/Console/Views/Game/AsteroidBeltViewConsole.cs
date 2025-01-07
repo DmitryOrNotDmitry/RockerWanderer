@@ -34,13 +34,13 @@ namespace ConsoleApp.Views.Game
 
       int startY = (int)Math.Round((AsteroidBelt.Position.Y - AsteroidBelt.Size.Y / 2) * scale);
       int endY =   startY + countStrs;
-      endY = Math.Min(endY, Console.BufferHeight);
+      endY = Math.Min(endY, console.Height);
 
       char fillChar = '+';
 
       for (int y = startY; y < endY; y++)
       {
-        for (int x = 0; x < Console.BufferWidth; x++)
+        for (int x = 0; x < console.Width; x++)
         {
           console.WriteBuffer(x, y, fillChar);
         }

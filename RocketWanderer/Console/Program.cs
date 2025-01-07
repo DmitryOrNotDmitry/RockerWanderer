@@ -29,7 +29,7 @@ public class AppConsole
     };
 
     FontInfo.Init();
-
+    
     while (true) 
     {
       ConsoleKeyInfo keyInfo = Console.ReadKey();
@@ -55,6 +55,8 @@ public class AppConsole
           _app.GameController.RocketDepartAction();
           break;
       }
+
+      ((ScreenControllerConsole)_app.ScreenController).OnNickEnter(keyInfo);
     }
   }
 

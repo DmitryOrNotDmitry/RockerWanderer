@@ -1,4 +1,5 @@
-﻿using Logic.Models.Screens;
+﻿using ConsoleApp.App;
+using Logic.Models.Screens;
 using Logic.Utils;
 using Logic.Views.Screens;
 using System;
@@ -33,20 +34,15 @@ namespace ConsoleApp.Views.Screens
     {
       base.Draw();
 
+      ConsoleAdapter console = ConsoleAdapter.Instance;
+
       Vector2 parentSize = Parent.AbsoluteSize;
 
-      ConsoleColor savColor = Console.ForegroundColor;
-      Console.ForegroundColor = ConsoleColor.White;
+      Vector2 position = parentSize.Scale(0.3);
+      console.WriteBuffer(position, "Рекорды", ConsoleColor.White);
 
-      Console.CursorLeft = 1;
-      Console.CursorTop = 1;
-      Console.Write("Назад [Backspace]");
-
-      Console.CursorLeft = (int)(parentSize.X * 0.3);
-      Console.CursorTop = (int)(parentSize.Y * 0.3);
-      Console.Write("Рекорды");
-
-      Console.ForegroundColor = savColor;
+      position = new Vector2(1, 1);
+      console.WriteBuffer(position, "Назад [Backspace]", ConsoleColor.White);
 
       DrawChildren();
     }

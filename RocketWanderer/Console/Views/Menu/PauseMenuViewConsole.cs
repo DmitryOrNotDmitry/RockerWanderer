@@ -18,16 +18,6 @@ namespace ConsoleApp.Views.Menu
     }
 
     /// <summary>
-    /// Создает представление пункта меню паузы от Console
-    /// </summary>
-    /// <param name="parMenuItem">Модель пункта меню</param>
-    /// <returns>Представление пункта меню</returns>
-    public override MenuItemView CreateMenuItemView(MenuItem parMenuItem)
-    {
-      return new MenuItemViewConsole(parMenuItem);
-    }
-
-    /// <summary>
     /// Отрисовывает меню паузы
     /// </summary>
     public override void Draw()
@@ -37,11 +27,11 @@ namespace ConsoleApp.Views.Menu
         ConsoleAdapter console = ConsoleAdapter.Instance;
 
         int sizeX = 20;
-        int startX = (Console.BufferWidth - sizeX) / 2;
+        int startX = (console.Width - sizeX) / 2;
         int endX = startX + sizeX;
         
         int sizeY = 8;
-        int startY = (Console.BufferHeight - sizeY) / 2;
+        int startY = (console.Height - sizeY) / 2;
         int endY = startY + sizeY;
 
         for (int y = startY; y < endY; y++)
@@ -52,7 +42,7 @@ namespace ConsoleApp.Views.Menu
           }
         }
         
-        console.Write(startX + sizeX / 2 - 2, startY + 1, "Пауза");
+        console.WriteBuffer(startX + sizeX / 2 - 2, startY + 1, "Пауза", ConsoleColor.White);
 
         base.Draw();
       }

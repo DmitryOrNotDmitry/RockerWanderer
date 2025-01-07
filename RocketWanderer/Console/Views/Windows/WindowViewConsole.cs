@@ -1,5 +1,6 @@
 ﻿using ConsoleApp.App;
 using Logic.Models.Windows;
+using Logic.Utils;
 using Logic.Views.Windows;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,26 @@ namespace ConsoleApp.Views.Windows
 {
   public class WindowViewConsole : WindowView
   {
+    /// <summary>
+    /// Адаптер для консоли
+    /// </summary>
+    private ConsoleAdapter _console;
+
     public WindowViewConsole(WindowData parWindow) 
       : base(parWindow)
     {
       Console.CursorVisible = false;
       Console.SetWindowSize(120, 30);
 
-      ConsoleAdapter console = ConsoleAdapter.Instance;
+      _console = ConsoleAdapter.Instance;
+      _prevWidth = _console.Width;
+      _prevHeight = _console.Height;
+
       parWindow.ScreenChanged += (parNewScreen) =>
       {
-        console.Clear();
-        console.ClearBuffer();
+        _console.Clear();
+        _console.ClearBuffer();
+        Redrawer.NeedRedraw = true;
       };
     }
 
@@ -34,29 +44,36 @@ namespace ConsoleApp.Views.Windows
       Environment.Exit(0);
     }
 
-    private int _prevWidth = Console.BufferWidth;
-    private int _prevHeight = Console.BufferHeight;
+    /// <summary>
+    /// Предыдущая ширина консоли
+    /// </summary>
+    private int _prevWidth;
+
+    /// <summary>
+    /// Предыдущая высолта консоли
+    /// </summary>
+    private int _prevHeight;
 
     /// <summary>
     /// Отрисовывает окно
     /// </summary>
     public override void Draw()
     {
-      ConsoleAdapter console = ConsoleAdapter.Instance;
-
-      if (_prevWidth != Console.BufferWidth || _prevHeight != Console.BufferHeight)
+      if (_prevWidth != _console.Width || _prevHeight != _console.Height)
       {
-        _prevWidth = Console.BufferWidth;
-        _prevHeight = Console.BufferHeight;
-        console.Clear();
+        _prevWidth = _console.Width;
+        _prevHeight = _console.Height;
+        _console.Clear();
       }
 
-      Window.Width = Console.BufferWidth;
-      Window.Height = Console.BufferHeight;
+      Window.Width = _console.Width;
+      Window.Height = _console.Height;
 
       AbsoluteSize = AbsSize();
 
       DrawChildren();
+
+      _console.DropBuffer();
     }
   }
 }

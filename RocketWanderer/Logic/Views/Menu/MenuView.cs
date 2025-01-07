@@ -51,8 +51,6 @@ namespace Logic.Views.Menus
       {
         MenuItemView itemView = CreateMenuItemView(elMenuItem);
         _items.Add(elMenuItem.Action, itemView);
-        
-        AddChild(itemView);
       }
     }
 

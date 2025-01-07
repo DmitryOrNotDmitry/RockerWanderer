@@ -47,6 +47,7 @@ namespace Logic.Views.Screens
       _mainMenuScreen = parMainMenuScreen;
 
       _settingsView = CreatePlayerSettingsView();
+      this.AddChild(_settingsView);
     }
 
     /// <summary>
