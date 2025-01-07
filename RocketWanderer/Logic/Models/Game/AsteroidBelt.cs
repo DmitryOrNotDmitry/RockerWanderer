@@ -19,16 +19,15 @@ namespace Logic.Models.Game
     /// <returns>true - столкновение произошло, иначе false</returns>
     public bool IsCollideWith(Rocket parRocket)
     {
-      Vector2 rocketRightBottom = parRocket.Position + parRocket.Size;
+      double tolerance = 0.2;
 
-      Vector2 beltLeftTop = Position;
-      Vector2 beltRightBottom = Position + Size;
+      Vector2 rocketLeftUp = parRocket.Position + parRocket.Size.Scale(-(0.5 - tolerance));
+      Vector2 rocketRightBottom = parRocket.Position + parRocket.Size.Scale(0.5 - tolerance);
 
-      double epsilon = 0.35;
-      beltLeftTop     =     beltLeftTop + new Vector2(0,  Size.Y * epsilon);
-      beltRightBottom = beltRightBottom + new Vector2(0, -Size.Y * epsilon);
+      Vector2 beltLeftTop = Position + Size.Scale(-0.5);
+      Vector2 beltRightBottom = Position + Size.Scale(0.5);
 
-      bool intersectsY = beltLeftTop.Y <= rocketRightBottom.Y && beltRightBottom.Y >= parRocket.Position.Y;
+      bool intersectsY = beltLeftTop.Y <= rocketRightBottom.Y && beltRightBottom.Y >= rocketLeftUp.Y;
 
       return intersectsY;
     }

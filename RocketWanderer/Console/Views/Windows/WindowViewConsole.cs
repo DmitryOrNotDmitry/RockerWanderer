@@ -29,7 +29,13 @@ namespace ConsoleApp.Views.Windows
       : base(parWindow)
     {
       Console.CursorVisible = false;
+      
       Console.SetWindowSize(120, 30);
+      try
+      {
+        Console.SetBufferSize(120, 30);
+      }
+      catch (Exception) { }
 
       _console = ConsoleAdapter.Instance;
       _prevWidth = _console.Width;

@@ -22,7 +22,7 @@ namespace Logic.Models.Game
     private Vector2 _size = new Vector2();
 
     /// <summary>
-    /// Позиция
+    /// Позиция центра объекта
     /// </summary>
     public Vector2 Position
     {
@@ -59,20 +59,6 @@ namespace Logic.Models.Game
         lock (_lock)
         {
           _size = value;
-        }
-      }
-    }
-    
-    /// <summary>
-    /// Центральная точка объекта
-    /// </summary>
-    public Vector2 Center
-    {
-      get 
-      {
-        lock (_lock)
-        {
-          return new Vector2(Position.X + Size.X / 2, Position.Y + Size.Y / 2);
         }
       }
     }

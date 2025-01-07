@@ -179,6 +179,14 @@ namespace Logic.Models.Game
     }
 
     /// <summary>
+    /// Расстояние от _xCameraOffset, начиная с которого планеты удаляются/генерируются
+    /// </summary>
+    public double DeletePlanetdistance
+    {
+      get { return _deletePlanetdistance; }
+    }
+
+    /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="parSize">Размер начальной части карты</param>
@@ -279,7 +287,7 @@ namespace Logic.Models.Game
         Rocket.Destroy();
       }
 
-      MoveCamera();
+      MoveCamera(parDeltaSeconds);
     }
 
     /// <summary>
@@ -343,22 +351,19 @@ namespace Logic.Models.Game
     /// <summary>
     /// Передвигает камеру
     /// </summary>
-    private void MoveCamera()
+    private void MoveCamera(double parPassedSeconds)
     {
-      if (Rocket.Location == null)
+      Planet loc = Rocket.Location;
+      if (loc == null)
       {
         _xCameraMustOffset = Rocket.Position.X - _startOffsetX;
       }
       else
       {
-        Planet loc = Rocket.Location;
-        if (loc != null)
-        {
-          _xCameraMustOffset = loc.Position.X - _startOffsetX;
-        }
+        _xCameraMustOffset = loc.Position.X - _startOffsetX;
       }
 
-      _xCameraOffset += (_xCameraMustOffset - _xCameraOffset) / 1000000;
+      _xCameraOffset += (_xCameraMustOffset - _xCameraOffset) * parPassedSeconds;
     }
 
     /// <summary>
@@ -366,6 +371,11 @@ namespace Logic.Models.Game
     /// </summary>
     private bool CheckCollisions()
     {
+      if (StartPlanet.IsCollideWith(Rocket))
+      {
+        return true;
+      }
+
       if (Sun.IsCollideWith(Rocket))
       {
         return true;
