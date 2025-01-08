@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Logic.Models.Game
 {
-  public class MovableItem : MapItem
+  /// <summary>
+  /// Базовый класс для движущихся объектов
+  /// </summary>
+  public abstract class MovableItem : MapItem
   {
     /// <summary>
     /// Скорость единиц в секунду

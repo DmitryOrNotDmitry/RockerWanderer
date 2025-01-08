@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Logic.Models.Game
 {
   /// <summary>
-  /// Направление с которым можно двигаться орбитально
+  /// Направление, с которым можно двигаться орбитально
   /// </summary>
   public enum MovingDirection
   {

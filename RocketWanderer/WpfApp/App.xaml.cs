@@ -16,7 +16,7 @@ using WpfApp.Views.Windows;
 namespace WpfApp
 {
     /// <summary>
-    /// Приложение Wpf
+    /// Приложение запуска Wpf
     /// </summary>
     public partial class AppWpf : Application
   {

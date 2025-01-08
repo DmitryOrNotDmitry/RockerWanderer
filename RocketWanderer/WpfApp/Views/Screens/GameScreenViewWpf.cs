@@ -12,7 +12,7 @@ using System.Windows.Controls;
 namespace WpfApp.Views.Screens
 {
   /// <summary>
-  /// Представление экрана игры
+  /// Представление экрана игры от Wpf
   /// </summary>
   public class GameScreenViewWpf : GameScreenView, IWpfItem
   {

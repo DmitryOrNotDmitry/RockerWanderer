@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Logic.Records
 {
   /// <summary>
-  /// Экспортер рекордов в файл
+  /// Импортер/экспортер рекордов в файл
   /// </summary>
   public class RecordsToFile
   {

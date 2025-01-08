@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace Logic.Models.Game
 {
+  /// <summary>
+  /// Базовый клас для объктов, располагаемых на карте
+  /// </summary>
   public abstract class MapItem
   {
+    /// <summary>
+    /// Блокировка для синхронизации
+    /// </summary>
     protected Object _lock = new Object();
 
     /// <summary>

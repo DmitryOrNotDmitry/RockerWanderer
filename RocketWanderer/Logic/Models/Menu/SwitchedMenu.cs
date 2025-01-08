@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Logic.Models.Menus
   {
   /// <summary>
-  /// Модель выключаемого меню
+  /// Включаемое/выключаемое меню
   /// </summary>
   public class SwitchedMenu : NavigatedMenu
   {

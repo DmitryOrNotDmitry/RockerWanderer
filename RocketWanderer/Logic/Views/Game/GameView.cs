@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Logic.Views.Game
 {
+  /// <summary>
+  /// Базовый класс для представлений игровых объектов
+  /// </summary>
   public abstract class GameView : BaseView
   {
     /// <summary>

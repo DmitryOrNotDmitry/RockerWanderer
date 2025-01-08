@@ -1,20 +1,13 @@
 ﻿using Logic.Models.Game;
 using Logic.Models.Menus;
-using Logic.Models.Menus;
 using Logic.Models.Screens;
 using Logic.Models.Windows;
 using Logic.Records;
 using Logic.Utils;
 using Logic.Views.Game;
 using Logic.Views.Menus;
-using Logic.Views.Screens;
 using Logic.Views.Windows;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic.Controllers
 {

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Logic.Controllers
 {
+  /// <summary>
+  /// Контроллер обработки рекордов игры
+  /// </summary>
   public class RecordsController : BaseController
   {
     /// <summary>

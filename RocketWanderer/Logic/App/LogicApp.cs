@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Logic.App
 {
   /// <summary>
-  /// Главный класс приложения
+  /// Главный класс приложения, создает все компоненты приложенеия
   /// </summary>
   public class LogicApp
   {

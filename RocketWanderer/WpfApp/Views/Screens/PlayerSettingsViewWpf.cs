@@ -13,6 +13,9 @@ using System.Windows.Data;
 
 namespace WpfApp.Views.Screens
 {
+  /// <summary>
+  /// Представление для настроек игрока от Wpf
+  /// </summary>
   public class PlayerSettingsViewWpf : PlayerSettingsView, IWpfItem
   {
     /// <summary>

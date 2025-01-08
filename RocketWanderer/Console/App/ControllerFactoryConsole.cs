@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.App
 {
-    /// <summary>
-    /// Фабрика по созданию контроллеров от Console
-    /// </summary>
-    public class ControllerFactoryConsole : ControllerFactory
+  /// <summary>
+  /// Фабрика по созданию контроллеров от Console
+  /// </summary>
+  public class ControllerFactoryConsole : ControllerFactory
   {
     /// <summary>
     /// Создает контроллер игры
