@@ -138,8 +138,15 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(1000, 1000);
 
-      Assert.False(true);
+      Vector2 expectedPosition = rocket.Position + rocket.Velocity;
+
+      map.Update(1);
+
+      Assert.Equal(expectedPosition.X, rocket.Position.X, 1e-3);
+      Assert.Equal(expectedPosition.Y, rocket.Position.Y, 1e-3);
     }
 
     [Fact]
@@ -147,8 +154,26 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(100, 100);
+      rocket.Position = map.StartPlanet.Position + new Vector2(0, 100);
+      rocket.Location = map.StartPlanet;
+      rocket.Size = new Vector2(20, 20);
 
-      Assert.False(true);
+      Vector2 expectedRadius = rocket.Position + map.StartPlanet.Position.Scale(-1);
+      rocket.ReachedOrbit = expectedRadius.Length;
+
+      double startDeltaTime = 0.1;
+      int countIters = 10;
+
+      for (int i = 0; i < countIters; i++)
+      {
+        map.Update(startDeltaTime * i);
+
+        Vector2 actual = rocket.Position + map.StartPlanet.Position.Scale(-1);
+
+        Assert.Equal(expectedRadius.Length, actual.Length, 1e-3);
+      }
     }
 
     [Fact]
@@ -156,8 +181,23 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(1, 0);
+      rocket.Size = new Vector2(20, 20);
+      rocket.Position = new Vector2(0, 0);
 
-      Assert.False(true);
+      map.Update(1);
+
+      Planet expectedPlanet = map.Planets.First.Value;
+
+      rocket.Position = expectedPlanet.Position + new Vector2(0, expectedPlanet.Radius * 2);
+      rocket.Location = null;
+
+      map.Update(1);
+
+      Planet actualLocation = rocket.Location;
+
+      Assert.Equal(expectedPlanet, actualLocation);
     }
 
     [Fact]
@@ -165,8 +205,23 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(1, 0);
+      rocket.Size = new Vector2(20, 20);
+      rocket.Position = new Vector2(0, 0);
 
-      Assert.False(true);
+      map.Update(1);
+
+      Planet planet = map.Planets.First.Value;
+
+      rocket.Position = planet.Position + new Vector2(0, planet.Radius * 100);
+      rocket.Location = null;
+
+      map.Update(1);
+
+      Planet actualLocation = rocket.Location;
+
+      Assert.Null(actualLocation);
     }
 
     [Fact]
@@ -174,8 +229,22 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(2555, 0);
 
-      Assert.False(true);
+      Vector2 prevPosition = new(-100, 500);
+
+      for (int i = 0; i < 10; i++)
+      {
+        map.Update(1);
+
+        Vector2 lastPlanetPosition = map.Planets.Last.Value.Position;
+
+        Assert.NotEqual(lastPlanetPosition.X, prevPosition.X, 1e-3);
+        Assert.NotEqual(lastPlanetPosition.Y, prevPosition.Y, 1e-3);
+
+        prevPosition = lastPlanetPosition;
+      }
     }
 
     [Fact]
@@ -183,8 +252,26 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(2555, 0);
 
-      Assert.False(true);
+      for (int i = 0; i < 10; i++)
+      {
+        map.Update(1);
+
+        foreach (Planet elPlanet in map.Planets)
+        {
+          foreach (Planet elInnerPlanet in map.Planets)
+          {
+            if (elPlanet != elInnerPlanet)
+            {
+              double distance = (elPlanet.Position + elInnerPlanet.Position.Scale(-1)).Length;
+
+              Assert.True(distance > (elInnerPlanet.Radius + elPlanet.Radius));
+            }
+          }
+        }
+      }
     }
 
     [Fact]
@@ -192,8 +279,26 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(2555, 0);
 
-      Assert.False(true);
+      double noiseDistance = 1000;
+      double maxDistance = map.DeletePlanetDistance + noiseDistance;
+
+      for (int i = 0; i < 10; i++)
+      {
+        double lastCameraOffset = map.XCameraOffset;
+        
+        map.Update(1);
+
+        foreach (Planet elPlanet in map.Planets)
+        {
+          if (Math.Abs(elPlanet.Position.X - lastCameraOffset) > maxDistance)
+          {
+            Assert.Fail();
+          }
+        }
+      }
     }
 
     [Fact]
@@ -201,8 +306,25 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(10000, 0);
 
-      Assert.False(true);
+      map.Update(1);
+
+      List<Planet> deletedPlanets = [.. map.Planets];
+
+      int countDespawnedPlanets = 0;
+      foreach (Planet elPlanet in deletedPlanets)
+      {
+        elPlanet.Despawned += () =>
+        {
+          countDespawnedPlanets++;
+        };
+      }
+
+      map.Update(1);
+
+      Assert.Equal(deletedPlanets.Count, countDespawnedPlanets);
     }
 
     [Fact]
@@ -210,43 +332,71 @@ namespace Tests
     {
       Map map = CreateMap();
 
+      Rocket rocket = map.Rocket;
+      rocket.Velocity = new Vector2(10000, 0);
 
-      Assert.False(true);
+      double prevCameraOffset = map.XMustCameraOffset;
+
+      for (int i = 0; i < 10; i++)
+      {
+        map.Update(1);
+
+        Assert.NotEqual(prevCameraOffset, map.XMustCameraOffset, 1e-3);
+
+        prevCameraOffset = map.XMustCameraOffset;
+      }
     }
 
     [Fact]
     public void MapsDoNotMoveCameraWhileRocketFlyAroundPlanet()
     {
-      Map map = CreateMap();
+      Map map = new Map(new Vector2(1920, 1080));
 
+      double prevCameraOffset = map.XMustCameraOffset;
 
-      Assert.False(true);
+      for (int i = 0; i < 10; i++)
+      {
+        map.Update(1);
+
+        Assert.Equal(prevCameraOffset, map.XMustCameraOffset, 1e-3);
+
+        prevCameraOffset = map.XMustCameraOffset;
+      }
     }
 
     [Fact]
     public void MapDepartsRocket()
     {
-      Map map = CreateMap();
+      Map map = new Map(new Vector2(1920, 1080));
 
+      map.RocketDepart();
 
-      Assert.False(true);
+      Assert.Null(map.Rocket.Location);
     }
 
     [Fact]
     public void MapCreatesSunToLeftFromStartPlanet()
     {
-      Map map = CreateMap();
+      Map map = new Map(new Vector2(1920, 1080));
 
+      Planet startPlanet = map.StartPlanet;
+      Sun sun = map.Sun;
 
-      Assert.False(true);
+      Assert.True(sun.Position.X < startPlanet.Position.X);
     }
 
     [Fact]
     public void MapCreatesAsteroidBeltsToupAndDownFromStartPlanet()
     {
-      Map map = CreateMap();
+      Map map = new Map(new Vector2(1920, 1080));
 
-      Assert.False(true);
+      Planet startPlanet = map.StartPlanet;
+
+      AsteroidBelt topBelt = map.TopAsteroidBelt;
+      Assert.True(topBelt.Position.Y < startPlanet.Position.Y);
+
+      AsteroidBelt bottomBelt = map.BottomAsteroidBelt;
+      Assert.True(bottomBelt.Position.Y > startPlanet.Position.Y);
     }
 
   }

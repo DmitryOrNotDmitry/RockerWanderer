@@ -103,7 +103,7 @@ namespace Logic.Models.Game
     /// <summary>
     /// Расстояние от _xCameraOffset, начиная с которого планеты удаляются/генерируются
     /// </summary>
-    private readonly double _deletePlanetdistance = 3000;
+    private readonly double _deletePlanetDistance = 3000;
 
     /// <summary>
     /// Ракета
@@ -181,9 +181,9 @@ namespace Logic.Models.Game
     /// <summary>
     /// Расстояние от _xCameraOffset, начиная с которого планеты удаляются/генерируются
     /// </summary>
-    public double DeletePlanetdistance
+    public double DeletePlanetDistance
     {
-      get { return _deletePlanetdistance; }
+      get { return _deletePlanetDistance; }
     }
 
     /// <summary>
@@ -264,10 +264,13 @@ namespace Logic.Models.Game
         _size.Y / 2 + yNoiseOffset
       );
 
-      _planets.AddLast(newPlanet);
       _countCreatedPlanets++;
 
-      PlanetCreated?.Invoke(newPlanet);
+      if (newPlanet.Position.X > _xCameraOffset - _deletePlanetDistance)
+      {
+        _planets.AddLast(newPlanet);
+        PlanetCreated?.Invoke(newPlanet);
+      }
     }
 
     /// <summary>
@@ -298,7 +301,7 @@ namespace Logic.Models.Game
       Planet? planet = _planets.First?.Value;
       while (planet != null)
       {
-        if (planet.Position.X + _deletePlanetdistance < _xCameraOffset)
+        if (planet.Position.X + _deletePlanetDistance < _xCameraOffset)
         {
           planet.Despawn();
           _planets.RemoveFirst();
@@ -317,12 +320,12 @@ namespace Logic.Models.Game
     /// </summary>
     private void GeneratePlanets()
     {
-      if (_planets.Count == 0)
+      while (_planets.Count == 0)
       {
         CreatePlanet();
       }
 
-      while (_planets.Last.Value.Position.X < _xCameraOffset + _deletePlanetdistance)
+      while (_planets.Last.Value.Position.X < _xCameraOffset + _deletePlanetDistance)
       {
         CreatePlanet();
       }
