@@ -7,7 +7,7 @@ namespace Tests
 {
   public class TestMap
   {
-    private const int _offset = 10000;
+    private const int OFFSET = 10000;
 
     [Fact]
     public void MapCheckExistingCollisionRocketAndAsteroidBelt()
@@ -15,7 +15,7 @@ namespace Tests
       Map map = CreateMap();
 
       AsteroidBelt asteroidBelt = map.TopAsteroidBelt;
-      asteroidBelt.Position = new Vector2(_offset, -100 + _offset);
+      asteroidBelt.Position = new Vector2(OFFSET, -100 + OFFSET);
       asteroidBelt.Size = new Vector2(100, 150);
 
       AssertRocketDestroying(map, true);
@@ -27,7 +27,7 @@ namespace Tests
       Map map = CreateMap();
 
       AsteroidBelt asteroidBelt = map.TopAsteroidBelt;
-      asteroidBelt.Position = new Vector2(_offset, -100 + _offset);
+      asteroidBelt.Position = new Vector2(OFFSET, -100 + OFFSET);
       asteroidBelt.Size = new Vector2(10, 10);
 
       AssertRocketDestroying(map, false);
@@ -39,7 +39,7 @@ namespace Tests
       Map map = CreateMap();
 
       Sun sun = map.Sun;
-      sun.Position = new Vector2(_offset + 50, _offset + 50);
+      sun.Position = new Vector2(OFFSET + 50, OFFSET + 50);
       sun.Size = new Vector2(100, 100);
 
       AssertRocketDestroying(map, true);
@@ -51,7 +51,7 @@ namespace Tests
       Map map = CreateMap();
 
       Sun sun = map.Sun;
-      sun.Position = new Vector2(_offset + 500, _offset + 500);
+      sun.Position = new Vector2(OFFSET + 500, OFFSET + 500);
       sun.Size = new Vector2(100, 100);
 
       AssertRocketDestroying(map, false);
@@ -63,7 +63,7 @@ namespace Tests
       Map map = CreateMap();
 
       Planet startPlanet = map.StartPlanet;
-      startPlanet.Position = new Vector2(_offset + 50, _offset + 50);
+      startPlanet.Position = new Vector2(OFFSET + 50, OFFSET + 50);
       startPlanet.Size = new Vector2(100, 100);
 
       AssertRocketDestroying(map, true);
@@ -75,7 +75,7 @@ namespace Tests
       Map map = CreateMap();
 
       Planet startPlanet = map.StartPlanet;
-      startPlanet.Position = new Vector2(_offset + 5000, _offset + 5000);
+      startPlanet.Position = new Vector2(OFFSET + 5000, OFFSET + 5000);
       startPlanet.Size = new Vector2(100, 100);
 
       AssertRocketDestroying(map, false);
@@ -86,7 +86,7 @@ namespace Tests
       Map map = new Map(new Vector2(1920, 1080));
 
       Rocket rocket = map.Rocket;
-      rocket.Position = new Vector2(_offset, _offset);
+      rocket.Position = new Vector2(OFFSET, OFFSET);
       rocket.Size = new Vector2(100, 100);
       rocket.Velocity = new Vector2(0, 0);
       rocket.Location = null;

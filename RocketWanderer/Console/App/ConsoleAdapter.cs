@@ -14,6 +14,12 @@ namespace ConsoleApp.App
   /// </summary>
   public class ConsoleAdapter
   {
+
+    /// <summary>
+    /// Пустой символ 
+    /// </summary>
+    private const char EMPTY_CHAR = ' ';
+
     /// <summary>
     /// Единственный экземпляр класса
     /// </summary>
@@ -26,11 +32,6 @@ namespace ConsoleApp.App
     {
       get { return _instance; }
     }
-
-    /// <summary>
-    /// Пустой символ 
-    /// </summary>
-    private const char _emptyChar = ' ';
 
     /// <summary>
     /// Ширина буфера
@@ -110,7 +111,7 @@ namespace ConsoleApp.App
     /// </summary>
     public void Clear(Rect parRect)
     {
-      string emptyStr = new(_emptyChar, parRect.Width);
+      string emptyStr = new(EMPTY_CHAR, parRect.Width);
       int endY = parRect.Y + parRect.Height;
 
       lock (_prevBuffer)
@@ -140,7 +141,7 @@ namespace ConsoleApp.App
         {
           for (int x = parRect.X; x < endX; x++)
           {
-            _buffer[y, x] = _emptyChar;
+            _buffer[y, x] = EMPTY_CHAR;
           }
         }
       }
@@ -160,7 +161,7 @@ namespace ConsoleApp.App
       {
         for (int x = parRect.X; x < endX; x++)
         {
-          parBuffer[y, x] = _emptyChar;
+          parBuffer[y, x] = EMPTY_CHAR;
         }
       }
     }

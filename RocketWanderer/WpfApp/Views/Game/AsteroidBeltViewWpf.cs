@@ -22,7 +22,7 @@ namespace WpfApp.Views.Game
     /// <summary>
     /// Максимальное количество элементов массива _beltImages
     /// </summary>
-    private const int _maxBeltImagesSize = 5;
+    private const int MAX_BELT_IMAGE_SIZE = 5;
 
     /// <summary>
     /// Контейнер для изображений астероидов
@@ -93,7 +93,7 @@ namespace WpfApp.Views.Game
       {
         needBeltImage = (int) (parentSize.X / _beltImages[0].ActualWidth + 1);
       }
-      needBeltImage = Math.Min(needBeltImage, _maxBeltImagesSize);
+      needBeltImage = Math.Min(needBeltImage, MAX_BELT_IMAGE_SIZE);
 
       while (_beltImages.Count < needBeltImage)
       {
