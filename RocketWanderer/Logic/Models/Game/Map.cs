@@ -229,7 +229,7 @@ namespace Logic.Models.Game
     {
       _rocket.Position = new Vector2(_size.X * 0.3, _size.Y * 0.5 + 170);
       _rocket.Velocity = new Vector2(_size.X / 10 * 2, 0);
-      _rocket.Size = new Vector2(53, 100);
+      _rocket.Size = new Vector2(53, 100).Scale(0.8);
       _rocket.Location = _startPlanet;
       _rocket.ReachedOrbit = 200;
 

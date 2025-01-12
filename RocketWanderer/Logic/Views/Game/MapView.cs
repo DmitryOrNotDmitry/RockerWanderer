@@ -98,12 +98,12 @@ namespace Logic.Views.Game
     {
       Map = parMap;
 
-      _rocketView = CreateRocketView();
       _startPlanetView = CreateStartPlanetView();
       _sunView = CreateSunView();
       _topBeltView = CreateAsteroidBeltView(Map.TopAsteroidBelt);
       _bottomBeltView = CreateAsteroidBeltView(Map.BottomAsteroidBelt);
-      
+      _rocketView = CreateRocketView();
+
       _planetsView = new LinkedList<PlanetView>();
       foreach (Planet elPlanet in Map.Planets)
       {

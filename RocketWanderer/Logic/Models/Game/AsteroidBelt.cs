@@ -19,7 +19,7 @@ namespace Logic.Models.Game
     /// <returns>true - столкновение произошло, иначе false</returns>
     public bool IsCollideWith(Rocket parRocket)
     {
-      double tolerance = 0.2;
+      double tolerance = 0.8;
 
       Vector2 rocketLeftUp = parRocket.Position + parRocket.Size.Scale(-(0.5 - tolerance));
       Vector2 rocketRightBottom = parRocket.Position + parRocket.Size.Scale(0.5 - tolerance);
