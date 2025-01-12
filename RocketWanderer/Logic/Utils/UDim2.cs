@@ -80,10 +80,5 @@ namespace Logic.Utils
     {
       return new UDim2(0, 0, 0, 0);
     }
-
-    public static UDim2 FromOffset(double v1, int v2)
-    {
-      throw new NotImplementedException();
-    }
   }
 }

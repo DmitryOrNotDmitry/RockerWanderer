@@ -35,7 +35,7 @@ namespace ConsoleApp.Views.Windows
       {
         Console.SetBufferSize(120, 30);
       }
-      catch (Exception) { }
+      catch (Exception ex) { }
 
       _console = ConsoleAdapter.Instance;
       _prevWidth = _console.Width;

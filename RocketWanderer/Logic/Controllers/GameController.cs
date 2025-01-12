@@ -267,7 +267,7 @@ namespace Logic.Controllers
         Stopwatch stopwatch = Stopwatch.StartNew();
         double lastFrameTime = stopwatch.Elapsed.TotalSeconds;
         double currentFrameTime = 0;
-
+        
         while (_isGameProcessed && !_isGamePaused)
         {
           currentFrameTime = stopwatch.Elapsed.TotalSeconds;
@@ -294,7 +294,12 @@ namespace Logic.Controllers
       _isGamePaused = false;
       _isGameProcessed = false;
 
-      _recordsTable.Add(new Record(PlayerSettings.Name, Scores.Current));
+      Record prevRecord = _recordsTable.GetRecordFor(PlayerSettings.Name);
+      if (prevRecord.Score < Scores.Current)
+      {
+        prevRecord.Score = Scores.Current;
+        _recordsTable.Update();
+      }
 
       GameOverMenu.Focus(MenuItemAction.NewGame);
     }

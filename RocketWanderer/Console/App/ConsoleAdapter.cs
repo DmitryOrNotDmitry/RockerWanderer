@@ -14,7 +14,6 @@ namespace ConsoleApp.App
   /// </summary>
   public class ConsoleAdapter
   {
-
     /// <summary>
     /// Пустой символ 
     /// </summary>

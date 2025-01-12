@@ -137,7 +137,7 @@ namespace Tests
     public void MapsMustMoveRocketDirectly()
     {
       Map map = CreateMap();
-
+      
       Rocket rocket = map.Rocket;
       rocket.Velocity = new Vector2(1000, 1000);
 
