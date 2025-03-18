@@ -98,22 +98,20 @@ namespace Logic.App
 
       Task.Run(() =>
       {
+        try
         {
-          try
+          while (true)
           {
-            while (true)
+            if (Redrawer.NeedRedraw)
             {
-              if (Redrawer.NeedRedraw)
-              {
-                Redrawer.NeedRedraw = false;
-                _windowController.WindowView.Draw();
-              }
+              Redrawer.NeedRedraw = false;
+              _windowController.WindowView.Draw();
             }
           }
-          catch (TaskCanceledException e)
-          {
+        }
+        catch (TaskCanceledException ex)
+        {
 
-          }
         }
       }
       );

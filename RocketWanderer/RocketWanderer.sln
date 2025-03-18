@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{A909E21A-DB78-4528-9F08-9319F0B7495A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp", "WpfApp\WpfApp.csproj", "{C846ACDD-DC9B-460A-ABE3-5BBE48768E3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "Console\ConsoleApp.csproj", "{DA3E41F9-2F86-4953-8165-760CEC943C30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A909E21A-DB78-4528-9F08-9319F0B7495A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A909E21A-DB78-4528-9F08-9319F0B7495A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A909E21A-DB78-4528-9F08-9319F0B7495A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C846ACDD-DC9B-460A-ABE3-5BBE48768E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C846ACDD-DC9B-460A-ABE3-5BBE48768E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C846ACDD-DC9B-460A-ABE3-5BBE48768E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C846ACDD-DC9B-460A-ABE3-5BBE48768E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA3E41F9-2F86-4953-8165-760CEC943C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3E41F9-2F86-4953-8165-760CEC943C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3E41F9-2F86-4953-8165-760CEC943C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3E41F9-2F86-4953-8165-760CEC943C30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

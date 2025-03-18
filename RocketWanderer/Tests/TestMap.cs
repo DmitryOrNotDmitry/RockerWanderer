@@ -16,7 +16,7 @@ namespace Tests
 
       AsteroidBelt asteroidBelt = map.TopAsteroidBelt;
       asteroidBelt.Position = new Vector2(OFFSET, -100 + OFFSET);
-      asteroidBelt.Size = new Vector2(100, 150);
+      asteroidBelt.Size = new Vector2(100, 300);
 
       AssertRocketDestroying(map, true);
     }
@@ -40,7 +40,7 @@ namespace Tests
 
       Sun sun = map.Sun;
       sun.Position = new Vector2(OFFSET + 50, OFFSET + 50);
-      sun.Size = new Vector2(100, 100);
+      sun.Size = new Vector2(1000, 1000);
 
       AssertRocketDestroying(map, true);
     }
@@ -137,7 +137,7 @@ namespace Tests
     public void MapsMustMoveRocketDirectly()
     {
       Map map = CreateMap();
-
+      
       Rocket rocket = map.Rocket;
       rocket.Velocity = new Vector2(1000, 1000);
 

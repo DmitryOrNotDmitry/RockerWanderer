@@ -89,7 +89,7 @@ namespace Logic.Models.Game
     public bool IsCollideWith(Rocket parRocket)
     {
       double rocketRadius = (parRocket.Size.Y + parRocket.Size.X) / 4;
-      rocketRadius *= 0.5;
+      rocketRadius *= 0.2;
 
       Vector2 rocketToSun = parRocket.Position + Position.Scale(-1);
 
